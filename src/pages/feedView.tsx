@@ -55,7 +55,7 @@ const FeedView: FC = () => {
                         >
                             <Link
                                 className="px-8 w-min hover:text-cyan-600"
-                                to={`/user/${localStorage.getItem("userId")}`}
+                                to={`/user/${localStorage.getItem("username")}`}
                             >
                                 Profile
                             </Link>
@@ -74,6 +74,10 @@ const FeedView: FC = () => {
                 {/* Content */}
 
                 <Post />
+
+                <span className="w-full h-px border-b border-gray-200 p-2"></span>
+
+
             </div>
         </>
     );

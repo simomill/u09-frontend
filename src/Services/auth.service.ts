@@ -31,7 +31,7 @@ export const login = async (loginData: LoginModel) => {
         response.data !== "User don't exist"
     ) {
         localStorage.setItem("accesstoken", response.data.token);
-        localStorage.setItem("userId", response.data.id);
+        localStorage.setItem("username", response.data.username);
     }
 
     return response;
@@ -40,7 +40,7 @@ export const login = async (loginData: LoginModel) => {
 // Logout by clearing token
 export const logout = async () => {
     localStorage.removeItem("accesstoken");
-    localStorage.removeItem("userId");
+    localStorage.removeItem("username");
 }
 
 // Get accesstoken from localStorage
