@@ -34,7 +34,7 @@ const Post: FC = () => {
 
             <p>Text</p>
 
-            <div className="flex flex-row gap-2">
+            <div className="flex flex-row pb-1 gap-2">
                 <svg
                     onClick={toggleInfo}
                     xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +53,7 @@ const Post: FC = () => {
                 </svg>
             </div>
 
-            <div className="flex flex-row gap-2">
+            <div className="flex flex-row py-1 gap-2">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -71,7 +71,7 @@ const Post: FC = () => {
                     <p>Hashtags</p>
                 </div>
                 
-                <div className="flex flex-row gap-2">
+                <div className="flex flex-row py-1 gap-2">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -94,7 +94,7 @@ const Post: FC = () => {
 
             {/* info section */}
             <div className={showInfo}>
-                <div className="flex flex-row gap-2">
+                <div className="flex flex-row py-1 gap-2">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -117,7 +117,7 @@ const Post: FC = () => {
                     <p>Camera</p>
                 </div>
 
-                <div className="flex flex-row gap-2">
+                <div className="flex flex-row py-1 gap-2">
                     <svg
                         className="w-5 h-5"
                         xmlns="http://www.w3.org/2000/svg"
@@ -133,12 +133,12 @@ const Post: FC = () => {
                     <p>Lens</p>
                 </div>
 
-                <div className="flex flex-row gap-2">
+                <div className="flex flex-row py-1 gap-2">
                     <img className="w-5 h-5" src={f} alt="" />
                     <p>F-Stop</p>
                 </div>
 
-                <div className="flex flerx-row gap-2">
+                <div className="flex flex-row py-1 gap-2">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

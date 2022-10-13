@@ -55,7 +55,7 @@ const FeedView: FC = () => {
                         >
                             <Link
                                 className="px-8 w-min hover:text-cyan-600"
-                                to="/user"
+                                to={`/user/${localStorage.getItem("userId")}`}
                             >
                                 Profile
                             </Link>
