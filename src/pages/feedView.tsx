@@ -74,6 +74,10 @@ const FeedView: FC = () => {
                 {/* Content */}
 
                 <Post />
+
+                <span className="w-full h-px border-b border-gray-200 p-2"></span>
+
+
             </div>
         </>
     );

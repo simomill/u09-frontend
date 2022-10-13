@@ -5,7 +5,7 @@ const UserPage: FC = () => {
     return (
         <div className="flex flex-col">
             {/* Top-part */}
-            <div className="px-3 py-4">
+            <div className="md:px-24 lg:px-36 px-3 py-4">
                 <Link className="flex flex-row" to="/">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,7 @@ const UserPage: FC = () => {
             <span className="w-full h-px border-b border-gray-200"></span>
 
             {/* Bio-part */}
-            <div className="px-3 py-4 flex flex-row gap-6 items-center">
+            <div className="md:px-24 lg:px-36 px-3 py-4 flex flex-row gap-6 items-center">
                 <div
                     className="rounded-full w-6 h-6 p-6 bg-slate-500 border border-gray-500 ml-5 relative cursor-pointer"
                 ></div>

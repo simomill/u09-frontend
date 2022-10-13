@@ -20,7 +20,7 @@ const Post: FC = () => {
     };
 
     return (
-        <div className="py-4 px-6 flex flex-col border-b border-gray-200">
+        <div className="md:w-[50rem] w-full py-4 px-6 flex flex-col self-center" >
             {/* Top */}
             <div className="flex flex-row justify-start items-center">
                 <div className="rounded-full w-4 h-4 p-4 bg-slate-500 mx-2 border border-gray-500"></div>
