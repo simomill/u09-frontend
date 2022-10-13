@@ -1,12 +1,32 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getUser } from "../Services/user.service";
 
 const UserPage: FC = () => {
+    const [userEmail, setUserEmail] = useState("")
+
+    useEffect(() => {
+
+        async function fetchData() {
+            const response = await getUser(localStorage.getItem("username") ?? "");
+            
+            setUserEmail(response.email);
+            
+            
+        }
+
+        if (!userEmail) {
+            fetchData();
+        }
+
+    }, [userEmail, userEmail.length]);
+
+
     return (
         <div className="flex flex-col">
             {/* Top-part */}
             <div className="md:px-24 lg:px-36 px-3 py-4">
-                <Link className="flex flex-row" to="/">
+                <Link className="flex flex-row hover:text-cyan-700" to="/">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -34,15 +54,15 @@ const UserPage: FC = () => {
                 ></div>
 
                 <div className="flex flex-col items-start">
-                    <p>Nameasdadasdasdsad</p>
-                    <p>Namasdsadsadsade</p>
+                    <p>{localStorage.getItem("username")}</p>
+                    <p>{userEmail}</p>
                 </div>
             </div>
 
             <span className="w-full h-px border-b border-gray-200"></span>
             {/* Gallery-part */}
             <div className="flex flex-wrap">
-                
+
             </div>
 
 
