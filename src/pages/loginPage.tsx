@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState } from "react";
+import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login, LoginModel } from "../Services/auth.service";
 
@@ -10,6 +10,15 @@ const LoginPage: FC = () => {
         password: "",
     });
     const [loading, setLoading] = useState(false);
+    const [statusMsg, setStatusMsg] = useState("");
+
+    useEffect(() => {
+        if (statusMsg) {
+            setTimeout(() => {
+                setStatusMsg("");
+            }, 2000);
+        }
+    }, [statusMsg]);
 
     // Change username state from input
     function handleChangeUsername(e: ChangeEvent<HTMLInputElement>) {
@@ -31,22 +40,22 @@ const LoginPage: FC = () => {
     async function handleClickLogin() {
         setLoading(true);
 
-        try {
-            const success = await login(loginData);
+        const response = await login(loginData);
 
-            if (success) {
-                // Navigate and reload if successful
-                navigate("/");
-                window.location.reload();
-            } else {
-                alert("Error logging in");
-            }
-        } catch (error) {
-            alert(error);
-        } finally {
-            // Reset loading state
-            setLoading(false);
+        if (
+            response.data !== "Wrong Password" &&
+            response.data !== "User don't exist"
+        ) {
+            // Navigate and reload if successful
+            navigate("/");
+            window.location.reload();
+            
+        } else {
+            setStatusMsg(response.data);
         }
+
+        // Reset loading state
+        setLoading(false);
     }
 
     return (
@@ -81,6 +90,8 @@ const LoginPage: FC = () => {
             <Link to={"/register"} className="text-cyan-900">
                 register
             </Link>
+
+            {statusMsg && <p className="text-red-700">{statusMsg}</p>}
         </div>
     );
 };

@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Navigate,
+    Route,
+    Routes,
+    useNavigate,
+} from "react-router-dom";
 import FeedView from "./pages/feedView";
 import PhotoView from "./pages/PhotoView";
 import UserPage from "./pages/userPage";
@@ -18,22 +24,28 @@ function App() {
         setIsLoggedIn(isLoggedIn);
     }, []);
 
-    
-
     return (
         <div className="App">
             <main>
                 {isLoggedIn && (
                     <>
                         <p>You are logged in! 👋</p>
-                        
                     </>
                 )}
                 <Router>
                     <Routes>
-                        <Route path="/" element={<FeedView />} />
-                        <Route path="/photo" element={<PhotoView />} />
-                        <Route path="/user" element={<UserPage />} />
+                        <Route
+                            path="/"
+                            element={isLoggedIn ? <FeedView /> : <LoginPage />}
+                        />
+                        <Route
+                            path="/photo"
+                            element={isLoggedIn ? <PhotoView /> : <LoginPage />}
+                        />
+                        <Route
+                            path="/user"
+                            element={isLoggedIn ? <UserPage /> : <LoginPage />}
+                        />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/register" element={<RegisterPage />} />
                         <Route path="/auth-test" element={<TestAuthPage />} />

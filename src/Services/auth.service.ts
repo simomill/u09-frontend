@@ -17,20 +17,21 @@ export interface RegisterModel {
 // Post register user
 export const register = async (registerData: RegisterModel) => {
     const response = await axios.post(`${API_URL}/register`, registerData);
-    return response.status === 200;
+    
+    
+    return response;
 }
 
 // Post login user and save token 
 export const login = async (loginData: LoginModel) => {
     const response = await axios.post(`${API_URL}/login`, loginData);
 
-    const success = (response.status === 200);
 
-    if (success) {
+    if (response.status === 200) {
         localStorage.setItem("accesstoken", response.data);
     }
 
-    return success;
+    return response;
 }
 
 // Logout by clearing token

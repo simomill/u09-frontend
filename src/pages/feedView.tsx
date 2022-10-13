@@ -1,7 +1,7 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Post from "./components/post";
 import Search from "../heroicons/search";
-import { logout } from "../Services/auth.service";
+import { checkIsLoggedIn, logout } from "../Services/auth.service";
 import { useNavigate } from "react-router-dom";
 
 const FeedView: FC = () => {
@@ -9,11 +9,19 @@ const FeedView: FC = () => {
 
     const navigate = useNavigate()
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+
     function onClickLogout() {
         logout();
         navigate("/login");
         window.location.reload();
     }
+
+    useEffect(() => {
+        const isLoggedIn = checkIsLoggedIn();
+        setIsLoggedIn(isLoggedIn);
+    }, [])
+    
 
     return (
         <>
@@ -30,7 +38,10 @@ const FeedView: FC = () => {
                     
                 </nav>
 
-                <button className="border rounded py-2 px-3 bg-slate-50 w-20 self-center mt-3" onClick={onClickLogout}>Logout</button>
+                { isLoggedIn && (
+                    <button className="border rounded py-2 px-3 bg-slate-50 w-20 self-center mt-3" onClick={onClickLogout}>Logout</button>
+                )}
+                
                 
                 <span className="w-full h-px border-b border-gray-200 p-2"></span>
                 

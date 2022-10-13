@@ -15,6 +15,7 @@ const RegisterPage: FC = () => {
     const [loading, setLoading] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
     const [disabledStyle, setDisabledStyle] = useState("opacity-100");
+    const [statusMsg, setStatusMsg] = useState("");
 
     // Change username state from input
     function handleChangeUsername(e: ChangeEvent<HTMLInputElement>) {
@@ -75,7 +76,14 @@ const RegisterPage: FC = () => {
         } else {
             setIsDisabled(false);
         }
-    }, [registerData.passconf, registerData.password]);
+
+        if (statusMsg) {
+            setTimeout(() => {
+                setStatusMsg("");
+            }, 2000);
+        }
+
+    }, [registerData.passconf, registerData.password, statusMsg]);
 
     async function handleClickRegister() {
         setLoading(true);
@@ -85,12 +93,14 @@ const RegisterPage: FC = () => {
 
             // Navigate if successful
             if (success) {
-                navigate("/login");
+                // navigate("/login");
+                console.log(success);
+                
             } else {
-                alert("Error registering user");
+                setStatusMsg("User already exists");
             }
         } catch (error) {
-            alert(error);
+            console.log(error);
         } finally {
             setLoading(false);
         }
@@ -161,6 +171,10 @@ const RegisterPage: FC = () => {
             )}
 
             {isDisabled && <p className="text-red-700">Passwords must match</p>}
+
+            {statusMsg && (
+                <p className="text-red-700">{statusMsg}</p>
+            )}
 
             <Link to={"/login"} className="text-cyan-900 hover:text-cyan-600">
                 Already a user?
