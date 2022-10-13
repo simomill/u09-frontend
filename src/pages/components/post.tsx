@@ -4,7 +4,7 @@ import f from ".././../assets/f-stop.svg";
 
 const Post: FC = () => {
     const [showInfo, setShowInfo] = useState("hidden");
-    const [infoColor, setInfoColor] = useState("text-slate-600");
+    const [infoColor, setInfoColor] = useState("text-slate-300");
     const [direction, setDirection] = useState("rotate-0");
 
     const toggleInfo = () => {
@@ -20,7 +20,7 @@ const Post: FC = () => {
     };
 
     return (
-        <div className="py-2 px-6 flex flex-col border-b border-gray-200">
+        <div className="py-4 px-6 flex flex-col border-b border-gray-200">
             {/* Top */}
             <div className="flex flex-row justify-start items-center">
                 <div className="rounded-full w-4 h-4 p-4 bg-slate-500 mx-2 border border-gray-500"></div>
@@ -28,7 +28,7 @@ const Post: FC = () => {
             </div>
 
             {/* Image */}
-            <div className="container w-full h-96 p-2 bg-slate-200 my-3">
+            <div className="container w-full h-96 p-2 bg-slate-200 my-3 self-center">
                 {/* <img src="#" alt="Doesn't exist" /> */}
             </div>
 

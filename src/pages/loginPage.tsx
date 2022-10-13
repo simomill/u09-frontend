@@ -49,7 +49,7 @@ const LoginPage: FC = () => {
             // Navigate and reload if successful
             navigate("/");
             window.location.reload();
-            
+
         } else {
             setStatusMsg(response.data);
         }
@@ -81,13 +81,13 @@ const LoginPage: FC = () => {
                 onChange={handleChangePassword}
             />
             <input
-                className="border rounded py-2 px-3 bg-slate-50"
+                className="border rounded py-2 px-3 bg-slate-50 cursor-pointer"
                 type="submit"
                 value="login"
                 onClick={handleClickLogin}
             />
 
-            <Link to={"/register"} className="text-cyan-900">
+            <Link to={"/register"} className="text-cyan-900 hover:text-cyan-600">
                 register
             </Link>
 

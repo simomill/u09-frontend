@@ -26,9 +26,12 @@ export const register = async (registerData: RegisterModel) => {
 export const login = async (loginData: LoginModel) => {
     const response = await axios.post(`${API_URL}/login`, loginData);
 
-
-    if (response.status === 200) {
-        localStorage.setItem("accesstoken", response.data);
+    if (
+        response.data !== "Wrong Password" &&
+        response.data !== "User don't exist"
+    ) {
+        localStorage.setItem("accesstoken", response.data.token);
+        localStorage.setItem("userId", response.data.id);
     }
 
     return response;
@@ -37,6 +40,7 @@ export const login = async (loginData: LoginModel) => {
 // Logout by clearing token
 export const logout = async () => {
     localStorage.removeItem("accesstoken");
+    localStorage.removeItem("userId");
 }
 
 // Get accesstoken from localStorage

@@ -24,14 +24,11 @@ function App() {
         setIsLoggedIn(isLoggedIn);
     }, []);
 
+
     return (
         <div className="App">
             <main>
-                {isLoggedIn && (
-                    <>
-                        <p>You are logged in! 👋</p>
-                    </>
-                )}
+
                 <Router>
                     <Routes>
                         <Route
@@ -43,7 +40,7 @@ function App() {
                             element={isLoggedIn ? <PhotoView /> : <LoginPage />}
                         />
                         <Route
-                            path="/user"
+                            path="/user/:id"
                             element={isLoggedIn ? <UserPage /> : <LoginPage />}
                         />
                         <Route path="/login" element={<LoginPage />} />
