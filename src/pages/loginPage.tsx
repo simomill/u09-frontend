@@ -38,6 +38,11 @@ const LoginPage: FC = () => {
 
     // Login on button click
     async function handleClickLogin() {
+
+        if (!loginData.password && !loginData.username) {
+            return
+        }
+        
         setLoading(true);
 
         const response = await login(loginData);

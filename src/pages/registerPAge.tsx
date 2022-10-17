@@ -82,7 +82,6 @@ const RegisterPage: FC = () => {
                 setStatusMsg("");
             }, 2000);
         }
-
     }, [registerData.passconf, registerData.password, statusMsg]);
 
     async function handleClickRegister() {
@@ -93,9 +92,8 @@ const RegisterPage: FC = () => {
 
             // Navigate if successful
             if (success) {
-                // navigate("/login");
-                console.log(success);
-                
+                navigate("/login");
+                // console.log(success);
             } else {
                 setStatusMsg("User already exists");
             }
@@ -110,59 +108,61 @@ const RegisterPage: FC = () => {
         <div className="flex flex-col justify-center items-center h-screen gap-4">
             <h1 className="font-bold text-3xl mb-6 text-cyan-900">DSPLAY</h1>
 
-            <input
-                className="border rounded py-2 px-3 mb-3"
-                type="text"
-                name="name"
-                id="name"
-                placeholder="name"
-                value={registerData.name}
-                onChange={handleChangeName}
-            />
+            <form className="flex flex-col" action="">
+                <input
+                    className="border rounded py-2 px-3 mb-3"
+                    type="text"
+                    name="name"
+                    id="name"
+                    placeholder="name"
+                    value={registerData.name}
+                    onChange={handleChangeName}
+                />
 
-            <input
-                className="border rounded py-2 px-3 mb-3"
-                type="email"
-                name="email"
-                id="email"
-                placeholder="email"
-                value={registerData.email}
-                onChange={handleChangeEmail}
-            />
+                <input
+                    className="border rounded py-2 px-3 mb-3"
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="email"
+                    value={registerData.email}
+                    onChange={handleChangeEmail}
+                />
 
-            <input
-                className="border rounded py-2 px-3 mb-3"
-                type="text"
-                name="username"
-                id="username"
-                placeholder="username"
-                value={registerData.username}
-                onChange={handleChangeUsername}
-            />
+                <input
+                    className="border rounded py-2 px-3 mb-3"
+                    type="text"
+                    name="username"
+                    id="username"
+                    placeholder="username"
+                    value={registerData.username}
+                    onChange={handleChangeUsername}
+                />
 
-            <input
-                className="border rounded py-2 px-3 mb-3"
-                type="password"
-                name="pass"
-                id="pass"
-                placeholder="password"
-                value={registerData.password}
-                onChange={handleChangePassword}
-            />
+                <input
+                    className="border rounded py-2 px-3 mb-3"
+                    type="password"
+                    name="pass"
+                    id="pass"
+                    placeholder="password"
+                    value={registerData.password}
+                    onChange={handleChangePassword}
+                />
 
-            <input
-                className="border rounded py-2 px-3 mb-3"
-                type="password"
-                name="passconf"
-                id="passconf"
-                placeholder="repeat password"
-                value={registerData.passconf}
-                onChange={handleChangePassConf}
-            />
+                <input
+                    className="border rounded py-2 px-3 mb-3"
+                    type="password"
+                    name="passconf"
+                    id="passconf"
+                    placeholder="repeat password"
+                    value={registerData.passconf}
+                    onChange={handleChangePassConf}
+                />
+            </form>
 
             {!isDisabled && (
                 <input
-                    className="border rounded py-2 px-3 bg-slate-50 cursor-pointer"
+                    className={isDisabled ? "border rounded py-2 px-3 bg-slate-50 cursor-pointer opacity-50" : "border rounded py-2 px-3 bg-slate-50 cursor-pointer "}
                     type="submit"
                     value="register"
                     disabled={isDisabled}
@@ -172,9 +172,7 @@ const RegisterPage: FC = () => {
 
             {isDisabled && <p className="text-red-700">Passwords must match</p>}
 
-            {statusMsg && (
-                <p className="text-red-700">{statusMsg}</p>
-            )}
+            {statusMsg && <p className="text-red-700">{statusMsg}</p>}
 
             <Link to={"/login"} className="text-cyan-900 hover:text-cyan-600">
                 Already a user?
