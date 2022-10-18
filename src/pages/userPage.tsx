@@ -1,26 +1,35 @@
 import React, { FC, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getUser } from "../Services/user.service";
+import UploadModal from "./components/uploadModal";
 
 const UserPage: FC = () => {
-    const [userEmail, setUserEmail] = useState("")
+    const [userEmail, setUserEmail] = useState("");
+    const [showModal, setShowModal] = useState(false);
+
+    function setFromModal(value: any) {
+        setShowModal(value);
+    };
+
+    const pageName = useParams().id;
 
     useEffect(() => {
-
         async function fetchData() {
-            const response = await getUser(localStorage.getItem("username") ?? "");
-            
-            setUserEmail(response.email);
-            
-            
+            const response = await getUser(pageName ?? "");
+
+            if (response.email) {
+                setUserEmail(response.email);
+            }
         }
 
         if (!userEmail) {
             fetchData();
         }
+    }, [pageName, userEmail, userEmail.length]);
 
-    }, [userEmail, userEmail.length]);
-
+    const openModal = () => {
+        setShowModal((prev) => !prev);        
+    };
 
     return (
         <div className="flex flex-col">
@@ -48,24 +57,32 @@ const UserPage: FC = () => {
             <span className="w-full h-px border-b border-gray-200"></span>
 
             {/* Bio-part */}
-            <div className="md:px-24 lg:px-36 px-3 py-4 flex flex-row gap-6 items-center">
-                <div
-                    className="rounded-full w-6 h-6 p-6 bg-slate-500 border border-gray-500 ml-5 relative cursor-pointer"
-                ></div>
+            <div className="md:px-24 lg:px-36 px-3 py-4 flex flex-row gap-6 items-center justify-around">
+                <div className="rounded-full w-6 h-6 p-6 bg-slate-500 border border-gray-500 ml-5 relative cursor-pointer"></div>
 
                 <div className="flex flex-col items-start">
-                    <p>{localStorage.getItem("username")}</p>
+                    <p>{pageName}</p>
                     <p>{userEmail}</p>
                 </div>
+
+                {localStorage.getItem("username") === pageName && (
+                    <>
+                        <button onClick={openModal}>Upload</button>
+
+                        {showModal && (
+                            <UploadModal
+                            showModal={showModal}
+                            setShowModal={setShowModal}
+                        />
+                        )}
+                        
+                    </>
+                )}
             </div>
 
             <span className="w-full h-px border-b border-gray-200"></span>
             {/* Gallery-part */}
-            <div className="flex flex-wrap">
-
-            </div>
-
-
+            <div className="flex flex-wrap"></div>
         </div>
     );
 };

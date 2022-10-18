@@ -15,3 +15,9 @@ export const getAllUsers = async () => {
     
     return response.data;
 }
+
+export const uploadImage = async () => {
+    const response = await axios.post(`${API_URL}/`,);
+
+    return response;
+}

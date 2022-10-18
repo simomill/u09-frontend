@@ -120,7 +120,7 @@ const RegisterPage: FC = () => {
                 )}
 
                 <input
-                    className="border rounded py-2 px-3 bg-slate-50 cursor-pointer"
+                    className="border rounded py-2 px-3 bg-slate-50 cursor-pointer "
                     type="submit"
                     value="register"
                 />
