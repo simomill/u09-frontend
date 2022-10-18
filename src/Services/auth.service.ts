@@ -15,7 +15,7 @@ export interface RegisterModel {
     passconf: string
 }
 // Post register user
-export const register = async (registerData: RegisterModel) => {
+export const registerUser = async (registerData: RegisterModel) => {
     const response = await axios.post(`${API_URL}/register`, registerData);
     
     

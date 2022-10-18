@@ -1,99 +1,44 @@
 import React, { useState, FC, ChangeEvent, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { register, RegisterModel } from "../Services/auth.service";
+import { registerUser, RegisterModel } from "../Services/auth.service";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 
 const RegisterPage: FC = () => {
     // states and navigation
     const navigate = useNavigate();
-    const [registerData, setRegisterData] = useState<RegisterModel>({
-        username: "",
-        password: "",
-        name: "",
-        email: "",
-        passconf: "",
-    });
     const [loading, setLoading] = useState(false);
-    const [isDisabled, setIsDisabled] = useState(false);
-    const [disabledStyle, setDisabledStyle] = useState("opacity-100");
     const [statusMsg, setStatusMsg] = useState("");
 
     // Change username state from input
-    function handleChangeUsername(e: ChangeEvent<HTMLInputElement>) {
-        setRegisterData({
-            username: e.target.value,
-            password: registerData.password,
-            name: registerData.name,
-            email: registerData.email,
-            passconf: registerData.passconf,
-        });
-    }
-    // Change name state from input
-    function handleChangeName(e: ChangeEvent<HTMLInputElement>) {
-        setRegisterData({
-            username: registerData.username,
-            password: registerData.password,
-            name: e.target.value,
-            email: registerData.email,
-            passconf: registerData.passconf,
-        });
-    }
-    // Change username state from input
-    function handleChangeEmail(e: ChangeEvent<HTMLInputElement>) {
-        setRegisterData({
-            username: registerData.username,
-            password: registerData.password,
-            name: registerData.name,
-            email: e.target.value,
-            passconf: registerData.passconf,
-        });
-    }
 
-    // Change password state from input
-    function handleChangePassword(e: ChangeEvent<HTMLInputElement>) {
-        setRegisterData({
-            username: registerData.username,
-            password: e.target.value,
-            name: registerData.name,
-            email: registerData.email,
-            passconf: registerData.passconf,
-        });
-    }
+    const formSchema = Yup.object().shape({
+        password: Yup.string()
+            .required("Password is required")
+            .min(4, "Password length should be at least 4 characters"),
+        passconf: Yup.string()
+            .required("Confirm Password is required")
+            .oneOf([Yup.ref("password")], "Passwords must and should match"),
+    });
 
-    // Change password state from input
-    function handleChangePassConf(e: ChangeEvent<HTMLInputElement>) {
-        setRegisterData({
-            username: registerData.username,
-            password: registerData.password,
-            name: registerData.name,
-            email: registerData.email,
-            passconf: e.target.value,
-        });
-    }
+    const validationOpt = { resolver: yupResolver(formSchema) };
 
-    useEffect(() => {
-        if (registerData.password !== registerData.passconf) {
-            setIsDisabled(true);
-        } else {
-            setIsDisabled(false);
-        }
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm(validationOpt);
 
-        if (statusMsg) {
-            setTimeout(() => {
-                setStatusMsg("");
-            }, 2000);
-        }
-    }, [registerData.passconf, registerData.password, statusMsg]);
-
-    async function handleClickRegister() {
+    const onSubmit = async (data: any) => {
         setLoading(true);
 
         try {
-            const success = await register(registerData);
+            const success = await registerUser(data);
 
             // Navigate if successful
             if (success) {
-                navigate("/login");
-                // console.log(success);
+                navigate("/login", { state: "User successfully created!" });
             } else {
                 setStatusMsg("User already exists");
             }
@@ -102,75 +47,84 @@ const RegisterPage: FC = () => {
         } finally {
             setLoading(false);
         }
-    }
+    };
+
+    useEffect(() => {
+        if (statusMsg) {
+            setTimeout(() => {
+                setStatusMsg("");
+            }, 2000);
+        }
+    }, [statusMsg]);
 
     return (
         <div className="flex flex-col justify-center items-center h-screen gap-4">
             <h1 className="font-bold text-3xl mb-6 text-cyan-900">DSPLAY</h1>
 
-            <form className="flex flex-col" action="">
+            <form
+                className="flex flex-col"
+                action=""
+                onSubmit={handleSubmit(onSubmit)}
+            >
                 <input
                     className="border rounded py-2 px-3 mb-3"
                     type="text"
-                    name="name"
                     id="name"
                     placeholder="name"
-                    value={registerData.name}
-                    onChange={handleChangeName}
+                    {...register("name", { required: true })}
                 />
 
                 <input
                     className="border rounded py-2 px-3 mb-3"
                     type="email"
-                    name="email"
                     id="email"
                     placeholder="email"
-                    value={registerData.email}
-                    onChange={handleChangeEmail}
+                    {...register("email", {
+                        required: true,
+                        pattern:
+                            /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    })}
                 />
 
                 <input
                     className="border rounded py-2 px-3 mb-3"
                     type="text"
-                    name="username"
                     id="username"
                     placeholder="username"
-                    value={registerData.username}
-                    onChange={handleChangeUsername}
+                    {...register("username", { required: true, maxLength: 10 })}
                 />
+                {errors.username && (
+                    <p className="text-red-700">Please choose a username</p>
+                )}
 
                 <input
                     className="border rounded py-2 px-3 mb-3"
                     type="password"
-                    name="pass"
                     id="pass"
                     placeholder="password"
-                    value={registerData.password}
-                    onChange={handleChangePassword}
+                    {...register("password", { required: true })}
                 />
+                {errors.password && (
+                    <p className="text-red-700">Please choose a password</p>
+                )}
 
                 <input
                     className="border rounded py-2 px-3 mb-3"
                     type="password"
-                    name="passconf"
                     id="passconf"
                     placeholder="repeat password"
-                    value={registerData.passconf}
-                    onChange={handleChangePassConf}
+                    {...register("passconf")}
                 />
-            </form>
+                {errors.passconf && (
+                    <p className="text-red-700">Passwords do not match</p>
+                )}
 
-            {!isDisabled && (
                 <input
-                    className={isDisabled ? "border rounded py-2 px-3 bg-slate-50 cursor-pointer opacity-50" : "border rounded py-2 px-3 bg-slate-50 cursor-pointer "}
+                    className="border rounded py-2 px-3 bg-slate-50 cursor-pointer "
                     type="submit"
                     value="register"
-                    disabled={isDisabled}
-                    onClick={handleClickRegister}
                 />
-            )}
-
-            {isDisabled && <p className="text-red-700">Passwords must match</p>}
+            </form>
 
             {statusMsg && <p className="text-red-700">{statusMsg}</p>}
 
