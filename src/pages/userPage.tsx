@@ -1,15 +1,18 @@
+import axios from "axios";
 import React, { FC, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getUser } from "../Services/user.service";
+import { getUser, getUserPhotos } from "../Services/user.service";
 import UploadModal from "./components/uploadModal";
 
 const UserPage: FC = () => {
     const [userEmail, setUserEmail] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const initialArray: any[] | (() => any[]) = [];
+    const [photoArray, setPhotoArray]: any[] = useState(initialArray);
 
     function setFromModal(value: any) {
         setShowModal(value);
-    };
+    }
 
     const pageName = useParams().id;
 
@@ -22,13 +25,23 @@ const UserPage: FC = () => {
             }
         }
 
+        async function fetchPhotos() {
+            const response = await getUserPhotos(pageName ?? "");
+
+            setPhotoArray(response);
+        }
+
         if (!userEmail) {
             fetchData();
         }
-    }, [pageName, userEmail, userEmail.length]);
+
+        if (photoArray.length === 0) {
+            fetchPhotos();
+        }
+    }, [pageName, photoArray.length, userEmail, userEmail.length]);
 
     const openModal = () => {
-        setShowModal((prev) => !prev);        
+        setShowModal((prev) => !prev);
     };
 
     return (
@@ -71,18 +84,39 @@ const UserPage: FC = () => {
 
                         {showModal && (
                             <UploadModal
-                            showModal={showModal}
-                            setShowModal={setShowModal}
-                        />
+                                showModal={showModal}
+                                setShowModal={setShowModal}
+                            />
                         )}
-                        
                     </>
                 )}
             </div>
 
             <span className="w-full h-px border-b border-gray-200"></span>
             {/* Gallery-part */}
-            <div className="flex flex-wrap"></div>
+            <div className="flex flex-wrap">
+                {(() => {
+                    if (photoArray.length > 0) {
+
+                        return (
+                            <>
+                                {photoArray.map((item: any, index: number) => (
+                                    <div
+                                        className="w-full flex flex-col"
+                                        key={index}
+                                    >
+                                        <p>{photoArray[index].title}</p>
+                                        <img
+                                            alt={photoArray[index].title}
+                                            src={`data:image/jpeg;base64, ${photoArray[index].img.data}`}
+                                        />
+                                    </div>
+                                ))}
+                            </>
+                        );
+                    }
+                })()}
+            </div>
         </div>
     );
 };
