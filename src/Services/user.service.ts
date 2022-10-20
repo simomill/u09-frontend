@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 const API_URL = "http://localhost:8000/users";
 
 // Get individual user
@@ -27,3 +28,9 @@ export const getUserPhotos = async (username: string) => {
 
     return response.data;
 };
+
+export const deleteUserPhoto = async (photoId: string) => {
+    const response = await axios.delete(`${API_URL}/photos/${photoId}`);
+
+    return response;
+}
