@@ -1,6 +1,6 @@
-import React, { useState, FC, ChangeEvent, useEffect } from "react";
+import React, { useState, FC, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { registerUser, RegisterModel } from "../Services/auth.service";
+import { registerUser } from "../Services/auth.service";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -82,7 +82,7 @@ const RegisterPage: FC = () => {
                     {...register("email", {
                         required: true,
                         pattern:
-                            /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                     })}
                 />
 
