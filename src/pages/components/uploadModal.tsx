@@ -64,7 +64,7 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
         <>
             {showModal && (
                 <>
-                    <div className="absolute bottom-1/2 w-96 h-96 bg-white border rounded-lg flex flex-col p-2">
+                    <div className=" bottom-1/2 w-96 h-96 bg-white border rounded-lg flex flex-col p-2 z-10 fixed">
                         <form
                             onSubmit={handleSubmit}
                             action=""
