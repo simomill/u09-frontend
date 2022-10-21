@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import Post from "./components/post";
 import Search from "../heroicons/search";
+import {IoSearchOutline} from 'react-icons/io5'
 import { checkIsLoggedIn, logout } from "../Services/auth.service";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -32,14 +33,14 @@ const FeedView: FC = () => {
             <div className="w-full py-6 flex flex-col">
                 {/* Nav */}
                 <nav className="flex flex-row justify-center items-center">
-                    <div className="flex flex-row border border-gray-300 rounded-lg w-min p-2">
+                    <div className="flex flex-row border border-gray-300 rounded-lg w-min p-2 items-center">
                         <input
                             type="text"
                             name=""
                             id=""
                             className="focus:outline-none"
                         />
-                        <Search />
+                        <IoSearchOutline className="w-6 h-6 text-gray-300" />
                     </div>
 
                     <div
@@ -73,7 +74,7 @@ const FeedView: FC = () => {
 
                 {/* Content */}
 
-                <Post />
+                <Post photo={null} />
 
                 <span className="w-full h-px border-b border-gray-200 p-2"></span>
 
