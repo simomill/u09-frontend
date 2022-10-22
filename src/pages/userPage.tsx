@@ -4,7 +4,6 @@ import { getUser, getUserPhotos } from "../Services/user.service";
 import { FaChevronLeft } from "react-icons/fa";
 import {AiOutlinePlusSquare} from 'react-icons/ai'
 import Post from "./components/post";
-import RemoveImgModal from "./components/removeImgModal";
 import UploadModal from "./components/uploadModal";
 
 const UserPage: FC = () => {

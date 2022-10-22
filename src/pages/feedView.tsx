@@ -4,6 +4,7 @@ import Search from "../heroicons/search";
 import {IoSearchOutline} from 'react-icons/io5'
 import { checkIsLoggedIn, logout } from "../Services/auth.service";
 import { Link, useNavigate } from "react-router-dom";
+import { getPhotos } from "../Services/user.service";
 
 const FeedView: FC = () => {
     const posts: number = 9;
@@ -12,6 +13,9 @@ const FeedView: FC = () => {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [profileMenu, setProfileMenu] = useState(false);
+    const initialArray: any[] | (() => any[]) = [];
+    const [photoArray, setPhotoArray]: any[] = useState(initialArray);
+
 
     function onClickLogout() {
         logout();
@@ -26,7 +30,17 @@ const FeedView: FC = () => {
     useEffect(() => {
         const isLoggedIn = checkIsLoggedIn();
         setIsLoggedIn(isLoggedIn);
-    }, []);
+
+        async function fetchPhotos() {
+            const response = await getPhotos();
+
+            setPhotoArray(response.data);
+        }
+
+        if (photoArray.length === 0) {
+            fetchPhotos()
+        }
+    }, [photoArray]);
 
     return (
         <>
@@ -74,7 +88,27 @@ const FeedView: FC = () => {
 
                 {/* Content */}
 
-                <Post photo={null} />
+             <div className="flex flex-wrap">
+                {/* IF THERE ARE PHOTOS, THEN LOOP OVER THEM */}
+                {(() => {
+                    if (photoArray.length > 0) {
+                        return (
+                            <>
+                                {photoArray.map((item: any, index: number) => (
+                                    <div
+                                        className="w-full flex flex-col items-center relative"
+                                        key={index}
+                                    >
+                                        <Post photo={photoArray[index]} />
+                                        <span className="w-full h-px border-b border-gray-200"></span>
+                                        
+                                    </div>
+                                ))}
+                            </>
+                        );
+                    }
+                })()}
+            </div>
 
                 <span className="w-full h-px border-b border-gray-200 p-2"></span>
 

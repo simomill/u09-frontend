@@ -8,7 +8,7 @@ import {
 import { HiOutlineCamera } from "react-icons/hi2";
 import { RiCameraLensFill } from "react-icons/ri";
 import { GoCommentDiscussion, GoSettings } from "react-icons/go";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import RemoveImgModal from "./removeImgModal";
 
 interface IfirstChildProps {
@@ -45,9 +45,13 @@ const Post: FC<IfirstChildProps> = ({ photo }) => {
         <div className="md:w-[50rem] w-full py-4 px-6 flex flex-col self-center items-center">
             {/* Top */}
             {!useParams().id ? (
-                <div className="flex flex-row justify-start items-center">
+                <div className="flex flex-row justify-start items-center self-start mb-2">
                     <div className="rounded-full w-4 h-4 p-4 bg-slate-500 mx-2 border border-gray-500"></div>
-                    <p>Username</p>
+                    <Link
+                        to={`/user/${photo.username}`}
+                        className="font-medium text-lg font-md"
+                    >
+                        {photo.username}</Link>
                 </div>
             ) : (
                 ""
@@ -90,21 +94,18 @@ const Post: FC<IfirstChildProps> = ({ photo }) => {
             {photo && <p>{photo.title}</p>}
 
             <div className="flex flex-col self-start">
+                
+
+                <div className="flex flex-row py-1 gap-2">
+                    <GoCommentDiscussion className="w-6 h-6" />
+                    <p>Comments</p>
+                </div>
+
                 <div className="flex flex-row pb-1 gap-2">
                     <HiOutlineInformationCircle
                         className={`${infoColor} w-6 h-6 cursor-pointer`}
                         onClick={toggleInfo}
                     />
-                </div>
-
-                <div className="flex flex-row py-1 gap-2">
-                    <HiOutlineHashtag className="w-6 h-6" />
-                    <p>Hashtags</p>
-                </div>
-
-                <div className="flex flex-row py-1 gap-2">
-                    <GoCommentDiscussion className="w-6 h-6" />
-                    <p>Comments</p>
                 </div>
 
                 {/* info section */}
