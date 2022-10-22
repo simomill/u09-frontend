@@ -1,5 +1,5 @@
-import axios, { AxiosHeaders } from "axios";
-import React, { FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { HiOutlineX } from "react-icons/hi";
 import { useParams } from "react-router-dom";
 import { uploadImage } from "../../Services/user.service";
 
@@ -31,20 +31,18 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
         event.preventDefault();
 
         const formData = {
-            "title": event.target.title.value,
-            "image": event.target.file.files[0],
-            "username": event.target.username.value,
+            title: event.target.title.value,
+            image: event.target.file.files[0],
+            username: event.target.username.value,
         };
 
         try {
             const result = await uploadImage(formData);
 
             window.location.reload();
-            
         } catch (error) {
-           console.log(error); 
+            console.log(error);
         }
-
     }
 
     useEffect(() => {
@@ -70,22 +68,10 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
                             action=""
                             className="flex h-full flex-col justify-between"
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={1.5}
-                                stroke="currentColor"
-                                className="w-6 h-6 cursor-pointer"
+                            <HiOutlineX
+                                className="w-6 h-6 cursor-pointer hover:text-red-700"
                                 onClick={closeHandler}
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M6 18L18 6M6 6l12 12"
-                                    className=""
-                                />
-                            </svg>
+                            />
 
                             <div className="flex flex-col items-center gap-5">
                                 <label

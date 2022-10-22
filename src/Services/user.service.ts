@@ -23,6 +23,12 @@ export const uploadImage = async (formData: any) => {
     return response;
 };
 
+export const getPhotos = async () => {
+    const response = await axios.get(`${API_URL}/photos`);    
+
+    return response
+}
+
 export const getUserPhotos = async (username: string) => {
     const response = await axios.get(`${API_URL}/photos/${username}`);
 

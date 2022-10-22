@@ -1,5 +1,8 @@
 import React from "react";
 import { deleteUserPhoto } from "../../Services/user.service";
+import { HiOutlineX } from 'react-icons/hi'
+import { IoWarningOutline } from 'react-icons/io5'
+
 
 const RemoveImgModal = ({ showModal, setShowModal, id }: any) => {
     function closeHandler() {
@@ -18,39 +21,13 @@ const RemoveImgModal = ({ showModal, setShowModal, id }: any) => {
     return (
         <>
             {showModal && (
-                <div className=" bottom-1/2 w-96 h-56 bg-white border rounded-lg flex flex-col justify-between center p-2 sticky">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
+                <div className=" bottom-1/2 w-96 h-56 bg-white border rounded-lg flex flex-col justify-between p-2 sticky">
+                    <HiOutlineX
                         className="w-6 h-6 cursor-pointer hover:text-red-700"
-                        onClick={closeHandler}
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M6 18L18 6M6 6l12 12"
-                            className=""
-                        />
-                    </svg>
-
+                        onClick={closeHandler}/>
+                    
                     <div className="flex flex-col items-center">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="w-6 h-6 mb-3 text-red-700"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
-                            />
-                        </svg>
+                        <IoWarningOutline className="w-6 h-6 mb-3 text-red-700"/>
 
                         <p>You are about to delete this image.</p>
                         <p>Are you sure about this?</p>
