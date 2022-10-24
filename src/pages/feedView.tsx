@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import Post from "./components/post";
 import Search from "../heroicons/search";
-import {IoSearchOutline} from 'react-icons/io5'
+import { IoSearchOutline } from 'react-icons/io5';
 import { checkIsLoggedIn, logout } from "../Services/auth.service";
 import { Link, useNavigate } from "react-router-dom";
 import { getPhotos } from "../Services/user.service";
@@ -13,6 +13,7 @@ const FeedView: FC = () => {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [profileMenu, setProfileMenu] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
     const initialArray: any[] | (() => any[]) = [];
     const [photoArray, setPhotoArray]: any[] = useState(initialArray);
 
@@ -29,7 +30,8 @@ const FeedView: FC = () => {
 
     useEffect(() => {
         const isLoggedIn = checkIsLoggedIn();
-        setIsLoggedIn(isLoggedIn);
+        setIsLoggedIn(isLoggedIn.token);
+        setIsAdmin(isLoggedIn.isAdmin ?? "")
 
         async function fetchPhotos() {
             const response = await getPhotos();
@@ -68,6 +70,9 @@ const FeedView: FC = () => {
                                     : "absolute w-60 h-min shadow-md rounded-lg py-2 z-20 bg-white left-0 top-0 mt-6 hidden"
                             }
                         >
+                            {isAdmin &&
+                                <Link to={'/dashboard'}>Dashboard</Link>
+                            }
                             <Link
                                 className="px-8 w-min hover:text-cyan-600"
                                 to={`/user/${localStorage.getItem("username")}`}
