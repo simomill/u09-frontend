@@ -40,3 +40,9 @@ export const deleteUserPhoto = async (photoId: string) => {
 
     return response;
 }
+
+export const deleteUser = async (userName: string) => {
+    const response = await axios.delete(`${API_URL}/${userName}`);
+
+    return response;
+}
