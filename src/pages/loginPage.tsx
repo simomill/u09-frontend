@@ -29,14 +29,20 @@ const LoginPage: FC = () => {
         setLoading(true);
 
         const response = await login(data);
+        
 
         if (
             response.data !== "Wrong Password" &&
             response.data !== "User don't exist"
         ) {
             // Navigate and reload if successful
-            navigate("/");
-            window.location.reload();
+            if (response.data.isAdmin) {
+                navigate("/dashboard");
+                window.location.reload();
+            } else {
+                navigate("/");
+                window.location.reload();
+            }
         } else {
             setStatusMsg(response.data);
         }

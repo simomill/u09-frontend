@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import {
     HiOutlineX,
     HiOutlineHashtag,
@@ -20,6 +20,8 @@ const Post: FC<IfirstChildProps> = ({ photo }) => {
     const [infoColor, setInfoColor] = useState("text-slate-300");
     const [showRemove, setShowRemove] = useState(false);
     const [showRemoveModal, setShowRemoveModal] = useState(false);
+    const [hasAccess, setHasAccess] = useState(false);
+
     const [imageId, setImageId] = useState("");
 
     const pageName = useParams().id;
@@ -40,6 +42,13 @@ const Post: FC<IfirstChildProps> = ({ photo }) => {
         setImageId(id);
         setShowRemoveModal((prev) => !prev);
     }
+    useEffect(() => {
+        if (pageName === authedUser) {
+            setHasAccess(true);
+        } else if (localStorage.getItem("isAdmin")) {
+            setHasAccess(true);
+        }
+    }, [authedUser, pageName]);
 
     return (
         <div className="md:w-[50rem] w-full py-4 px-6 flex flex-col self-center items-center">
@@ -51,7 +60,8 @@ const Post: FC<IfirstChildProps> = ({ photo }) => {
                         to={`/user/${photo.username}`}
                         className="font-medium text-lg font-md"
                     >
-                        {photo.username}</Link>
+                        {photo.username}
+                    </Link>
                 </div>
             ) : (
                 ""
@@ -70,7 +80,7 @@ const Post: FC<IfirstChildProps> = ({ photo }) => {
                     />
 
                     {(() => {
-                        if (authedUser === pageName && showRemove)
+                        if (hasAccess && showRemove)
                             return (
                                 <>
                                     <HiOutlineX
@@ -94,8 +104,6 @@ const Post: FC<IfirstChildProps> = ({ photo }) => {
             {photo && <p>{photo.title}</p>}
 
             <div className="flex flex-col self-start">
-                
-
                 <div className="flex flex-row py-1 gap-2">
                     <GoCommentDiscussion className="w-6 h-6" />
                     <p>Comments</p>

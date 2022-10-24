@@ -12,8 +12,12 @@ const UserPage: FC = () => {
     const [showUploadModal, setShowUploadModal] = useState(false);
     const initialArray: any[] | (() => any[]) = [];
     const [photoArray, setPhotoArray]: any[] = useState(initialArray);
+    const [hasAccess, setHasAccess] = useState(false);
     const pageName = useParams().id;
     const authedUser = localStorage.getItem("username");
+
+    
+
 
     // FUNCTION FOR OPEN-/CLOSING THE UPLOAD MODAL
     const openModal = () => {
@@ -21,6 +25,13 @@ const UserPage: FC = () => {
     };
 
     useEffect(() => {
+        if (pageName === authedUser) {
+            setHasAccess(true)
+        } else if (localStorage.getItem('isAdmin')) {
+            setHasAccess(true);
+        }
+
+
         // FUNCTION FOR FETCHING THE DATA OF USER CORRESPONDING TO THE PAGE NAME
         async function fetchData() {
             const response = await getUser(pageName ?? "");
@@ -42,7 +53,7 @@ const UserPage: FC = () => {
         }
 
         fetchPhotos();
-    }, [pageName, photoArray.length, userEmail, userEmail.length]);
+    }, [authedUser, pageName, photoArray.length, userEmail, userEmail.length]);
 
     return (
         <div className="flex flex-col">
@@ -67,7 +78,7 @@ const UserPage: FC = () => {
 
                 {/* ENABLE PHOTO UPLOAD IFF IT IS YOUR OWN PAGE */}
 
-                {authedUser === pageName && (
+                {hasAccess && (
                     <>
                         <AiOutlinePlusSquare className="w-6 h-6 cursor-pointer" onClick={openModal} />
 
