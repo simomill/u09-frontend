@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../Services/auth.service";
 import { getAllUsers } from "../Services/user.service";
 import { AiOutlineStop } from "react-icons/ai";
@@ -10,6 +10,7 @@ import { ImPlus } from "react-icons/im";
 import { BsFillKeyFill } from "react-icons/bs";
 import RemoveUsrModal from "./components/removeUsrModal";
 import NewUsrModal from "./components/NewUsrModal";
+import UpdateUsrModal from "./components/UpdateUsrModal";
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -17,9 +18,12 @@ const Dashboard = () => {
     const [profileMenu, setProfileMenu] = useState(false);
     const initialArray: any[] | (() => any[]) = [];
     const [userArray, setUserArray] = useState(initialArray);
-    const [userName, setUserName] = useState("");
+    const [userName, setUserName] = useState<object | string>("");
     const [showRemoveModal, setShowRemoveModal] = useState(false);
     const [showNewUsrModal, setShowNewUsrModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const { state } = useLocation();
+    const [statusMsg, setStatusMsg] = useState(state ?? "");
 
     function onClickLogout() {
         logout();
@@ -38,6 +42,11 @@ const Dashboard = () => {
         setUserName(username);
     };
 
+    const onEdit = (user: object) => {
+        setUserName(user);
+        setShowEditModal((prev) => !prev);
+    };
+
     const onAdd = () => {
         setShowNewUsrModal((prev) => !prev);
     };
@@ -52,7 +61,13 @@ const Dashboard = () => {
         if (userArray.length === 0) {
             fetchUsers();
         }
-    }, [userArray.length]);
+
+        if (statusMsg) {
+            setTimeout(() => {
+                setStatusMsg("");
+            }, 4000);
+        }
+    }, [statusMsg, userArray.length]);
 
     return (
         <div className="h-screen py-6 px-2 items-center flex flex-col bg-gray-100 relative">
@@ -106,20 +121,23 @@ const Dashboard = () => {
                         key={index}
                         className="flex bg-white border border-gray-200 rounded justify-between"
                     >
-                        
-                        
-                        <div className="flex items-start flex-col p-3 hover:text-sky-400 cursor-pointer"
-                        onClick={() => navigate(`/user/${user.username}`)}>
-                                <p>{user.name}</p>
-                                <p>{user.email}</p>
-                            </div>
+                        <div
+                            className="flex items-start flex-col p-3 hover:text-sky-400 cursor-pointer"
+                            onClick={() => navigate(`/user/${user.username}`)}
+                        >
+                            <p className="font-medium">{user.username}</p>
+                            <p>{user.email}</p>
+                        </div>
 
                         <div className="flex justify-center border-l border-gray-200">
                             <div className="flex items-center border-r border-gray-200 px-4">
-                                <BsFillKeyFill className="w-6 h-6 text-sky-900" />
+                                <BsFillKeyFill className="w-6 h-6 text-sky-900 cursor-pointer hover:text-slate-400" />
                             </div>
                             <div className="flex items-center border-r border-gray-200 px-4">
-                                <BsFillPencilFill className="w-6 h-6 text-sky-900" />
+                                <BsFillPencilFill
+                                    className="w-6 h-6 text-sky-900 cursor-pointer hover:text-slate-400"
+                                    onClick={() => onEdit(user)}
+                                />
                             </div>
 
                             <div className="flex items-center px-4">
@@ -152,7 +170,17 @@ const Dashboard = () => {
                 setShowModal={setShowNewUsrModal}
             />
 
-            {/* <span className="w-full h-px border-b border-gray-200"></span> */}
+            <UpdateUsrModal
+                showModal={showEditModal}
+                setShowModal={setShowEditModal}
+                userName={userName}
+                setUserName={setUserName}
+                setStatusMsg={setStatusMsg}
+                statusMsg={statusMsg}
+                userArray={userArray}
+            />
+
+            {statusMsg && <p className="text-green-500">{statusMsg}</p>}
         </div>
     );
 };
