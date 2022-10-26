@@ -2,20 +2,19 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import {
     BrowserRouter as Router,
-    Navigate,
     Route,
     Routes,
-    useNavigate,
 } from "react-router-dom";
 import FeedView from "./pages/feedView";
 import PhotoView from "./pages/PhotoView";
 import UserPage from "./pages/userPage";
 import LoginPage from "./pages/loginPage";
 import RegisterPage from "./pages/registerPage";
-import { checkIsLoggedIn, logout } from "./Services/auth.service";
+import { checkIsLoggedIn } from "./Services/auth.service";
 import TestAuthPage from "./pages/TestAuthPage";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
+import Loader from "./pages/Loader";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -49,7 +48,7 @@ function App() {
                         />
                         <Route
                             path="/dashboard"
-                            element={isAdmin ? <Dashboard /> : <NotFound />}
+                            element={isAdmin ? <Dashboard /> : <Loader />}
                         />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/register" element={<RegisterPage />} />

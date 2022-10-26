@@ -16,7 +16,7 @@ interface IfirstChildProps {
 }
 
 const Post: FC<IfirstChildProps> = ({ photo }) => {
-    const [showInfo, setShowInfo] = useState("hidden");
+    const [showInfo, setShowInfo] = useState("hidden aria-hidden");
     const [infoColor, setInfoColor] = useState("text-slate-300");
     const [showRemove, setShowRemove] = useState(false);
     const [showRemoveModal, setShowRemoveModal] = useState(false);
@@ -32,7 +32,7 @@ const Post: FC<IfirstChildProps> = ({ photo }) => {
             setShowInfo("flex flex-col gap-1");
             setInfoColor("text-slate-800");
         } else {
-            setShowInfo("hidden");
+            setShowInfo("hidden aria-hidden");
             setInfoColor("text-slate-300");
         }
     };

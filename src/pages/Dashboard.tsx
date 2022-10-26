@@ -1,20 +1,18 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../Services/auth.service";
 import { getAllUsers } from "../Services/user.service";
-import { AiOutlineStop } from "react-icons/ai";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import { ImPlus } from "react-icons/im";
 import { BsFillKeyFill } from "react-icons/bs";
 import RemoveUsrModal from "./components/removeUsrModal";
 import NewUsrModal from "./components/NewUsrModal";
 import UpdateUsrModal from "./components/UpdateUsrModal";
+import AdminAssignModal from "./components/AdminAssignModal";
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [profileMenu, setProfileMenu] = useState(false);
     const initialArray: any[] | (() => any[]) = [];
     const [userArray, setUserArray] = useState(initialArray);
@@ -22,8 +20,10 @@ const Dashboard = () => {
     const [showRemoveModal, setShowRemoveModal] = useState(false);
     const [showNewUsrModal, setShowNewUsrModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
+    const [showAdminModal, setShowAdminModal] = useState(false);
     const { state } = useLocation();
     const [statusMsg, setStatusMsg] = useState(state ?? "");
+    const authRole = localStorage.getItem("isAdmin");
 
     function onClickLogout() {
         logout();
@@ -36,13 +36,21 @@ const Dashboard = () => {
     };
 
     const onRemove = (username: string) => {
-        // console.log(username);
-
+        window.scrollTo({ top: 0, behavior: "smooth" });
         setShowRemoveModal((prev) => !prev);
         setUserName(username);
     };
 
+    const onMakeAdmin = (user: any) => {
+        // console.log(user);
+
+        setUserName(user);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        setShowAdminModal((prev) => !prev);
+    };
+
     const onEdit = (user: object) => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
         setUserName(user);
         setShowEditModal((prev) => !prev);
     };
@@ -70,7 +78,7 @@ const Dashboard = () => {
     }, [statusMsg, userArray.length]);
 
     return (
-        <div className="h-screen py-6 px-2 items-center flex flex-col bg-gray-100 relative">
+        <div className="h-full py-6 px-2 items-center flex flex-col bg-gray-100 relative">
             {/* Nav */}
             <nav className="flex flex-row justify-center items-center">
                 <div className="flex flex-row border border-gray-300 rounded-lg w-min p-2 items-center bg-white">
@@ -91,7 +99,7 @@ const Dashboard = () => {
                         className={
                             profileMenu
                                 ? "absolute w-min h-min shadow-md rounded-lg py-4 z-20 bg-white -left-10 top-5 mt-6 flex flex-col items-center gap-4"
-                                : "absolute w-60 h-min shadow-md rounded-lg py-2 z-20 bg-white left-0 top-0 mt-6 hidden"
+                                : "absolute w-60 h-min shadow-md rounded-lg py-2 z-20 bg-white left-0 top-0 mt-6 hidden aria-hidden"
                         }
                     >
                         <Link
@@ -116,6 +124,7 @@ const Dashboard = () => {
 
             <div className="flex flex-col justify-start items-stretch p-4 gap-2">
                 <p className="text-3xl font-bold pb-3">Users</p>
+                {statusMsg && <p className="text-green-500">{statusMsg}</p>}
                 {userArray.map((user, index) => (
                     <div
                         key={index}
@@ -127,26 +136,47 @@ const Dashboard = () => {
                         >
                             <p className="font-medium">{user.username}</p>
                             <p>{user.email}</p>
+                            <p>
+                                {user.isAdmin > 1
+                                    ? "Superadmin"
+                                    : user.isAdmin > 0
+                                    ? "Admin"
+                                    : "User"}
+                            </p>
                         </div>
 
-                        <div className="flex justify-center border-l border-gray-200">
-                            <div className="flex items-center border-r border-gray-200 px-4">
-                                <BsFillKeyFill className="w-6 h-6 text-sky-900 cursor-pointer hover:text-slate-400" />
-                            </div>
-                            <div className="flex items-center border-r border-gray-200 px-4">
-                                <BsFillPencilFill
-                                    className="w-6 h-6 text-sky-900 cursor-pointer hover:text-slate-400"
-                                    onClick={() => onEdit(user)}
-                                />
-                            </div>
+                        {(() => {
+                            if (authRole && authRole > user.isAdmin)
+                                return (
+                                    <div className="flex justify-center border-l border-gray-200">
+                                        {user.isAdmin !== 2 && (
+                                            <div className="flex items-center border-r border-gray-200 px-4">
+                                                <BsFillKeyFill
+                                                    onClick={() =>
+                                                        onMakeAdmin(user)
+                                                    }
+                                                    className="w-6 h-6 text-sky-900 cursor-pointer hover:text-slate-400"
+                                                />
+                                            </div>
+                                        )}
+                                        <div className="flex items-center border-r border-gray-200 px-4">
+                                            <BsFillPencilFill
+                                                className="w-6 h-6 text-sky-900 cursor-pointer hover:text-slate-400"
+                                                onClick={() => onEdit(user)}
+                                            />
+                                        </div>
 
-                            <div className="flex items-center px-4">
-                                <BsTrashFill
-                                    className="w-6 h-6 text-sky-900 hover:text-red-900 cursor-pointer"
-                                    onClick={() => onRemove(user.username)}
-                                />
-                            </div>
-                        </div>
+                                        <div className="flex items-center px-4">
+                                            <BsTrashFill
+                                                className="w-6 h-6 text-sky-900 hover:text-red-900 cursor-pointer"
+                                                onClick={() =>
+                                                    onRemove(user.username)
+                                                }
+                                            />
+                                        </div>
+                                    </div>
+                                );
+                        })()}
                     </div>
                 ))}
                 <ImPlus
@@ -180,7 +210,12 @@ const Dashboard = () => {
                 userArray={userArray}
             />
 
-            {statusMsg && <p className="text-green-500">{statusMsg}</p>}
+            <AdminAssignModal
+                userName={userName}
+                setUserName={setUserName}
+                showModal={showAdminModal}
+                setShowModal={setShowAdminModal}
+            />
         </div>
     );
 };

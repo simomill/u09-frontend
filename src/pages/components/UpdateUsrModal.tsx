@@ -1,16 +1,8 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { HiOutlineX } from "react-icons/hi";
-import { IoWarningOutline } from "react-icons/io5";
-import * as Yup from "yup";
-import { registerUser } from "../../Services/auth.service";
 import { BiChevronDown, BiChevronRight } from "react-icons/bi";
-import { UserInfo } from "os";
-import { EventEmitter } from "stream";
 import { updateUser } from "../../Services/user.service";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface IUserModel {
     name: string | null;
@@ -25,10 +17,9 @@ const UpdateUsrModal = ({
     setUserName,
     userArray,
 }: any) => {
-    const [statusMsg, setStatusMsg] = useState("");
     const [showPassNote, setShowPassNote] = useState(false);
     const [user, setUser] = useState<IUserModel>(userName ?? null);
-    const { username, name, email } = user;
+    const { username } = user;
     const [newName, setNewName] = useState("");
     const [newUsername, setNewUsername] = useState("");
     const [newEmail, setNewEmail] = useState("");

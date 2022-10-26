@@ -1,17 +1,12 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { HiOutlineX } from "react-icons/hi";
-import { IoWarningOutline } from "react-icons/io5";
-import * as Yup from "yup";
 import { registerUser } from "../../Services/auth.service";
 import { BiChevronDown, BiChevronRight } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 
 const NewUsrModal = ({ showModal, setShowModal }: any) => {
-    const [statusMsg, setStatusMsg] = useState("");
     const [showPassNote, setShowPassNote] = useState(false);
     const navigate = useNavigate();
 
@@ -38,7 +33,8 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
             navigate("/dashboard", { state: "User was successfully created!" });
             window.location.reload();
         } else {
-            setStatusMsg("Failed to create user");
+            navigate("/dashboard", { state: "Failed to create user." });
+            window.location.reload();
         }
     };
 

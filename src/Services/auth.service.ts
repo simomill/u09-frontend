@@ -36,7 +36,7 @@ export const login = async (loginData: LoginModel) => {
         localStorage.setItem("accesstoken", response.data.token);
         localStorage.setItem("username", response.data.username);
         
-        if (response.data.isAdmin) {
+        if (response.data.isAdmin !== 0) {
             localStorage.setItem("isAdmin", response.data.isAdmin);
         }
         
@@ -47,6 +47,7 @@ export const login = async (loginData: LoginModel) => {
 
 // Logout by clearing token
 export const logout = async () => {
+    localStorage.clear();
     localStorage.removeItem("accesstoken");
     localStorage.removeItem("username");
 }
