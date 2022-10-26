@@ -36,7 +36,7 @@ const LoginPage: FC = () => {
             response.data !== "User don't exist"
         ) {
             // Navigate and reload if successful
-            if (response.data.isAdmin) {
+            if (response.data.isAdmin !== 0) {
                 navigate("/dashboard");
                 window.location.reload();
             } else {
