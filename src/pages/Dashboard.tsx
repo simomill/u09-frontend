@@ -23,6 +23,7 @@ const Dashboard = () => {
     const [showAdminModal, setShowAdminModal] = useState(false);
     const { state } = useLocation();
     const [statusMsg, setStatusMsg] = useState(state ?? "");
+    const authRole = localStorage.getItem("isAdmin");
 
     function onClickLogout() {
         logout();
@@ -35,18 +36,21 @@ const Dashboard = () => {
     };
 
     const onRemove = (username: string) => {
-        window.scrollTo({top: 0, behavior: 'smooth'});        setShowRemoveModal((prev) => !prev);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        setShowRemoveModal((prev) => !prev);
         setUserName(username);
     };
 
-    const onMakeAdmin = (username: string) => {
-        window.scrollTo({top: 0, behavior: 'smooth'});
+    const onMakeAdmin = (user: any) => {
+        // console.log(user);
+
+        setUserName(user);
+        window.scrollTo({ top: 0, behavior: "smooth" });
         setShowAdminModal((prev) => !prev);
-        setUserName(username);
     };
 
     const onEdit = (user: object) => {
-        window.scrollTo({top: 0, behavior: 'smooth'}); 
+        window.scrollTo({ top: 0, behavior: "smooth" });
         setUserName(user);
         setShowEditModal((prev) => !prev);
     };
@@ -95,7 +99,7 @@ const Dashboard = () => {
                         className={
                             profileMenu
                                 ? "absolute w-min h-min shadow-md rounded-lg py-4 z-20 bg-white -left-10 top-5 mt-6 flex flex-col items-center gap-4"
-                                : "absolute w-60 h-min shadow-md rounded-lg py-2 z-20 bg-white left-0 top-0 mt-6 hidden"
+                                : "absolute w-60 h-min shadow-md rounded-lg py-2 z-20 bg-white left-0 top-0 mt-6 hidden aria-hidden"
                         }
                     >
                         <Link
@@ -120,6 +124,7 @@ const Dashboard = () => {
 
             <div className="flex flex-col justify-start items-stretch p-4 gap-2">
                 <p className="text-3xl font-bold pb-3">Users</p>
+                {statusMsg && <p className="text-green-500">{statusMsg}</p>}
                 {userArray.map((user, index) => (
                     <div
                         key={index}
@@ -140,32 +145,38 @@ const Dashboard = () => {
                             </p>
                         </div>
 
-                        <div className="flex justify-center border-l border-gray-200">
-                            {user.isAdmin !== 2 && (
-                                <div className="flex items-center border-r border-gray-200 px-4">
-                                    <BsFillKeyFill
-                                        onClick={() =>
-                                            onMakeAdmin(user.username)
-                                        }
-                                        className="w-6 h-6 text-sky-900 cursor-pointer hover:text-slate-400"
-                                    />
-                                </div>
-                            )}
+                        {(() => {
+                            if (authRole && authRole > user.isAdmin)
+                                return (
+                                    <div className="flex justify-center border-l border-gray-200">
+                                        {user.isAdmin !== 2 && (
+                                            <div className="flex items-center border-r border-gray-200 px-4">
+                                                <BsFillKeyFill
+                                                    onClick={() =>
+                                                        onMakeAdmin(user)
+                                                    }
+                                                    className="w-6 h-6 text-sky-900 cursor-pointer hover:text-slate-400"
+                                                />
+                                            </div>
+                                        )}
+                                        <div className="flex items-center border-r border-gray-200 px-4">
+                                            <BsFillPencilFill
+                                                className="w-6 h-6 text-sky-900 cursor-pointer hover:text-slate-400"
+                                                onClick={() => onEdit(user)}
+                                            />
+                                        </div>
 
-                            <div className="flex items-center border-r border-gray-200 px-4">
-                                <BsFillPencilFill
-                                    className="w-6 h-6 text-sky-900 cursor-pointer hover:text-slate-400"
-                                    onClick={() => onEdit(user)}
-                                />
-                            </div>
-
-                            <div className="flex items-center px-4">
-                                <BsTrashFill
-                                    className="w-6 h-6 text-sky-900 hover:text-red-900 cursor-pointer"
-                                    onClick={() => onRemove(user.username)}
-                                />
-                            </div>
-                        </div>
+                                        <div className="flex items-center px-4">
+                                            <BsTrashFill
+                                                className="w-6 h-6 text-sky-900 hover:text-red-900 cursor-pointer"
+                                                onClick={() =>
+                                                    onRemove(user.username)
+                                                }
+                                            />
+                                        </div>
+                                    </div>
+                                );
+                        })()}
                     </div>
                 ))}
                 <ImPlus
@@ -201,11 +212,10 @@ const Dashboard = () => {
 
             <AdminAssignModal
                 userName={userName}
+                setUserName={setUserName}
                 showModal={showAdminModal}
                 setShowModal={setShowAdminModal}
             />
-
-            {statusMsg && <p className="text-green-500">{statusMsg}</p>}
         </div>
     );
 };
