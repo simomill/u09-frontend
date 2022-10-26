@@ -3,6 +3,12 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8000/users";
 
+export interface updateData {
+    name?: string,
+    username?: string,
+    email?: string
+}
+
 // Get individual user
 export const getUser = async (username: string) => {
     const response = await axios.get(`${API_URL}/${username}`);
@@ -43,6 +49,12 @@ export const deleteUserPhoto = async (photoId: string) => {
 
 export const deleteUser = async (userName: string) => {
     const response = await axios.delete(`${API_URL}/${userName}`);
+
+    return response;
+}
+
+export const updateUser = async (updateData: updateData, userId: string, ) => {
+    const response = await axios.put(`${API_URL}/${userId}`, updateData);
 
     return response;
 }
