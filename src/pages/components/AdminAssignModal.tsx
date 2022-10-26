@@ -1,5 +1,5 @@
 import React from "react";
-import { deleteUser } from "../../Services/user.service";
+import { changeUserRole, deleteUser } from "../../Services/user.service";
 import { HiOutlineX } from "react-icons/hi";
 import { GrUserAdmin } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
@@ -12,12 +12,17 @@ const AdminAssignModal = ({ showModal, setShowModal, userName }: any) => {
     }
 
     function onApprove() {
-        console.log(`${userName} is now admin`);
 
-        // makeAdmin(userName);
+        const currentRole = {
+            isAdmin: userName.isAdmin
+        }
 
-        // window.location.reload();
-        //     navigate("/dashboard", { state: "User role was successfully updated!" });
+        changeUserRole(userName._id, currentRole);
+
+        window.location.reload();
+        navigate("/dashboard", {
+            state: "User role was successfully updated!",
+        });
     }
 
     function onDeny() {
@@ -38,9 +43,9 @@ const AdminAssignModal = ({ showModal, setShowModal, userName }: any) => {
 
                         <div className="px-8">
                             <p>
-                                You are about to make{" "}
-                                <span className="font-medium">{userName}</span>{" "}
-                                admin.
+                                You are about to {userName.isAdmin > 0 ? "downgrade" : "upgrade"}{" "}
+                                <span className="font-medium">{userName.username}'s</span>{" "}
+                                role.
                             </p>
                             <p>Are you sure about this?</p>
                         </div>
