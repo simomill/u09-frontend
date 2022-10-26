@@ -9,6 +9,7 @@ import { BsFillKeyFill } from "react-icons/bs";
 import RemoveUsrModal from "./components/removeUsrModal";
 import NewUsrModal from "./components/NewUsrModal";
 import UpdateUsrModal from "./components/UpdateUsrModal";
+import AdminAssignModal from "./components/AdminAssignModal";
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -19,6 +20,7 @@ const Dashboard = () => {
     const [showRemoveModal, setShowRemoveModal] = useState(false);
     const [showNewUsrModal, setShowNewUsrModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
+    const [showAdminModal, setShowAdminModal] = useState(false);
     const { state } = useLocation();
     const [statusMsg, setStatusMsg] = useState(state ?? "");
 
@@ -33,13 +35,18 @@ const Dashboard = () => {
     };
 
     const onRemove = (username: string) => {
-        // console.log(username);
+        window.scrollTo({top: 0, behavior: 'smooth'});        setShowRemoveModal((prev) => !prev);
+        setUserName(username);
+    };
 
-        setShowRemoveModal((prev) => !prev);
+    const onMakeAdmin = (username: string) => {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+        setShowAdminModal((prev) => !prev);
         setUserName(username);
     };
 
     const onEdit = (user: object) => {
+        window.scrollTo({top: 0, behavior: 'smooth'}); 
         setUserName(user);
         setShowEditModal((prev) => !prev);
     };
@@ -67,7 +74,7 @@ const Dashboard = () => {
     }, [statusMsg, userArray.length]);
 
     return (
-        <div className="h-screen py-6 px-2 items-center flex flex-col bg-gray-100 relative">
+        <div className="h-full py-6 px-2 items-center flex flex-col bg-gray-100 relative">
             {/* Nav */}
             <nav className="flex flex-row justify-center items-center">
                 <div className="flex flex-row border border-gray-300 rounded-lg w-min p-2 items-center bg-white">
@@ -124,12 +131,27 @@ const Dashboard = () => {
                         >
                             <p className="font-medium">{user.username}</p>
                             <p>{user.email}</p>
+                            <p>
+                                {user.isAdmin > 1
+                                    ? "Superadmin"
+                                    : user.isAdmin > 0
+                                    ? "Admin"
+                                    : "User"}
+                            </p>
                         </div>
 
                         <div className="flex justify-center border-l border-gray-200">
-                            <div className="flex items-center border-r border-gray-200 px-4">
-                                <BsFillKeyFill className="w-6 h-6 text-sky-900 cursor-pointer hover:text-slate-400" />
-                            </div>
+                            {user.isAdmin !== 2 && (
+                                <div className="flex items-center border-r border-gray-200 px-4">
+                                    <BsFillKeyFill
+                                        onClick={() =>
+                                            onMakeAdmin(user.username)
+                                        }
+                                        className="w-6 h-6 text-sky-900 cursor-pointer hover:text-slate-400"
+                                    />
+                                </div>
+                            )}
+
                             <div className="flex items-center border-r border-gray-200 px-4">
                                 <BsFillPencilFill
                                     className="w-6 h-6 text-sky-900 cursor-pointer hover:text-slate-400"
@@ -175,6 +197,12 @@ const Dashboard = () => {
                 setStatusMsg={setStatusMsg}
                 statusMsg={statusMsg}
                 userArray={userArray}
+            />
+
+            <AdminAssignModal
+                userName={userName}
+                showModal={showAdminModal}
+                setShowModal={setShowAdminModal}
             />
 
             {statusMsg && <p className="text-green-500">{statusMsg}</p>}

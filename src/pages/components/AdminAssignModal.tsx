@@ -1,11 +1,10 @@
 import React from "react";
 import { deleteUser } from "../../Services/user.service";
 import { HiOutlineX } from "react-icons/hi";
-import { IoWarningOutline } from "react-icons/io5";
+import { GrUserAdmin } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
-import { AiOutlineUserDelete } from "react-icons/ai";
 
-const RemoveUsrModal = ({ showModal, setShowModal, userName }: any) => {
+const AdminAssignModal = ({ showModal, setShowModal, userName }: any) => {
     const navigate = useNavigate();
 
     function closeHandler() {
@@ -13,10 +12,12 @@ const RemoveUsrModal = ({ showModal, setShowModal, userName }: any) => {
     }
 
     function onApprove() {
-        deleteUser(userName);
+        console.log(`${userName} is now admin`);
 
-        window.location.reload();
-        navigate("/dashboard", { state: "User was successfully deleted!" });
+        // makeAdmin(userName);
+
+        // window.location.reload();
+        //     navigate("/dashboard", { state: "User role was successfully updated!" });
     }
 
     function onDeny() {
@@ -33,12 +34,13 @@ const RemoveUsrModal = ({ showModal, setShowModal, userName }: any) => {
                     />
 
                     <div className="flex flex-col items-center">
-                        <AiOutlineUserDelete className="w-8 h-8 mb-3" />
+                        <GrUserAdmin className="w-8 h-8 mb-3" />
 
                         <div className="px-8">
                             <p>
-                                You are about to delete{" "}
-                                <span className="font-medium">{userName}</span>.
+                                You are about to make{" "}
+                                <span className="font-medium">{userName}</span>{" "}
+                                admin.
                             </p>
                             <p>Are you sure about this?</p>
                         </div>
@@ -64,4 +66,4 @@ const RemoveUsrModal = ({ showModal, setShowModal, userName }: any) => {
     );
 };
 
-export default RemoveUsrModal;
+export default AdminAssignModal;
