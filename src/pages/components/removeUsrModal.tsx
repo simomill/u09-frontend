@@ -2,15 +2,20 @@ import React from "react";
 import { deleteUser, deleteUserPhoto } from "../../Services/user.service";
 import { HiOutlineX } from "react-icons/hi";
 import { IoWarningOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const RemoveUsrModal = ({ showModal, setShowModal, userName }: any) => {
+    const navigate = useNavigate();
+
     function closeHandler() {
         setShowModal((prev: any) => !prev);
     }
 
     function onApprove() {
         deleteUser(userName);        
+        
         window.location.reload();
+            navigate("/dashboard", { state: "User was successfully deleted!" });
     }
 
     function onDeny() {

@@ -7,10 +7,13 @@ import { IoWarningOutline } from "react-icons/io5";
 import * as Yup from "yup";
 import { registerUser } from "../../Services/auth.service";
 import { BiChevronDown, BiChevronRight } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+
 
 const NewUsrModal = ({ showModal, setShowModal }: any) => {
     const [statusMsg, setStatusMsg] = useState("");
     const [showPassNote, setShowPassNote] = useState(false);
+    const navigate = useNavigate();
 
     function closeHandler() {
         setShowModal((prev: any) => !prev);
@@ -32,7 +35,7 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
         setShowModal((prev: any) => !prev);
 
         if (success) {
-            setStatusMsg("User successfully created");
+            navigate("/dashboard", { state: "User was successfully created!" });
             window.location.reload();
         } else {
             setStatusMsg("Failed to create user");
