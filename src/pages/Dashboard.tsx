@@ -1,10 +1,8 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../Services/auth.service";
 import { getAllUsers } from "../Services/user.service";
-import { AiOutlineStop } from "react-icons/ai";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import { ImPlus } from "react-icons/im";
 import { BsFillKeyFill } from "react-icons/bs";
@@ -14,7 +12,6 @@ import UpdateUsrModal from "./components/UpdateUsrModal";
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [profileMenu, setProfileMenu] = useState(false);
     const initialArray: any[] | (() => any[]) = [];
     const [userArray, setUserArray] = useState(initialArray);
