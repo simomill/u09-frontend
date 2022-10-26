@@ -47,6 +47,7 @@ export const login = async (loginData: LoginModel) => {
 
 // Logout by clearing token
 export const logout = async () => {
+    localStorage.clear();
     localStorage.removeItem("accesstoken");
     localStorage.removeItem("username");
 }

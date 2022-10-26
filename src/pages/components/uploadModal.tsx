@@ -140,7 +140,7 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
                                     }}
                                     type="file"
                                     ref={ref}
-                                    hidden
+                                    hidden={true}
                                     name="file"
                                     id="fileUpload"
                                 />
