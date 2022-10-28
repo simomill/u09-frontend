@@ -1,0 +1,25 @@
+import axios from "axios";
+
+const API_URL = "http://localhost:8000/comments";
+
+
+export interface commentData {
+    username: string;
+    photoId: string;
+    message: string;
+};
+
+
+// GET ALL COMMENTS
+export const getComments = async () => {
+    const response = await axios.get(`${API_URL}/`);
+
+    return response;
+}
+
+// POST NEW COMMENT
+export const postComment = async (data: commentData) => {
+    const response = await axios.post(`${API_URL}`, data);
+
+    return response;
+}

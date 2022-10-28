@@ -218,8 +218,9 @@ const Post: FC<IfirstChildProps> = ({ photo }) => {
                         onSubmit={(e) => onSubmitComment(e, photo._id)}
                     >
                         <span
-                            className="text-left border h-fit w-52 rounded rounded-r-none py-2 px-3"
-                            placeholder="Add a comment"
+                            className="text-left border h-fit w-52 rounded rounded-r-none py-2 px-3 empty:before:content-[attr(placeholder)] focus:before:content-[attr(ref)]"
+                            
+                            placeholder="Add a comment..."
                             id="message"
                             role={"textbox"}
                             contentEditable
