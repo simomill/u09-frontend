@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import ContentEditable from "react-contenteditable";
 import { getComments, postComment } from "../../Services/comment.service";
 import RemoveCmntModal from "./removeCmntModal";
+import { IoCameraOutline } from "react-icons/io5";
 
 interface IfirstChildProps {
     photo: any;
@@ -274,7 +275,7 @@ const Post: FC<IfirstChildProps> = ({ photo }) => {
                     {/* info section */}
                     <div className={showInfo}>
                         <div className="flex flex-row py-1 gap-2">
-                            <HiOutlineCamera className="w-6 h-6" />
+                            <IoCameraOutline className="w-6 h-6" />
                             <p>Camera</p>
                         </div>
 
