@@ -22,6 +22,8 @@ const Dashboard = () => {
     const [showNewUsrModal, setShowNewUsrModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [showAdminModal, setShowAdminModal] = useState(false);
+    const [findings, setFindings] = useState(initialArray);
+    const [searchVal, setSearchVal] = useState("");
     const { state } = useLocation();
     const [statusMsg, setStatusMsg] = useState(state ?? "");
     const authRole = localStorage.getItem("isAdmin");
@@ -60,6 +62,23 @@ const Dashboard = () => {
         setShowNewUsrModal((prev) => !prev);
     };
 
+    const onSearch = (val: string) => {
+        setSearchVal(val);
+
+        for (const user of userArray) {
+            if (user.username.includes(val)) {
+                if (!findings.includes(user.username)) {
+                    setFindings((oldArr) => [...oldArr, user.username]);
+                }
+            } else {
+                if (findings.includes(user.username)) {
+                    findings.pop();
+                    setFindings(findings);
+                }
+            }
+        }
+    };
+
     useEffect(() => {
         const fetchUsers = async () => {
             const users = await getAllUsers();
@@ -76,7 +95,11 @@ const Dashboard = () => {
                 setStatusMsg("");
             }, 4000);
         }
-    }, [statusMsg, userArray.length]);
+
+        if (!searchVal) {
+            setFindings([]);
+        }
+    }, [searchVal, statusMsg, userArray.length]);
 
     return (
         <div className="h-full py-6 px-2 items-center flex flex-col bg-gray-100 relative">
@@ -92,9 +115,26 @@ const Dashboard = () => {
                         name=""
                         id=""
                         className="focus:outline-none"
+                        onChange={(e) => onSearch(e.target.value)}
                     />
                     <IoSearchOutline className="w-6 h-6 text-gray-300" />
                 </div>
+
+                {searchVal && (
+                        <div
+                            className={
+                                findings.length
+                                    ? "absolute top-20 border z-20 w-72 rounded bg-white flex flex-col gap-1 items-center shadow-md"
+                                    : "hidden"
+                            }
+                        >
+                            {findings.map((user: string, index: number) => (
+                                <Link key={index} className="flex flex-col w-1/3 items-start" to={`/user/${user}`}>
+                                    <p className="font-medium py-2">{user}</p>
+                                </Link>
+                            ))}
+                        </div>
+                    )}
 
                 <div
                     onClick={onClickProfile}
