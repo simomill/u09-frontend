@@ -10,6 +10,7 @@ import RemoveUsrModal from "./components/removeUsrModal";
 import NewUsrModal from "./components/NewUsrModal";
 import UpdateUsrModal from "./components/UpdateUsrModal";
 import AdminAssignModal from "./components/AdminAssignModal";
+import { AiFillHome } from "react-icons/ai";
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -80,8 +81,12 @@ const Dashboard = () => {
     return (
         <div className="h-full py-6 px-2 items-center flex flex-col bg-gray-100 relative">
             {/* Nav */}
-            <nav className="flex flex-row justify-center items-center">
-                <div className="flex flex-row border border-gray-300 rounded-lg w-min p-2 items-center bg-white">
+            <nav className="flex flex-row gap-2 justify-center items-center">
+                <Link to={'/'}>
+                    <AiFillHome className="w-6 h-6 text-slate-800 hover:text-slate-600" />
+                </Link>
+
+                <div className="flex flex-row border border-gray-300 rounded-lg mx-3 w-min p-2 items-center bg-white">
                     <input
                         type="text"
                         name=""
@@ -93,7 +98,7 @@ const Dashboard = () => {
 
                 <div
                     onClick={onClickProfile}
-                    className="rounded-full w-4 h-4 p-4 bg-slate-500 border border-gray-500 ml-5 relative cursor-pointer"
+                    className="rounded-full w-4 h-4 p-4 bg-slate-500 border border-gray-500 relative cursor-pointer"
                 >
                     <div
                         className={
