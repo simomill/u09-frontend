@@ -1,16 +1,24 @@
 import React from "react";
-import { deleteUserPhoto } from "../../Services/user.service";
+import { deleteUser } from "../../Services/user.service";
 import { HiOutlineX } from "react-icons/hi";
 import { IoWarningOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+import { AiOutlineUserDelete } from "react-icons/ai";
+import { deleteComment } from "../../Services/comment.service";
+import { BiCommentX } from "react-icons/bi";
 
-const RemoveImgModal = ({ showModal, setShowModal, id }: any) => {
+const RemoveCmntModal = ({ showModal, setShowModal, id, fetchComments }: any) => {
+    const navigate = useNavigate();
+
     function closeHandler() {
         setShowModal((prev: any) => !prev);
     }
 
     function onApprove() {
-        deleteUserPhoto(id);
-        window.location.reload();
+        deleteComment(id).then(() => {
+            fetchComments();
+        });
+        setShowModal((prev: any) => !prev);
     }
 
     function onDeny() {
@@ -20,21 +28,23 @@ const RemoveImgModal = ({ showModal, setShowModal, id }: any) => {
     return (
         <>
             {showModal && (
-                <div className="absolute h-full w-full flex items-center justify-center">
-                    <div className=" w-96 h-56 bg-white border rounded-lg flex flex-col justify-between p-2">
+                <div className="absolute h-full w-full flex items-center">
+                    <div className="bg-white border rounded-lg flex flex-col justify-between p-2 drop-shadow-md z-10">
                         <HiOutlineX
                             className="w-6 h-6 cursor-pointer hover:text-red-700"
                             onClick={closeHandler}
                         />
 
                         <div className="flex flex-col items-center">
-                            <IoWarningOutline className="w-6 h-6 mb-3 text-red-700" />
+                            <BiCommentX className="w-8 h-8 mb-3" />
 
-                            <p>You are about to delete this image.</p>
-                            <p>Are you sure about this?</p>
+                            <div className="px-8">
+                                <p>You are about to delete this comment.</p>
+                                <p>Are you sure about this?</p>
+                            </div>
                         </div>
 
-                        <div className="flex flex-row w-full gap-2 justify-center">
+                        <div className="flex flex-row w-full gap-2 justify-center py-2 px-6">
                             <button
                                 onClick={onApprove}
                                 className="border rounded w-max px-5 bg-slate-50 cursor-pointer hover:border-sky-200 hover:bg-sky-50 w-1/2"
@@ -55,4 +65,4 @@ const RemoveImgModal = ({ showModal, setShowModal, id }: any) => {
     );
 };
 
-export default RemoveImgModal;
+export default RemoveCmntModal;
