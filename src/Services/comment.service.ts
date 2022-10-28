@@ -23,3 +23,10 @@ export const postComment = async (data: commentData) => {
 
     return response;
 }
+
+// DELETE COMMENT
+export const deleteComment = async (commentId: string) => {
+    const response = await axios.delete(`${API_URL}/${commentId}`);
+
+    return response;
+}
