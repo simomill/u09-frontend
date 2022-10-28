@@ -27,8 +27,6 @@ const UserPage: FC = () => {
     useEffect(() => {
         if (pageName === authedUser) {
             setHasAccess(true)
-        } else if (localStorage.getItem('isAdmin')) {
-            setHasAccess(true);
         }
 
 
