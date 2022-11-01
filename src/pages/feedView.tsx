@@ -4,6 +4,8 @@ import { IoSearchOutline } from "react-icons/io5";
 import { checkIsLoggedIn, logout } from "../Services/auth.service";
 import { Link, useNavigate } from "react-router-dom";
 import { getAllUsers, getPhotos } from "../Services/user.service";
+import { IPhotoModel } from "../Models";
+import FullscreenModal from "./components/fullscreenModal";
 
 const FeedView: FC = () => {
     const navigate = useNavigate();
@@ -16,6 +18,8 @@ const FeedView: FC = () => {
     const [photoArray, setPhotoArray]: any[] = useState(initialArray);
     const [userArray, setUserArray]: any[] = useState(initialArray);
     const [findings, setFindings] = useState(initialArray);
+    const [chosenPhoto, setChosenPhoto] = useState<string | null>(null);
+    const [showFullscreenModal, setShowFullscreenModal] = useState(false);
 
     function onClickLogout() {
         logout();
@@ -44,6 +48,17 @@ const FeedView: FC = () => {
         }
     };
 
+    const changeState = (data: any) => {  
+        console.log({data});
+        
+        if (!chosenPhoto) {
+            setChosenPhoto(data);
+            setShowFullscreenModal((prev) => !prev);
+            
+            
+        }        
+    } 
+
     async function fetchUsers() {
         const response = await getAllUsers();
 
@@ -70,8 +85,14 @@ const FeedView: FC = () => {
 
         if (!searchVal) {
             setFindings([]);
+        }   
+        
+        if (!showFullscreenModal) {
+            setChosenPhoto(null);
         }
-    }, [photoArray, searchVal, userArray]);
+
+
+    }, [photoArray, searchVal, showFullscreenModal, userArray]);
 
     return (
         <>
@@ -98,7 +119,7 @@ const FeedView: FC = () => {
                             }
                         >
                             {findings.map((user: string, index: number) => (
-                                <Link className="flex flex-col w-1/3 items-start" to={`user/${user}`}>
+                                <Link key={index} className="flex flex-col w-1/3 items-start" to={`user/${user}`}>
                                     <p className="font-medium py-2">{user}</p>
                                 </Link>
                             ))}
@@ -153,6 +174,8 @@ const FeedView: FC = () => {
                                             >
                                                 <Post
                                                     photo={photoArray[index]}
+                                                    changeState={changeState}
+
                                                 />
                                                 <span className="w-full h-px border-b border-gray-200"></span>
                                             </div>
@@ -163,6 +186,12 @@ const FeedView: FC = () => {
                         }
                     })()}
                 </div>
+
+                <FullscreenModal
+                showModal={showFullscreenModal}
+                setShowModal={setShowFullscreenModal}
+                data={chosenPhoto}
+            />
             </div>
         </>
     );
