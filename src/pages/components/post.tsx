@@ -1,33 +1,20 @@
 import React, { FC, FormEvent, useEffect, useRef, useState } from "react";
 import {
     HiOutlineX,
-    HiOutlineHashtag,
     HiOutlineInformationCircle,
     HiOutlineFilm,
 } from "react-icons/hi";
-import { HiOutlineCamera } from "react-icons/hi2";
 import { RiCameraLensFill } from "react-icons/ri";
 import { GoCommentDiscussion, GoSettings } from "react-icons/go";
 import { Link, useParams } from "react-router-dom";
 import RemoveImgModal from "./removeImgModal";
-import { useForm } from "react-hook-form";
-import ContentEditable from "react-contenteditable";
 import { getComments, postComment } from "../../Services/comment.service";
 import RemoveCmntModal from "./removeCmntModal";
 import { IoCameraOutline } from "react-icons/io5";
+import { encode, decode } from "html-entities";
+import { ICommentModel } from "../../Models";
 
-interface IfirstChildProps {
-    photo: any;
-}
-
-interface ICommentModel {
-    photoId: string;
-    username: string;
-    message: string;
-    _id: string;
-}
-
-const Post: FC<IfirstChildProps> = ({ photo }) => {
+const Post = ({ photo, changeState }: any) => {
     const [showInfo, setShowInfo] = useState("hidden");
     const [infoColor, setInfoColor] = useState("text-slate-300");
     const [showRemove, setShowRemove] = useState(false);
@@ -80,9 +67,13 @@ const Post: FC<IfirstChildProps> = ({ photo }) => {
 
         let message = msgRef.current?.innerText;
 
+        // make user input safe from XSS
+
+        const safeMsg = encode(message, { mode: "nonAsciiPrintable" });
+
         if (message && authedUser) {
             const obj = {
-                message: message,
+                message: safeMsg,
                 username: authedUser,
                 photoId: photoId,
             };
@@ -133,13 +124,15 @@ const Post: FC<IfirstChildProps> = ({ photo }) => {
                 {/* Image */}
                 {photo && (
                     <div
-                        className="flex relative"
+                        className="flex relative max-h-screen p-2"
                         onMouseLeave={() => setShowRemove(false)}
                     >
                         <img
                             alt={photo.title}
                             src={`data:image/jpeg;base64, ${photo.img.data}`}
                             onMouseOver={() => setShowRemove(true)}
+                            onClick={() => changeState(photo)}
+                            className="cursor-nesw-resize h-full w-auto"
                         />
 
                         {(() => {
@@ -204,7 +197,9 @@ const Post: FC<IfirstChildProps> = ({ photo }) => {
                                                 {comment.username}
                                             </Link>
                                             <p className="h-max w-60 text-left break-words border-l pl-2">
-                                                {comment.message}
+                                                {decode(comment.message, {
+                                                    level: "html5",
+                                                })}
                                             </p>
 
                                             {(() => {
@@ -231,13 +226,13 @@ const Post: FC<IfirstChildProps> = ({ photo }) => {
                             )
                         )}
                         {showRemoveCmntModal && (
-                                <RemoveCmntModal
-                                    id={commentId}
-                                    showModal={showRemoveCmntModal}
+                            <RemoveCmntModal
+                                id={commentId}
+                                showModal={showRemoveCmntModal}
                                 setShowModal={setShowRemoveCmntModal}
                                 fetchComments={fetchComments}
-                                />
-                    )}
+                            />
+                        )}
 
                         <form
                             className="flex self-center my-3 items-end"
@@ -295,7 +290,6 @@ const Post: FC<IfirstChildProps> = ({ photo }) => {
                             <p>Film</p>
                         </div>
                     </div>
-                    
                 </div>
             </div>
         </>
