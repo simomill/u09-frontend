@@ -1,7 +1,7 @@
 {
   "name": "dsplay",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@hookform/resolvers": "^2.9.9",
     "@testing-library/jest-dom": "^5.16.5",
@@ -48,6 +48,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "browser": {
+    "fs":"false",
+    "path":"false",
+    "os": "false"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.12",
