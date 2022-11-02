@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_URL = "https://dsplay-backend.onrender.com/users";
+const API_URL = `${process.env.API_URL}/users`;
+
 
 export interface updateData {
     name?: string;
