@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://dsplay-backend.onrender.com/comments";
+const API_URL = `${process.env.API_URL}/comments`;
 
 
 export interface commentData {
