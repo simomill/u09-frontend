@@ -1,56 +1,64 @@
-import axios from 'axios';
+import axios from "axios";
 
 const API_URL = `${process.env.REACT_APP_API_URL}/auth`;
 
 export interface LoginModel {
-    username: string
-    password: string
-};
+    username: string;
+    password: string;
+}
 
 export interface RegisterModel {
-    username: string
-    password: string
-    name: string
-    email: string
-    passconf: string
+    username: string;
+    password: string;
+    name: string;
+    email: string;
+    passconf: string;
 }
 // Post register user
 export const registerUser = async (registerData: RegisterModel) => {
-    const response = await axios.post(`${API_URL}/register`, registerData);
-    
-    
-    return response;
-}
+    try {
+        const response = await axios.post(`${API_URL}/register`, registerData);
 
-// Post login user and save token 
-export const login = async (loginData: LoginModel) => {
-    const response = await axios.post(`${API_URL}/login`, loginData);
+        console.log(response);
 
-    console.log(response);
-    
-
-    if (
-        response.data !== "Wrong Password" &&
-        response.data !== "User don't exist"
-    ) {
-        localStorage.setItem("accesstoken", response.data.token);
-        localStorage.setItem("username", response.data.username);
+        return response;
         
-        if (response.data.isAdmin !== 0) {
-            localStorage.setItem("isAdmin", response.data.isAdmin);
-        }
-        
+    } catch (error) {
+        console.log(error);
     }
+};
 
-    return response;
-}
+// Post login user and save token
+export const login = async (loginData: LoginModel) => {
+    try {
+        const response = await axios.post(`${API_URL}/login`, loginData);
+
+        console.log(response);
+
+        if (
+            response.data !== "Wrong Password" &&
+            response.data !== "User don't exist"
+        ) {
+            localStorage.setItem("accesstoken", response.data.token);
+            localStorage.setItem("username", response.data.username);
+
+            if (response.data.isAdmin !== 0) {
+                localStorage.setItem("isAdmin", response.data.isAdmin);
+            }
+        }
+
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 // Logout by clearing token
 export const logout = async () => {
     localStorage.clear();
     localStorage.removeItem("accesstoken");
     localStorage.removeItem("username");
-}
+};
 
 // Get accesstoken from localStorage
 export const getAuthJWT = () => {
@@ -61,11 +69,11 @@ export const getAuthJWT = () => {
     } else {
         return false;
     }
-}
+};
 
 export const getIsAdmin = () => {
-    return localStorage.getItem("isAdmin"); 
-}
+    return localStorage.getItem("isAdmin");
+};
 
 // Get auth header with token
 export const getAuthHeader = () => {
@@ -74,20 +82,21 @@ export const getAuthHeader = () => {
     if (token) {
         return { Authorization: token };
     } else {
-        return { Authorization: '' };
+        return { Authorization: "" };
     }
-}
+};
 
 // Returns true if token exists
 export const checkIsLoggedIn = () => {
     const token = getAuthJWT();
-    const isAdmin = getIsAdmin()
-    return {token: Boolean(token), isAdmin: Boolean(isAdmin)};
-}
+    const isAdmin = getIsAdmin();
+    return { token: Boolean(token), isAdmin: Boolean(isAdmin) };
+};
 
 // Get auth/test from API
 export const getAuthTest = async () => {
-    const response = await axios.get(`${API_URL}/test`, { headers: getAuthHeader() });
+    const response = await axios.get(`${API_URL}/test`, {
+        headers: getAuthHeader(),
+    });
     return response.data;
-}
-
+};
