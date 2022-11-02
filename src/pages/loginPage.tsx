@@ -31,7 +31,7 @@ const LoginPage: FC = () => {
         const response = await login(data);
         
 
-        if (
+        if ( response &&
             response.data !== "Wrong Password" &&
             response.data !== "User don't exist"
         ) {
@@ -44,7 +44,7 @@ const LoginPage: FC = () => {
                 window.location.reload();
             }
         } else {
-            setStatusMsg(response.data);
+            setStatusMsg(response?.data);
         }
 
         // Reset loading state
