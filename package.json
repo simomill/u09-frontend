@@ -49,11 +49,6 @@
       "last 1 safari version"
     ]
   },
-  "browser": {
-    "fs":"false",
-    "path":"false",
-    "os": "false"
-  },
   "devDependencies": {
     "autoprefixer": "^10.4.12",
     "postcss": "^8.4.17",
