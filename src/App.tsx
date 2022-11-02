@@ -15,6 +15,8 @@ import TestAuthPage from "./pages/TestAuthPage";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import Loader from "./pages/Loader";
+import dotenv from 'dotenv';
+dotenv.config();
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
