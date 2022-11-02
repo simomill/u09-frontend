@@ -50,6 +50,7 @@ const LoginPage: FC = () => {
         // Reset loading state
         setLoading(false);
     }
+    
 
     return (
         <div className="flex flex-col justify-center items-center h-screen gap-4">

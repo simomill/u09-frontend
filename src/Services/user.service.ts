@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = `${process.env.API_URL}/users`;
+const API_URL = `${process.env.REACT_APP_API_URL}/users`;
 
 
 export interface updateData {

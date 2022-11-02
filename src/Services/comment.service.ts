@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = `${process.env.API_URL}/comments`;
+const API_URL = `${process.env.REACT_APP_API_URL}/comments`;
 
 
 export interface commentData {
