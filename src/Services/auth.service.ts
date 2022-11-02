@@ -17,7 +17,10 @@ export interface RegisterModel {
 // Post register user
 export const registerUser = async (registerData: RegisterModel) => {
     try {
-        const response = await axios.post(`${API_URL}/register`, registerData);
+        const response = await axios.post(`${API_URL}/register`, registerData).then((data) => {
+            console.log(data);
+            return data;
+        });
 
         console.log(response);
 
@@ -31,7 +34,10 @@ export const registerUser = async (registerData: RegisterModel) => {
 // Post login user and save token
 export const login = async (loginData: LoginModel) => {
     try {
-        const response = await axios.post(`${API_URL}/login`, loginData);
+        const response = await axios.post(`${API_URL}/login`, loginData).then((data) => {
+            console.log(data);
+            return data;
+        });
 
         console.log(response);
 
