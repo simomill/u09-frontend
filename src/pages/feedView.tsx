@@ -16,7 +16,7 @@ const FeedView: FC = () => {
     const [searchVal, setSearchVal] = useState("");
     const initialArray: any[] | (() => any[]) = [];
     const [photoArray, setPhotoArray] = useState<any[] | null>(null);
-    const [userArray, setUserArray] = useState<any[] | null>(initialArray);
+    const [userArray, setUserArray] = useState<any[] | null>(null);
     const [findings, setFindings] = useState(initialArray);
     const [chosenPhoto, setChosenPhoto] = useState<string | null>(null);
     const [showFullscreenModal, setShowFullscreenModal] = useState(false);
