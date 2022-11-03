@@ -15,8 +15,8 @@ const FeedView: FC = () => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [searchVal, setSearchVal] = useState("");
     const initialArray: any[] | (() => any[]) = [];
-    const [photoArray, setPhotoArray]= useState<any[] | null>(null);
-    const [userArray, setUserArray]: any[] = useState(initialArray);
+    const [photoArray, setPhotoArray] = useState<any[] | null>(null);
+    const [userArray, setUserArray] = useState<any[] | null>(initialArray);
     const [findings, setFindings] = useState(initialArray);
     const [chosenPhoto, setChosenPhoto] = useState<string | null>(null);
     const [showFullscreenModal, setShowFullscreenModal] = useState(false);
@@ -34,15 +34,17 @@ const FeedView: FC = () => {
     const onSearch = (val: string) => {
         setSearchVal(val);
 
-        for (const user of userArray) {
-            if (user.username.includes(val)) {
-                if (!findings.includes(user.username)) {
-                    setFindings((oldArr) => [...oldArr, user.username]);
-                }
-            } else {
-                if (findings.includes(user.username)) {
-                    findings.pop();
-                    setFindings(findings);
+        if (userArray) {
+            for (const user of userArray) {
+                if (user.username.includes(val)) {
+                    if (!findings.includes(user.username)) {
+                        setFindings((oldArr) => [...oldArr, user.username]);
+                    }
+                } else {
+                    if (findings.includes(user.username)) {
+                        findings.pop();
+                        setFindings(findings);
+                    }
                 }
             }
         }
@@ -63,7 +65,6 @@ const FeedView: FC = () => {
         if (response) {
             setUserArray(response);
         }
-        
     }
 
     async function fetchPhotos() {
@@ -79,7 +80,7 @@ const FeedView: FC = () => {
         setIsLoggedIn(isLoggedIn.token);
         setIsAdmin(isLoggedIn.isAdmin ?? "");
 
-        if (userArray.length === 0) {
+        if (userArray?.length === 0) {
             fetchUsers();
         }
         if (photoArray === null) {
@@ -190,7 +191,7 @@ const FeedView: FC = () => {
                         }
                     })()}
                 </div>
-                    
+
                 <FullscreenModal
                     showModal={showFullscreenModal}
                     setShowModal={setShowFullscreenModal}

@@ -16,7 +16,7 @@ const Dashboard = () => {
     const navigate = useNavigate();
     const [profileMenu, setProfileMenu] = useState(false);
     const initialArray: any[] | (() => any[]) = [];
-    const [userArray, setUserArray] = useState(initialArray);
+    const [userArray, setUserArray] = useState<any[] | null>(null);
     const [userName, setUserName] = useState<object | string>("");
     const [showRemoveModal, setShowRemoveModal] = useState(false);
     const [showNewUsrModal, setShowNewUsrModal] = useState(false);
@@ -65,15 +65,17 @@ const Dashboard = () => {
     const onSearch = (val: string) => {
         setSearchVal(val);
 
-        for (const user of userArray) {
-            if (user.username.includes(val)) {
-                if (!findings.includes(user.username)) {
-                    setFindings((oldArr) => [...oldArr, user.username]);
-                }
-            } else {
-                if (findings.includes(user.username)) {
-                    findings.pop();
-                    setFindings(findings);
+        if (userArray) {
+            for (const user of userArray) {
+                if (user.username.includes(val)) {
+                    if (!findings.includes(user.username)) {
+                        setFindings((oldArr) => [...oldArr, user.username]);
+                    }
+                } else {
+                    if (findings.includes(user.username)) {
+                        findings.pop();
+                        setFindings(findings);
+                    }
                 }
             }
         }
@@ -83,13 +85,13 @@ const Dashboard = () => {
         const response = await getAllUsers();
 
         if (response) {
-            console.log(response); 
+            console.log(response);
             setUserArray(response);
         }
     }
 
     useEffect(() => {
-        if (userArray.length === 0) {
+        if (userArray?.length === 0) {
             fetchUsers();
         }
 
@@ -102,7 +104,7 @@ const Dashboard = () => {
         if (!searchVal) {
             setFindings([]);
         }
-    }, [searchVal, statusMsg, userArray.length]);
+    }, [searchVal, statusMsg, userArray?.length]);
 
     return (
         <div className="h-screen py-6 px-2 items-center flex flex-col bg-gray-100 relative">
@@ -177,7 +179,7 @@ const Dashboard = () => {
             <div className="flex flex-col justify-start items-stretch p-4 gap-2">
                 <p className="text-3xl font-bold pb-3">Users</p>
                 {statusMsg && <p className="text-green-500">{statusMsg}</p>}
-                {userArray.map((user, index) => (
+                {userArray?.map((user, index) => (
                     <div
                         key={index}
                         className="flex bg-white border border-gray-200 rounded justify-between"
