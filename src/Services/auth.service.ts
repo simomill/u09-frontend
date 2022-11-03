@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const API_URL = `${process.env.REACT_APP_API_URL}/auth`;
+const API_URL =
+    process.env.NODE_ENV === "production"
+        ? `${process.env.REACT_APP_API_URL}/auth`
+        : `http://localhost:3000/auth`;
 
 export interface LoginModel {
     username: string;
@@ -17,15 +20,16 @@ export interface RegisterModel {
 // Post register user
 export const registerUser = async (registerData: RegisterModel) => {
     try {
-        const response = await axios.post(`${API_URL}/register`, registerData).then((data) => {
-            console.log(data);
-            return data;
-        });
+        const response = await axios
+            .post(`${API_URL}/register`, registerData)
+            .then((data) => {
+                console.log(data);
+                return data;
+            });
 
         console.log(response);
 
         return response;
-        
     } catch (error) {
         console.log(error);
     }
@@ -34,10 +38,12 @@ export const registerUser = async (registerData: RegisterModel) => {
 // Post login user and save token
 export const login = async (loginData: LoginModel) => {
     try {
-        const response = await axios.post(`${API_URL}/login`, loginData).then((data) => {
-            console.log(data);
-            return data;
-        });
+        const response = await axios
+            .post(`${API_URL}/login`, loginData)
+            .then((data) => {
+                console.log(data);
+                return data;
+            });
 
         console.log(response);
 
