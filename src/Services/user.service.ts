@@ -26,6 +26,8 @@ export const getUser = async (username: string) => {
 export const getAllUsers = async () => {
     const response = await axios.get(`${API_URL}/`);
 
+    console.log(response);
+    
     return response.data;
 };
 
