@@ -79,11 +79,11 @@ const Dashboard = () => {
         }
     };
 
-    const fetchUsers = async () => {
-        const users = await getAllUsers();
-        console.log(users);
+    async function fetchUsers()  {
+        const response = await getAllUsers();
+        console.log(response);
 
-        setUserArray(users);
+        setUserArray(response);
     };
 
     useEffect(() => {
