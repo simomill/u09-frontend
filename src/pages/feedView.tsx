@@ -61,15 +61,16 @@ const FeedView: FC = () => {
 
     async function fetchUsers() {
         const response = await getAllUsers();
-
+        
+        console.log(response.data);
         setUserArray(response.data);
     }
 
-    async function fetchPhotos() {
-        const response = await getPhotos();
+    // async function fetchPhotos() {
+    //     const response = await getPhotos();
 
-        setPhotoArray(response.data);
-    }
+    //     setPhotoArray(response.data);
+    // }
 
     useEffect(() => {
         const isLoggedIn = checkIsLoggedIn();
@@ -79,9 +80,9 @@ const FeedView: FC = () => {
         if (userArray === null) {
             fetchUsers();
         }
-        if (photoArray === null) {
-            fetchPhotos();
-        }
+        // if (photoArray === null) {
+        //     fetchPhotos();
+        // }
 
         if (!searchVal) {
             setFindings([]);
