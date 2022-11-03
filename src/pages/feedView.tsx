@@ -15,7 +15,7 @@ const FeedView: FC = () => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [searchVal, setSearchVal] = useState("");
     const initialArray: any[] | (() => any[]) = [];
-    const [photoArray, setPhotoArray]: any[] = useState(initialArray);
+    const [photoArray, setPhotoArray]= useState<any[] | null>(null);
     const [userArray, setUserArray]: any[] = useState(initialArray);
     const [findings, setFindings] = useState(initialArray);
     const [chosenPhoto, setChosenPhoto] = useState<string | null>(null);
@@ -48,16 +48,14 @@ const FeedView: FC = () => {
         }
     };
 
-    const changeState = (data: any) => {  
-        console.log({data});
-        
+    const changeState = (data: any) => {
+        console.log({ data });
+
         if (!chosenPhoto) {
             setChosenPhoto(data);
             setShowFullscreenModal((prev) => !prev);
-            
-            
-        }        
-    } 
+        }
+    };
 
     async function fetchUsers() {
         const response = await getAllUsers();
@@ -65,33 +63,33 @@ const FeedView: FC = () => {
         setUserArray(response);
     }
 
+    async function fetchPhotos() {
+        const response = await getPhotos();
+
+        if (response) {
+            setPhotoArray(response.data);
+        }
+    }
+
     useEffect(() => {
         const isLoggedIn = checkIsLoggedIn();
         setIsLoggedIn(isLoggedIn.token);
         setIsAdmin(isLoggedIn.isAdmin ?? "");
 
-        async function fetchPhotos() {
-            const response = await getPhotos();
-
-            setPhotoArray(response.data);
-        }
-
         if (userArray.length === 0) {
             fetchUsers();
         }
-        if (photoArray.length === 0) {
+        if (photoArray === null) {
             fetchPhotos();
         }
 
         if (!searchVal) {
             setFindings([]);
-        }   
-        
+        }
+
         if (!showFullscreenModal) {
             setChosenPhoto(null);
         }
-
-
     }, [photoArray, searchVal, showFullscreenModal, userArray]);
 
     return (
@@ -119,7 +117,11 @@ const FeedView: FC = () => {
                             }
                         >
                             {findings.map((user: string, index: number) => (
-                                <Link key={index} className="flex flex-col w-1/3 items-start" to={`user/${user}`}>
+                                <Link
+                                    key={index}
+                                    className="flex flex-col w-1/3 items-start"
+                                    to={`user/${user}`}
+                                >
                                     <p className="font-medium py-2">{user}</p>
                                 </Link>
                             ))}
@@ -160,10 +162,10 @@ const FeedView: FC = () => {
 
                 {/* Content */}
 
-                <div className="flex flex-wrap">
+                <div className="flex flex-wrap items-center justify-center">
                     {/* IF THERE ARE PHOTOS, THEN LOOP OVER THEM */}
                     {(() => {
-                        if (photoArray.length > 0) {
+                        if (photoArray && photoArray.length > 0) {
                             return (
                                 <>
                                     {photoArray.map(
@@ -175,7 +177,6 @@ const FeedView: FC = () => {
                                                 <Post
                                                     photo={photoArray[index]}
                                                     changeState={changeState}
-
                                                 />
                                                 <span className="w-full h-px border-b border-gray-200"></span>
                                             </div>
@@ -183,15 +184,21 @@ const FeedView: FC = () => {
                                     )}
                                 </>
                             );
+                        } else {
+                            return (
+                                <>
+                                <p className="self-center">There are no photos uploaded yet</p>
+                                </>
+                            )
                         }
                     })()}
                 </div>
-
+                    
                 <FullscreenModal
-                showModal={showFullscreenModal}
-                setShowModal={setShowFullscreenModal}
-                data={chosenPhoto}
-            />
+                    showModal={showFullscreenModal}
+                    setShowModal={setShowFullscreenModal}
+                    data={chosenPhoto}
+                />
             </div>
         </>
     );
