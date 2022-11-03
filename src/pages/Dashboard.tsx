@@ -79,12 +79,14 @@ const Dashboard = () => {
         }
     };
 
-    async function fetchUsers()  {
+    async function fetchUsers() {
         const response = await getAllUsers();
-        console.log(response);
 
-        setUserArray(response);
-    };
+        if (response) {
+            console.log(response); 
+            setUserArray(response);
+        }
+    }
 
     useEffect(() => {
         if (userArray.length === 0) {

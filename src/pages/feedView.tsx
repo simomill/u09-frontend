@@ -60,7 +60,10 @@ const FeedView: FC = () => {
     async function fetchUsers() {
         const response = await getAllUsers();
 
-        setUserArray(response);
+        if (response) {
+            setUserArray(response);
+        }
+        
     }
 
     async function fetchPhotos() {
