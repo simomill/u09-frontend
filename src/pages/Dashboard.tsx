@@ -86,7 +86,7 @@ const Dashboard = () => {
 
         if (response) {
             console.log(response);
-            setUserArray(response);
+            setUserArray(response.data);
         }
     }
 
