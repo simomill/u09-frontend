@@ -91,7 +91,7 @@ const Dashboard = () => {
     }
 
     useEffect(() => {
-        if (userArray?.length === 0) {
+        if (userArray === null) {
             fetchUsers();
         }
 
@@ -104,7 +104,7 @@ const Dashboard = () => {
         if (!searchVal) {
             setFindings([]);
         }
-    }, [searchVal, statusMsg, userArray?.length]);
+    }, [searchVal, statusMsg, userArray]);
 
     return (
         <div className="h-screen py-6 px-2 items-center flex flex-col bg-gray-100 relative">

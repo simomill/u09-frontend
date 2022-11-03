@@ -80,7 +80,7 @@ const FeedView: FC = () => {
         setIsLoggedIn(isLoggedIn.token);
         setIsAdmin(isLoggedIn.isAdmin ?? "");
 
-        if (userArray?.length === 0) {
+        if (userArray === null) {
             fetchUsers();
         }
         if (photoArray === null) {
