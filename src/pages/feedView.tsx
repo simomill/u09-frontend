@@ -63,7 +63,7 @@ const FeedView: FC = () => {
         const response = await getAllUsers();
 
         if (response) {
-            setUserArray(response);
+            setUserArray(response.data);
         }
     }
 
