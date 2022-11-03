@@ -24,7 +24,7 @@ export const getUser = async (username: string) => {
 
 // Get all users
 export const getAllUsers = async () => {
-    const response = await axios.get(`${API_URL}`);
+    const response = await axios.get(`${API_URL}/`);
 
     return response;
 };
