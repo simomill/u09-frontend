@@ -82,14 +82,15 @@ const Dashboard = () => {
     const fetchUsers = async () => {
         const users = await getAllUsers();
         console.log(users);
-        
+
         setUserArray(users);
     };
 
     useEffect(() => {
-    
-        fetchUsers();
-    
+        if (userArray.length === 0) {
+            fetchUsers();
+        }
+
         if (statusMsg) {
             setTimeout(() => {
                 setStatusMsg("");
@@ -102,10 +103,10 @@ const Dashboard = () => {
     }, [searchVal, statusMsg, userArray.length]);
 
     return (
-        <div className="h-full py-6 px-2 items-center flex flex-col bg-gray-100 relative">
+        <div className="h-screen py-6 px-2 items-center flex flex-col bg-gray-100 relative">
             {/* Nav */}
             <nav className="flex flex-row gap-2 justify-center items-center">
-                <Link to={'/'}>
+                <Link to={"/"}>
                     <AiFillHome className="w-6 h-6 text-slate-800 hover:text-slate-600" />
                 </Link>
 
@@ -121,20 +122,24 @@ const Dashboard = () => {
                 </div>
 
                 {searchVal && (
-                        <div
-                            className={
-                                findings.length
-                                    ? "absolute top-20 border z-20 w-72 rounded bg-white flex flex-col gap-1 items-center shadow-md"
-                                    : "hidden"
-                            }
-                        >
-                            {findings.map((user: string, index: number) => (
-                                <Link key={index} className="flex flex-col w-1/3 items-start" to={`/user/${user}`}>
-                                    <p className="font-medium py-2">{user}</p>
-                                </Link>
-                            ))}
-                        </div>
-                    )}
+                    <div
+                        className={
+                            findings.length
+                                ? "absolute top-20 border z-20 w-72 rounded bg-white flex flex-col gap-1 items-center shadow-md"
+                                : "hidden"
+                        }
+                    >
+                        {findings.map((user: string, index: number) => (
+                            <Link
+                                key={index}
+                                className="flex flex-col w-1/3 items-start"
+                                to={`/user/${user}`}
+                            >
+                                <p className="font-medium py-2">{user}</p>
+                            </Link>
+                        ))}
+                    </div>
+                )}
 
                 <div
                     onClick={onClickProfile}
