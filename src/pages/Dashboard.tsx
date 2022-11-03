@@ -79,17 +79,17 @@ const Dashboard = () => {
         }
     };
 
+    const fetchUsers = async () => {
+        const users = await getAllUsers();
+        console.log(users);
+        
+        setUserArray(users);
+    };
+
     useEffect(() => {
-        const fetchUsers = async () => {
-            const users = await getAllUsers();
-
-            setUserArray(users);
-        };
-
-        if (userArray.length === 0) {
-            fetchUsers();
-        }
-
+    
+        fetchUsers();
+    
         if (statusMsg) {
             setTimeout(() => {
                 setStatusMsg("");

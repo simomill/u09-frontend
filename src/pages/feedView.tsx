@@ -184,12 +184,6 @@ const FeedView: FC = () => {
                                     )}
                                 </>
                             );
-                        } else {
-                            return (
-                                <>
-                                <p className="self-center">There are no photos uploaded yet</p>
-                                </>
-                            )
                         }
                     })()}
                 </div>
