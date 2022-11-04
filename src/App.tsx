@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import {
-    BrowserRouter as Router,
-    Route,
-    Routes,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import FeedView from "./pages/feedView";
 import PhotoView from "./pages/PhotoView";
 import UserPage from "./pages/userPage";
@@ -15,6 +11,7 @@ import TestAuthPage from "./pages/TestAuthPage";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import Loader from "./pages/Loader";
+import Unauth from "./pages/Unauth";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,11 +24,9 @@ function App() {
         setIsAdmin(isLoggedIn.token);
     }, []);
 
-
     return (
         <div className="App">
             <main>
-
                 <Router>
                     <Routes>
                         <Route
@@ -48,7 +43,15 @@ function App() {
                         />
                         <Route
                             path="/dashboard"
-                            element={isAdmin ? <Dashboard /> : <Loader />}
+                            element={
+                                isAdmin ? (
+                                    <Dashboard />
+                                ) : isLoggedIn ? (
+                                    <Unauth />
+                                ) : (
+                                    <LoginPage />
+                                )
+                            }
                         />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/register" element={<RegisterPage />} />
