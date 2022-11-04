@@ -5,7 +5,7 @@ import "react-loader-spinner"
 const Loader = () => {
   return (
     <div className="flex flex-col justify-center items-center h-screen gap-4">
-      <h1 className="font-bold text-3xl mb-6 text-cyan-900">DSPLAY</h1>
+      <h1 className="font-bold text-3xl -mt-20 mb-6 text-cyan-900">DSPLAY</h1>
       <TailSpin
         height="80"
         width="80"

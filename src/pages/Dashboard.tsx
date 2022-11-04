@@ -11,6 +11,7 @@ import NewUsrModal from "./components/NewUsrModal";
 import UpdateUsrModal from "./components/UpdateUsrModal";
 import AdminAssignModal from "./components/AdminAssignModal";
 import { AiFillHome } from "react-icons/ai";
+import Loader from "./Loader";
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -27,6 +28,8 @@ const Dashboard = () => {
     const { state } = useLocation();
     const [statusMsg, setStatusMsg] = useState(state ?? "");
     const authRole = localStorage.getItem("isAdmin");
+    const [isLoading, setIsLoading] = useState(false);
+
 
     function onClickLogout() {
         logout();
@@ -92,7 +95,10 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (userArray === null) {
+            setIsLoading(true);
             fetchUsers();
+        } else {
+            setIsLoading(false);
         }
 
         if (statusMsg) {
@@ -177,6 +183,9 @@ const Dashboard = () => {
             {/* Content */}
 
             <div className="flex flex-col justify-start items-stretch p-4 gap-2">
+                
+                {isLoading && <Loader />}
+                
                 <p className="text-3xl font-bold pb-3">Users</p>
                 {statusMsg && <p className="text-green-500">{statusMsg}</p>}
                 {userArray?.map((user, index) => (

@@ -2,9 +2,11 @@ import React, { FC, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getUser, getUserPhotos } from "../Services/user.service";
 import { FaChevronLeft } from "react-icons/fa";
-import {AiOutlinePlusSquare} from 'react-icons/ai'
+import { AiOutlinePlusSquare } from "react-icons/ai";
 import Post from "./components/post";
 import UploadModal from "./components/uploadModal";
+import Loader from "./Loader";
+import { setLocale } from "yup";
 
 const UserPage: FC = () => {
     // STATES AND VARIABLES
@@ -15,9 +17,7 @@ const UserPage: FC = () => {
     const [hasAccess, setHasAccess] = useState(false);
     const pageName = useParams().id;
     const authedUser = localStorage.getItem("username");
-
-    
-
+    const [isLoading, setIsLoading] = useState(false);
 
     // FUNCTION FOR OPEN-/CLOSING THE UPLOAD MODAL
     const openModal = () => {
@@ -26,9 +26,8 @@ const UserPage: FC = () => {
 
     useEffect(() => {
         if (pageName === authedUser) {
-            setHasAccess(true)
+            setHasAccess(true);
         }
-
 
         // FUNCTION FOR FETCHING THE DATA OF USER CORRESPONDING TO THE PAGE NAME
         async function fetchData() {
@@ -41,6 +40,7 @@ const UserPage: FC = () => {
 
         // FUNCTION FOR FETCHING THE PHOTOS OF USER CORRESPONDING TO THE PAGE NAME
         async function fetchPhotos() {
+            setIsLoading(true);
             const response = await getUserPhotos(pageName ?? "");
 
             setPhotoArray(response);
@@ -50,15 +50,23 @@ const UserPage: FC = () => {
             fetchData();
         }
 
-        fetchPhotos();
-    }, [authedUser, pageName, photoArray.length, userEmail, userEmail.length]);
+        if (photoArray.length === 0) {
+            setIsLoading(true);
+            fetchPhotos();
+        } else {
+            setIsLoading(false);
+        }
+    }, [authedUser, pageName, userEmail, photoArray.length]);
 
     return (
         <div className="flex flex-col">
             {/* -------------------------TOP/NAV SECTION */}
             <div className="md:px-24 lg:px-36 px-3 py-4">
-                <Link className="flex flex-row items-center hover:text-cyan-700" to="/">
-                    <FaChevronLeft/>
+                <Link
+                    className="flex flex-row items-center hover:text-cyan-700"
+                    to="/"
+                >
+                    <FaChevronLeft />
                     <span>Back</span>
                 </Link>
             </div>
@@ -78,7 +86,10 @@ const UserPage: FC = () => {
 
                 {hasAccess && (
                     <>
-                        <AiOutlinePlusSquare className="w-6 h-6 cursor-pointer" onClick={openModal} />
+                        <AiOutlinePlusSquare
+                            className="w-6 h-6 cursor-pointer"
+                            onClick={openModal}
+                        />
 
                         {/* ----------------------------MODAL COMPONENT */}
                         {showUploadModal && (
@@ -92,9 +103,12 @@ const UserPage: FC = () => {
             </div>
 
             <span className="w-full h-px border-b border-gray-200"></span>
-
+            
+            
             {/* --------------------------------GALLERY SECTION */}
-            <div className="flex flex-wrap">
+            <div className={photoArray.length ? "flex flex-wrap" : "flex flex-col justify-center items-center h-screen "}>
+                
+            {isLoading && <Loader />}
                 {/* IF THERE ARE PHOTOS, THEN LOOP OVER THEM */}
                 {(() => {
                     if (photoArray.length > 0) {
@@ -107,7 +121,6 @@ const UserPage: FC = () => {
                                     >
                                         <Post photo={photoArray[index]} />
                                         <span className="w-full h-px border-b border-gray-200"></span>
-                                        
                                     </div>
                                 ))}
                             </>
