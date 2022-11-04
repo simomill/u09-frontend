@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getAllUsers, getPhotos } from "../Services/user.service";
 import { IPhotoModel } from "../Models";
 import FullscreenModal from "./components/fullscreenModal";
+import Loader from "./Loader";
 
 const FeedView: FC = () => {
     const navigate = useNavigate();
@@ -20,6 +21,8 @@ const FeedView: FC = () => {
     const [findings, setFindings] = useState(initialArray);
     const [chosenPhoto, setChosenPhoto] = useState<string | null>(null);
     const [showFullscreenModal, setShowFullscreenModal] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
 
     function onClickLogout() {
         logout();
@@ -78,10 +81,17 @@ const FeedView: FC = () => {
         setIsAdmin(isLoggedIn.isAdmin ?? "");
 
         if (userArray === null) {
+            setIsLoading(true);
             fetchUsers();
+        } else {
+            setIsLoading(false);
         }
+
         if (photoArray === null) {
+            setIsLoading(true);
             fetchPhotos();
+        } else {
+            setIsLoading(false)
         }
 
         if (!searchVal) {
@@ -162,8 +172,11 @@ const FeedView: FC = () => {
                 <span className="w-full h-px border-b border-gray-200 p-2"></span>
 
                 {/* Content */}
-
+                
                 <div className="flex flex-wrap items-center justify-center">
+
+                    {isLoading && <Loader />}
+                    
                     {/* IF THERE ARE PHOTOS, THEN LOOP OVER THEM */}
                     {(() => {
                         if (photoArray && photoArray.length > 0) {
