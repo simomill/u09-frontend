@@ -254,6 +254,7 @@ const Post = ({ photo, changeState }: any) => {
                                 className=" h-max py-2 border rounded px-5 bg-slate-50 cursor-pointer hover:border-sky-200 hover:bg-sky-50 rounded-l-none"
                                 type="submit"
                                 value={"Post"}
+                                aria-label={"submit"}
                             />
                         </form>
 

@@ -116,6 +116,7 @@ const UpdateUsrModal = ({
                                     placeholder="name"
                                     defaultValue={userName.name}
                                     onChange={(e) => setNewName(e.target.value)}
+                                    aria-label={"name of user"}
                                 />
 
                                 <input
@@ -128,6 +129,7 @@ const UpdateUsrModal = ({
                                     onChange={(e) =>
                                         setNewEmail(e.target.value)
                                     }
+                                    aria-label={"user email"}
                                 />
 
                                 <input
@@ -139,6 +141,7 @@ const UpdateUsrModal = ({
                                     onChange={(e) =>
                                         setNewUsername(e.target.value)
                                     }
+                                    aria-label={"username of user"}
                                 />
 
                                 <input
@@ -150,6 +153,7 @@ const UpdateUsrModal = ({
                                     type="submit"
                                     value="update user"
                                     disabled={notAvailable ? true : false}
+                                    aria-label={"submit"}
                                 />
 
                                 {notAvailable && (
