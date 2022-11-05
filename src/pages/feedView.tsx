@@ -65,7 +65,6 @@ const FeedView: FC = () => {
     async function fetchUsers() {
         const response = await getAllUsers();
         
-        console.log(response.data);
         setUserArray(response.data);
     }
 
