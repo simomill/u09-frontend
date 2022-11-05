@@ -2,13 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { HiOutlineX } from 'react-icons/hi'
 import { BiChevronDown, BiChevronRight } from 'react-icons/bi'
 import { useNavigate } from 'react-router-dom';
-import { updateUser } from '../../Services/user.service'
-
-interface IUserModel {
-    name: string | null
-    username: string | null
-    email: string | null
-}
+import { updateUser } from '../../../Services/user.service'
+import { IUserModel } from '../../../Models';
 
 function UpdateUsrModal({ showModal, setShowModal, userName, setUserName, userArray }: any) {
     const [showPassNote, setShowPassNote] = useState(false)

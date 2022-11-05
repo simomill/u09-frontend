@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { HiOutlineX } from "react-icons/hi";
 import { useParams } from "react-router-dom";
-import { uploadImage } from "../../Services/user.service";
+import { uploadImage } from "../../../Services/user.service";
 
 const UploadModal = ({ showModal, setShowModal }: any) => {
     const [selectedImg, setSelectedImg] = useState<any>(null);

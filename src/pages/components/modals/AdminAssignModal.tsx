@@ -1,5 +1,5 @@
 import React from "react";
-import { changeUserRole, deleteUser } from "../../Services/user.service";
+import { changeUserRole, deleteUser } from "../../../Services/user.service";
 import { HiOutlineX } from "react-icons/hi";
 import { GrUserAdmin } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";

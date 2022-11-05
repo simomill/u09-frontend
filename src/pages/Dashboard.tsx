@@ -6,10 +6,10 @@ import { getAllUsers } from "../Services/user.service";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import { ImPlus } from "react-icons/im";
 import { BsFillKeyFill } from "react-icons/bs";
-import RemoveUsrModal from "./components/removeUsrModal";
-import NewUsrModal from "./components/NewUsrModal";
-import UpdateUsrModal from "./components/UpdateUsrModal";
-import AdminAssignModal from "./components/AdminAssignModal";
+import RemoveUsrModal from "./components/modals/removeUsrModal";
+import NewUsrModal from "./components/modals/NewUsrModal";
+import UpdateUsrModal from "./components/modals/UpdateUsrModal";
+import AdminAssignModal from "./components/modals/AdminAssignModal";
 import { AiFillHome } from "react-icons/ai";
 import Loader from "./Loader";
 

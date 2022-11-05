@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { HiOutlineX } from "react-icons/hi";
-import { registerUser } from "../../Services/auth.service";
+import { registerUser } from "../../../Services/auth.service";
 import { BiChevronDown, BiChevronRight } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 

@@ -7,9 +7,9 @@ import {
 import { RiCameraLensFill } from "react-icons/ri";
 import { GoCommentDiscussion, GoSettings } from "react-icons/go";
 import { Link, useParams } from "react-router-dom";
-import RemoveImgModal from "./removeImgModal";
+import RemoveImgModal from "./modals/removeImgModal";
 import { getComments, postComment } from "../../Services/comment.service";
-import RemoveCmntModal from "./removeCmntModal";
+import RemoveCmntModal from "./modals/removeCmntModal";
 import { IoCameraOutline } from "react-icons/io5";
 import { encode, decode } from "html-entities";
 import { ICommentModel } from "../../Models";
