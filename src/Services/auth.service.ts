@@ -19,7 +19,6 @@ export interface RegisterModel {
 }
 // Post register user
 export const registerUser = async (registerData: RegisterModel) => {
-    try {
         const response = await axios
             .post(`${API_URL}/register`, registerData)
             .then((data) => {
@@ -29,10 +28,8 @@ export const registerUser = async (registerData: RegisterModel) => {
 
         console.log(response);
 
-        return response;
-    } catch (error) {
-        console.log(error);
-    }
+    return response.status === 200; 
+  
 };
 
 // Post login user and save token

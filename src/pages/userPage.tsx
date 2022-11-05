@@ -54,9 +54,9 @@ const UserPage: FC = () => {
             setIsLoading(true);
             fetchPhotos();
         } else {
-            setIsLoading(false);
+            setIsLoading(false);            
         }
-    }, [authedUser, pageName, userEmail, photoArray.length]);
+    }, [authedUser, pageName, userEmail, photoArray]);
 
     return (
         <div className="flex flex-col">
