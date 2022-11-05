@@ -88,7 +88,6 @@ const Dashboard = () => {
         const response = await getAllUsers();
 
         if (response) {
-            console.log(response);
             setUserArray(response.data);
         }
     }
