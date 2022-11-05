@@ -29,12 +29,8 @@ const LoginPage: FC = () => {
         setLoading(true);
 
         const response = await login(data);
-        
 
-        if ( response &&
-            response.data !== "Wrong Password" &&
-            response.data !== "User don't exist"
-        ) {
+        if (response?.status === 200) {
             // Navigate and reload if successful
             if (response.data.isAdmin !== 0) {
                 navigate("/dashboard");
@@ -50,7 +46,6 @@ const LoginPage: FC = () => {
         // Reset loading state
         setLoading(false);
     }
-    
 
     return (
         <div className="flex flex-col justify-center items-center h-screen gap-4">
