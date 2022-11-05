@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useEffect, useRef, useState } from "react";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
 import {
     HiOutlineX,
     HiOutlineInformationCircle,

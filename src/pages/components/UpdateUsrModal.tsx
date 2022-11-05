@@ -1,95 +1,85 @@
-import React, { useEffect, useState } from "react";
-import { HiOutlineX } from "react-icons/hi";
-import { BiChevronDown, BiChevronRight } from "react-icons/bi";
-import { updateUser } from "../../Services/user.service";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { HiOutlineX } from 'react-icons/hi'
+import { BiChevronDown, BiChevronRight } from 'react-icons/bi'
+import { useNavigate } from 'react-router-dom';
+import { updateUser } from '../../Services/user.service'
 
 interface IUserModel {
-    name: string | null;
-    username: string | null;
-    email: string | null;
+    name: string | null
+    username: string | null
+    email: string | null
 }
 
-const UpdateUsrModal = ({
-    showModal,
-    setShowModal,
-    userName,
-    setUserName,
-    userArray,
-}: any) => {
-    const [showPassNote, setShowPassNote] = useState(false);
-    const [user, setUser] = useState<IUserModel>(userName ?? null);
-    const { username } = user;
-    const [newName, setNewName] = useState("");
-    const [newUsername, setNewUsername] = useState("");
-    const [newEmail, setNewEmail] = useState("");
-    const [notAvailable, setNotAvailable] = useState("");
-    const navigate = useNavigate();
+function UpdateUsrModal({ showModal, setShowModal, userName, setUserName, userArray }: any) {
+    const [showPassNote, setShowPassNote] = useState(false)
+    const [user, setUser] = useState<IUserModel>(userName ?? null)
+    const { username } = user
+    const [newName, setNewName] = useState('')
+    const [newUsername, setNewUsername] = useState('')
+    const [newEmail, setNewEmail] = useState('')
+    const [notAvailable, setNotAvailable] = useState('')
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (userName) {
-            setUser(userName);
+            setUser(userName)
         }
 
         if (userArray && newUsername) {
             if (
                 userArray.every((user: any) => {
-                    return user.username !== newUsername;
+                    return user.username !== newUsername
                 })
             ) {
-                setNotAvailable("");
+                setNotAvailable('')
+            } else if (username === newUsername) {
+                setNotAvailable('')
             } else {
-                if (username === newUsername) {
-                    setNotAvailable("");
-                } else {
-                    setNotAvailable("Username is occupied!");
-                }    
+                setNotAvailable('Username is occupied!')
             }
         }
-    }, [newUsername, userArray, userName, username]);
+    }, [newUsername, userArray, userName, username])
 
     function closeHandler() {
-        setNewName("");
-        setNewUsername("");
-        setNewEmail("");
-        setNotAvailable("");
+        setNewName('')
+        setNewUsername('')
+        setNewEmail('')
+        setNotAvailable('')
 
-        setShowModal((prev: any) => !prev);
+        setShowModal((prev: any) => !prev)
     }
 
     const onSubmit = async (event: any) => {
-        event.preventDefault();
+        event.preventDefault()
 
-        let obj: any = {};
-        const userId = userName._id;
+        const obj: any = {}
+        const userId = userName._id
 
-        newName ? (obj.name = newName) : (obj.name = userName.name);
+        newName ? (obj.name = newName) : (obj.name = userName.name)
 
-        newUsername
-            ? (obj.username = newUsername)
-            : (obj.username = userName.username);
+        newUsername ? (obj.username = newUsername) : (obj.username = userName.username)
 
-        newEmail ? (obj.email = newEmail) : (obj.email = userName.email);
+        newEmail ? (obj.email = newEmail) : (obj.email = userName.email)
 
-        console.log(obj);
+        console.log(obj)
 
-        const success = await updateUser(obj, userId);
+        const success = await updateUser(obj, userId)
 
         if (success) {
-            window.location.reload();
-            navigate("/dashboard", { state: "User was successfully updated!" });
+            window.location.reload()
+            navigate('/dashboard', { state: 'User was successfully updated!' })
         } else {
-            window.location.reload();
-            navigate("/dashboard", { state: "Failed to update user." });
+            window.location.reload()
+            navigate('/dashboard', { state: 'Failed to update user.' })
         }
 
-        setNewName("");
-        setNewUsername("");
-        setNewEmail("");
-        setNotAvailable("");
+        setNewName('')
+        setNewUsername('')
+        setNewEmail('')
+        setNotAvailable('')
 
-        setShowModal((prev: any) => !prev);
-    };
+        setShowModal((prev: any) => !prev)
+    }
 
     return (
         <>
@@ -104,11 +94,7 @@ const UpdateUsrModal = ({
                     {/* CONTENT */}
                     <div className="flex flex-col items-center px-5 pt-4">
                         {userName && (
-                            <form
-                                className="flex flex-col py-3"
-                                action=""
-                                onSubmit={onSubmit}
-                            >
+                            <form className="flex flex-col py-3" action="" onSubmit={onSubmit}>
                                 <input
                                     className="border rounded py-2 px-3 mb-3"
                                     type="text"
@@ -116,7 +102,7 @@ const UpdateUsrModal = ({
                                     placeholder="name"
                                     defaultValue={userName.name}
                                     onChange={(e) => setNewName(e.target.value)}
-                                    aria-label={"name of user"}
+                                    aria-label="name of user"
                                 />
 
                                 <input
@@ -126,10 +112,8 @@ const UpdateUsrModal = ({
                                     placeholder="email"
                                     defaultValue={userName.email}
                                     pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                                    onChange={(e) =>
-                                        setNewEmail(e.target.value)
-                                    }
-                                    aria-label={"user email"}
+                                    onChange={(e) => setNewEmail(e.target.value)}
+                                    aria-label="user email"
                                 />
 
                                 <input
@@ -138,28 +122,24 @@ const UpdateUsrModal = ({
                                     id="username"
                                     placeholder="username"
                                     defaultValue={userName.username}
-                                    onChange={(e) =>
-                                        setNewUsername(e.target.value)
-                                    }
-                                    aria-label={"username of user"}
+                                    onChange={(e) => setNewUsername(e.target.value)}
+                                    aria-label="username of user"
                                 />
 
                                 <input
                                     className={
                                         notAvailable
-                                            ? "border rounded py-2 px-3 bg-slate-50 opacity-60"
-                                            : "border rounded py-2 px-3 bg-slate-50 cursor-pointer "
+                                            ? 'border rounded py-2 px-3 bg-slate-50 opacity-60'
+                                            : 'border rounded py-2 px-3 bg-slate-50 cursor-pointer '
                                     }
                                     type="submit"
                                     value="update user"
-                                    disabled={notAvailable ? true : false}
-                                    aria-label={"submit"}
+                                    disabled={!!notAvailable}
+                                    aria-label="submit"
                                 />
 
                                 {notAvailable && (
-                                    <p className="text-red-700 pt-3">
-                                        {notAvailable}
-                                    </p>
+                                    <p className="text-red-700 pt-3">{notAvailable}</p>
                                 )}
                             </form>
                         )}
@@ -180,8 +160,8 @@ const UpdateUsrModal = ({
 
                             {showPassNote && (
                                 <span className="text-slate-400">
-                                    You cannot change users passwords. They have
-                                    to change it themselves in their userpage
+                                    You cannot change users passwords. They have to change it
+                                    themselves in their userpage
                                 </span>
                             )}
                         </div>
@@ -189,7 +169,7 @@ const UpdateUsrModal = ({
                 </div>
             )}
         </>
-    );
-};
+    )
+}
 
-export default UpdateUsrModal;
+export default UpdateUsrModal

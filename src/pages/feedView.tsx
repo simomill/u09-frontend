@@ -1,10 +1,9 @@
-import React, { FC, FormEvent, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Post from "./components/post";
 import { IoSearchOutline } from "react-icons/io5";
 import { checkIsLoggedIn, logout } from "../Services/auth.service";
 import { Link, useNavigate } from "react-router-dom";
 import { getAllUsers, getPhotos } from "../Services/user.service";
-import { IPhotoModel } from "../Models";
 import FullscreenModal from "./components/fullscreenModal";
 import Loader from "./Loader";
 

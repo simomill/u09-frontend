@@ -7,7 +7,6 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
     const [selectedImg, setSelectedImg] = useState<any>(null);
     const [selectImgText, setSelectImgText] = useState("Select");
     const [imageUrl, setImageUrl] = useState<any>("");
-    const [imageTitle, setImageTitle] = useState("");
     const [showRemove, setShowRemove] = useState(false);
     const ref = useRef<any>();
     const userName = useParams().id;
@@ -37,7 +36,7 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
         };
 
         try {
-            const result = await uploadImage(formData);
+            await uploadImage(formData);
 
             window.location.reload();
         } catch (error) {

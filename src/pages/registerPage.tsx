@@ -4,6 +4,7 @@ import { registerUser } from "../Services/auth.service";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+import Loader from "./Loader";
 
 const RegisterPage: FC = () => {
     // states and navigation
@@ -137,6 +138,8 @@ const RegisterPage: FC = () => {
             <Link to={"/login"} className="text-cyan-900 hover:text-cyan-600">
                 Already a user?
             </Link>
+
+            {loading && <Loader />}
         </div>
     );
 };

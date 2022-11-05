@@ -1,50 +1,50 @@
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { login, LoginModel } from "../Services/auth.service";
-import { useForm } from "react-hook-form";
+import { FC, useEffect, useState } from "react"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import { login } from "../Services/auth.service"
+import { useForm } from "react-hook-form"
+import Loader from "./Loader"
 
 const LoginPage: FC = () => {
     // states and navigation
-    const navigate = useNavigate();
-    const { state } = useLocation();
-    const [loading, setLoading] = useState(false);
-    const [statusMsg, setStatusMsg] = useState(state ?? "");
+    const navigate = useNavigate()
+    const { state } = useLocation()
+    const [loading, setLoading] = useState(false)
+    const [statusMsg, setStatusMsg] = useState(state ?? "")
 
     const {
         register,
         handleSubmit,
-        formState: { errors },
-    } = useForm();
+    } = useForm()
 
     useEffect(() => {
         if (statusMsg) {
             setTimeout(() => {
-                setStatusMsg("");
-            }, 4000);
+                setStatusMsg("")
+            }, 4000)
         }
-    }, [statusMsg]);
+    }, [statusMsg])
 
     // Login on button click
     async function onSubmit(data: any) {
-        setLoading(true);
+        setLoading(true)
 
-        const response = await login(data);
+        const response = await login(data)
 
         if (response?.status === 200) {
             // Navigate and reload if successful
             if (response.data.isAdmin !== 0) {
-                navigate("/dashboard");
-                window.location.reload();
+                navigate("/dashboard")
+                window.location.reload()
             } else {
-                navigate("/");
-                window.location.reload();
+                navigate("/")
+                window.location.reload()
             }
         } else {
-            setStatusMsg(response?.data);
+            setStatusMsg(response?.data)
         }
 
         // Reset loading state
-        setLoading(false);
+        setLoading(false)
     }
 
     return (
@@ -98,12 +98,14 @@ const LoginPage: FC = () => {
                             <p className="text-red-700 bg-red-50 border border-red-700 rounded mt-3">
                                 {statusMsg}
                             </p>
-                        );
+                        )
                     }
                 })()}
             </form>
-        </div>
-    );
-};
 
-export default LoginPage;
+            {loading && <Loader />}
+        </div>
+    )
+}
+
+export default LoginPage
