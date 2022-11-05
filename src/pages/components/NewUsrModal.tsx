@@ -61,6 +61,7 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
                                 id="name"
                                 placeholder="name"
                                 {...register("name", { required: true })}
+                                aria-label={"name of user"}
                             />
 
                             <input
@@ -73,6 +74,7 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
                                     pattern:
                                         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                                 })}
+                                aria-label={"user email"}
                             />
 
                             <input
@@ -84,6 +86,7 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
                                     required: true,
                                     maxLength: 10,
                                 })}
+                                aria-label={"username of user"}
                             />
                             {errors.username && (
                                 <p className="text-red-700">
@@ -95,6 +98,7 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
                                 className="border rounded py-2 px-3 bg-slate-50 cursor-pointer "
                                 type="submit"
                                 value="create user"
+                                aria-label={"submit"}
                             />
                         </form>
                         <div

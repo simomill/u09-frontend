@@ -86,6 +86,7 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
                                     type="hidden"
                                     name="username"
                                     value={userName}
+                                    aria-label={"your username is chosen automatically"}
                                 />
 
                                 <div className="flex flex-row justify-center items-center">
@@ -124,10 +125,11 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
                                         <input
                                             className="border rounded py-2 px-3 mb-3"
                                             type="text"
-                                            id="passconf"
+                                            id="imgTitle"
                                             placeholder="title"
                                             name="title"
                                             accept="image/*"
+                                            aria-label={"Image title"}
                                         />
                                     </>
                                 )}
@@ -144,6 +146,7 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
                                     hidden={true}
                                     name="file"
                                     id="fileUpload"
+                                    aria-label={"Upload image"}
                                 />
                             </div>
 

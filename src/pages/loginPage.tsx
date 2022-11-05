@@ -62,6 +62,7 @@ const LoginPage: FC = () => {
                     id="username"
                     placeholder="username"
                     {...register("username", { required: true })}
+                    aria-label={"your username"}
                 />
 
                 <input
@@ -70,12 +71,14 @@ const LoginPage: FC = () => {
                     id="pass"
                     placeholder="password"
                     {...register("password", { required: true })}
+                    aria-label={"your password"}
                 />
 
                 <input
                     className="border rounded py-2 px-3 bg-slate-50 cursor-pointer"
                     type="submit"
                     value="login"
+                    aria-label={"submit"}
                 />
 
                 <Link

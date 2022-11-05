@@ -122,10 +122,11 @@ const Dashboard = () => {
                 <div className="flex flex-row border border-gray-300 rounded-lg mx-3 w-min p-2 items-center bg-white">
                     <input
                         type="text"
-                        name=""
-                        id=""
+                        name="searchfield"
+                        id="searchfield"
                         className="focus:outline-none"
                         onChange={(e) => onSearch(e.target.value)}
+                        aria-label={"search"}
                     />
                     <IoSearchOutline className="w-6 h-6 text-gray-300" />
                 </div>

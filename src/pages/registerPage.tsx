@@ -72,6 +72,7 @@ const RegisterPage: FC = () => {
                     id="name"
                     placeholder="name"
                     {...register("name", { required: true })}
+                    aria-label={"your name"}
                 />
 
                 <input
@@ -84,6 +85,7 @@ const RegisterPage: FC = () => {
                         pattern:
                             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                     })}
+                    aria-label={"your email"}
                 />
 
                 <input
@@ -92,6 +94,7 @@ const RegisterPage: FC = () => {
                     id="username"
                     placeholder="username"
                     {...register("username", { required: true, maxLength: 10 })}
+                    aria-label={"your username"}
                 />
                 {errors.username && (
                     <p className="text-red-700">Please choose a username</p>
@@ -103,6 +106,7 @@ const RegisterPage: FC = () => {
                     id="pass"
                     placeholder="password"
                     {...register("password", { required: true })}
+                    aria-label={"your password"}
                 />
                 {errors.password && (
                     <p className="text-red-700">Please choose a password</p>
@@ -114,6 +118,7 @@ const RegisterPage: FC = () => {
                     id="passconf"
                     placeholder="repeat password"
                     {...register("passconf")}
+                    aria-label={"confirm password"}
                 />
                 {errors.passconf && (
                     <p className="text-red-700">Passwords do not match</p>
@@ -123,6 +128,7 @@ const RegisterPage: FC = () => {
                     className="border rounded py-2 px-3 bg-slate-50 cursor-pointer "
                     type="submit"
                     value="register"
+                    aria-label={"submit"}
                 />
             </form>
 

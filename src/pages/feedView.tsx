@@ -110,11 +110,12 @@ const FeedView: FC = () => {
                     <div className="flex flex-row border border-gray-300 rounded-lg w-min p-3 items-center">
                         <input
                             type="text"
-                            name=""
-                            id=""
+                            name="searchfield"
+                            id="searchfield"
                             className="focus:outline-none"
                             onChange={(e) => onSearch(e.target.value)}
-                        />
+                            aria-label={"search"}
+                            />
                         <IoSearchOutline className="w-6 h-6 text-gray-300" />
                     </div>
 
