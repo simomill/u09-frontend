@@ -5,14 +5,18 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { IUserModel } from "../../Models";
 import { logout } from "../../Services/auth.service";
 
-const Nav = (userArray: IUserModel[] | any, isAdmin: boolean, pageId: string) => {
+const Nav = (
+    userArray: IUserModel[] | any,
+    isAdmin: boolean,
+    pageId: string
+) => {
     const navigate = useNavigate();
     const [profileMenu, setProfileMenu] = useState(false);
     const [searchVal, setSearchVal] = useState("");
     const initialArray: any[] | (() => any[]) = [];
     const [findings, setFindings] = useState(initialArray);
     isAdmin = userArray.isAdmin;
-    pageId = userArray.pageId;    
+    pageId = userArray.pageId;
 
     function onClickLogout() {
         logout();
@@ -54,10 +58,16 @@ const Nav = (userArray: IUserModel[] | any, isAdmin: boolean, pageId: string) =>
             <nav className="flex flex-row justify-center items-center">
                 {pageId === "/dashboard" && (
                     <Link to={"/"}>
-                        <AiFillHome className="w-6 h-6 text-slate-800 hover:text-slate-600 mr-4" />
+                        <AiFillHome className="homeBtn" />
                     </Link>
                 )}
-                <div className={pageId === "/dashboard" ? "bg-white flex flex-row border border-gray-300 rounded-lg w-min p-3 items-center" : "flex flex-row border border-gray-300 rounded-lg w-min p-3 items-center"}>
+                <div
+                    className={
+                        pageId === "/dashboard"
+                            ? "searchField bg-white"
+                            : "searchField"
+                    }
+                >
                     <input
                         type="text"
                         name="searchfield"
@@ -73,8 +83,8 @@ const Nav = (userArray: IUserModel[] | any, isAdmin: boolean, pageId: string) =>
                     <div
                         className={
                             findings.length
-                                ? "absolute top-20 border z-20 w-72 rounded bg-white flex flex-col gap-1 items-center shadow-md"
-                                : "hidden"
+                                ? "searchResults"
+                                : "hidden aria-hidden"
                         }
                     >
                         {findings.map((user: string, index: number) => (
@@ -91,58 +101,46 @@ const Nav = (userArray: IUserModel[] | any, isAdmin: boolean, pageId: string) =>
 
                 <div
                     onClick={onClickProfile}
-                    className="rounded-full w-4 h-4 p-4 bg-slate-500 border border-gray-500 ml-5 relative cursor-pointer"
+                    className="avatar"
                 >
                     <div
                         className={
                             profileMenu
-                                ? "absolute w-min h-min shadow-md rounded-lg py-4 z-20 bg-white -left-10 top-5 mt-6 flex flex-col items-center gap-4"
-                                : "absolute w-60 h-min shadow-md rounded-lg py-2 z-20 bg-white left-0 top-0 mt-6 hidden aria-hidden"
+                                ? "menu"
+                                : " hidden aria-hidden"
                         }
                     >
-                        {pageId === "/dashboard" ? (
-                            <>
-                                <Link
-                                    className="px-8 w-min hover:text-cyan-600"
-                                    to={`/user/${localStorage.getItem(
-                                        "username"
-                                    )}`}
-                                >
-                                    Profile
-                                </Link>
-                                <button
-                                    className="hover:text-cyan-600"
-                                    onClick={onClickLogout}
-                                >
-                                    Logout
-                                </button>
-                            </>
-                        ) : (
+                        {pageId !== "/dashboard" && (
                             <>
                                 {isAdmin && (
-                                    <Link to={"//dashboard"}>/dashboard</Link>
+                                    <Link
+                                        className="menuLink"
+                                        to={"/dashboard"}
+                                    >
+                                        Dashboard
+                                    </Link>
                                 )}
-                                <Link
-                                    className="px-8 w-min hover:text-cyan-600"
-                                    to={`/user/${localStorage.getItem(
-                                        "username"
-                                    )}`}
-                                >
-                                    Profile
-                                </Link>
-                                <button
-                                    className="hover:text-cyan-600"
-                                    onClick={onClickLogout}
-                                >
-                                    Logout
-                                </button>
                             </>
                         )}
+
+                        <Link
+                            className="menuLink"
+                            to={`/user/${localStorage.getItem("username")}`}
+                        >
+                            Profile
+                        </Link>
+
+                        <button
+                            className="hover:text-cyan-600"
+                            onClick={onClickLogout}
+                        >
+                            Logout
+                        </button>
                     </div>
                 </div>
             </nav>
 
-            <span className="w-full h-px border-b border-gray-200 p-2"></span>
+            <span className="divider"></span>
         </>
     );
 };
