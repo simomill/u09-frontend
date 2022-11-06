@@ -84,11 +84,11 @@ const LoginForm = ({ state }: any) => {
                 {(() => {
                     if (statusMsg) {
                         return statusMsg.includes("success") ? (
-                            <p className="text-green-700 bg-green-50 border border-green-700 rounded mt-3">
+                            <p className="msg success">
                                 {statusMsg}
                             </p>
                         ) : (
-                            <p className="text-red-700 bg-red-50 border border-red-700 rounded mt-3">
+                            <p className="msg warning">
                                 {statusMsg}
                             </p>
                         );

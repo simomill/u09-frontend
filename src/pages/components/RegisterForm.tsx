@@ -53,7 +53,7 @@ const RegisterForm = ({ statusMsg, setStatusMsg }: any) => {
             onSubmit={handleSubmit(onSubmit)}
         >
             <input
-                className="border rounded py-2 px-3 mb-3"
+                className="inputField"
                 type="text"
                 id="name"
                 placeholder="name"
@@ -62,7 +62,7 @@ const RegisterForm = ({ statusMsg, setStatusMsg }: any) => {
             />
 
             <input
-                className="border rounded py-2 px-3 mb-3"
+                className="inputField"
                 type="email"
                 id="email"
                 placeholder="email"
@@ -75,7 +75,7 @@ const RegisterForm = ({ statusMsg, setStatusMsg }: any) => {
             />
 
             <input
-                className="border rounded py-2 px-3 mb-3"
+                className="inputField"
                 type="text"
                 id="username"
                 placeholder="username"
@@ -87,7 +87,7 @@ const RegisterForm = ({ statusMsg, setStatusMsg }: any) => {
             )}
 
             <input
-                className="border rounded py-2 px-3 mb-3"
+                className="inputField"
                 type="password"
                 id="pass"
                 placeholder="password"
@@ -99,7 +99,7 @@ const RegisterForm = ({ statusMsg, setStatusMsg }: any) => {
             )}
 
             <input
-                className="border rounded py-2 px-3 mb-3"
+                className="inputField"
                 type="password"
                 id="passconf"
                 placeholder="repeat password"
@@ -111,7 +111,7 @@ const RegisterForm = ({ statusMsg, setStatusMsg }: any) => {
             )}
 
             <input
-                className="border rounded py-2 px-3 bg-slate-50 cursor-pointer "
+                className="btn"
                 type="submit"
                 value="register"
                 aria-label={"submit"}

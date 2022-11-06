@@ -60,8 +60,8 @@ const RegisterPage: FC = () => {
     }, [statusMsg]);
 
     return (
-        <div className="flex flex-col justify-center items-center h-screen gap-4">
-            <h1 className="font-bold text-3xl mb-6 text-cyan-900">DSPLAY</h1>
+        <div className="formGroup">
+            <h1 className="logo">DSPLAY</h1>
 
             <RegisterForm
                 statusMsg={statusMsg}
@@ -70,7 +70,7 @@ const RegisterPage: FC = () => {
 
             {statusMsg && <p className="text-red-700">{statusMsg}</p>}
 
-            <Link to={"/login"} className="text-cyan-900 hover:text-cyan-600">
+            <Link to={"/login"} className="textLink">
                 Already a user?
             </Link>
 
