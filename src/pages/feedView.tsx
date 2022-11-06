@@ -18,8 +18,6 @@ const FeedView: FC = () => {
     const [isLoading, setIsLoading] = useState(false);
 
 
-    
-
     const changeState = (data: any) => {
         console.log({ data });
 

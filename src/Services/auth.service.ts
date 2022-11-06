@@ -12,11 +12,8 @@ export const registerUser = async (registerData: IRegisterModel) => {
         const response = await axios
             .post(`${API_URL}/register`, registerData)
             .then((data) => {
-                console.log(data);
                 return data;
             });
-
-        console.log(response);
 
     return response.status === 200; 
   
@@ -28,11 +25,8 @@ export const login = async (loginData: ILoginModel) => {
         const response = await axios
             .post(`${API_URL}/login`, loginData)
             .then((data) => {
-                console.log(data);
                 return data;
             });
-
-        console.log(response);
 
         if (
             response.data !== "Wrong Password" &&
@@ -47,8 +41,8 @@ export const login = async (loginData: ILoginModel) => {
         }
 
         return response;
-    } catch (error) {
-        console.log(error);
+    } catch (error: any) {
+        return error.response;
     }
 };
 
