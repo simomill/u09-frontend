@@ -23,8 +23,7 @@ const RemoveCmntModal = ({ showModal, setShowModal, id, fetchComments }: any) =>
     return (
         <>
             {showModal && (
-                <div className="commentModalPlacement">
-                    <div className="commentModalBody">
+                    <div className="modalQ">
                         <HiOutlineX
                             className="closeWndw"
                             onClick={closeHandler}
@@ -54,7 +53,6 @@ const RemoveCmntModal = ({ showModal, setShowModal, id, fetchComments }: any) =>
                             </button>
                         </div>
                     </div>
-                </div>
             )}
         </>
     );
