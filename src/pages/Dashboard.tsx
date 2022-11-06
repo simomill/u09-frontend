@@ -30,7 +30,7 @@ const Dashboard = () => {
     const { state } = useLocation();
     const [statusMsg, setStatusMsg] = useState(state ?? "");
     const authRole = localStorage.getItem("isAdmin");
-    const [isLoading, setIsLoading] = useState(false);    
+    const [isLoading, setIsLoading] = useState(false);
 
     function onClickLogout() {
         logout();
@@ -113,25 +113,20 @@ const Dashboard = () => {
     }, [searchVal, statusMsg, userArray]);
 
     return (
-        <div className="h-screen py-6 px-2 items-center flex flex-col bg-gray-100 relative">
-            
+        <div className="dashContainer">
             <Nav userArray={userArray} isAdmin={authRole} pageId={pageId} />
 
-            {/* Content */}
-
-            <div className="flex flex-col justify-start items-stretch p-4 gap-2">
-                
+            <div className="usersFlexbox">
                 {isLoading && <Loader />}
-                
-                <p className="text-3xl font-bold pb-3">Users</p>
-                {statusMsg && <p className="text-green-500">{statusMsg}</p>}
+
+                <h1>Users</h1>
+
+                {statusMsg && <p className="msg success">{statusMsg}</p>}
+
                 {userArray?.map((user, index) => (
-                    <div
-                        key={index}
-                        className="flex bg-white border border-gray-200 rounded justify-between"
-                    >
+                    <div key={index} className="card">
                         <div
-                            className="flex items-start flex-col p-3 hover:text-sky-400 cursor-pointer"
+                            className="userInfo"
                             onClick={() => navigate(`/user/${user.username}`)}
                         >
                             <p className="font-medium">{user.username}</p>
@@ -148,27 +143,26 @@ const Dashboard = () => {
                         {(() => {
                             if (authRole && authRole > user.isAdmin)
                                 return (
-                                    <div className="flex justify-center border-l border-gray-200">
-                                        {user.isAdmin !== 2 && (
-                                            <div className="flex items-center border-r border-gray-200 px-4">
-                                                <BsFillKeyFill
-                                                    onClick={() =>
-                                                        onMakeAdmin(user)
-                                                    }
-                                                    className="w-6 h-6 text-sky-900 cursor-pointer hover:text-slate-400"
-                                                />
-                                            </div>
-                                        )}
-                                        <div className="flex items-center border-r border-gray-200 px-4">
+                                    <div className="actionButtons">
+                                        <div className="action rBorder">
+                                            <BsFillKeyFill
+                                                onClick={() =>
+                                                    onMakeAdmin(user)
+                                                }
+                                                className="actionIcon"
+                                            />
+                                        </div>
+
+                                        <div className="action rBorder">
                                             <BsFillPencilFill
-                                                className="w-6 h-6 text-sky-900 cursor-pointer hover:text-slate-400"
+                                                className="actionIcon"
                                                 onClick={() => onEdit(user)}
                                             />
                                         </div>
 
-                                        <div className="flex items-center px-4">
+                                        <div className="action">
                                             <BsTrashFill
-                                                className="w-6 h-6 text-sky-900 hover:text-red-900 cursor-pointer"
+                                                className="actionIcon"
                                                 onClick={() =>
                                                     onRemove(user.username)
                                                 }
@@ -182,8 +176,8 @@ const Dashboard = () => {
                 <ImPlus
                     className={
                         showNewUsrModal
-                            ? "w-6 h-6 my-5 mx-2 text-green-600 hover:text-green-600 cursor-pointer"
-                            : "w-6 h-6 my-5 mx-2 text-green-800 hover:text-green-600 cursor-pointer"
+                            ? "plusIcon plusActive"
+                            : "plusIcon"
                     }
                     onClick={onAdd}
                 />
