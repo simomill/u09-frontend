@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { login } from "../Services/auth.service"
 import { useForm } from "react-hook-form"
-import Loader from "./Loader"
+import Loader from "./components/Loader"
 
 const LoginPage: FC = () => {
     // states and navigation

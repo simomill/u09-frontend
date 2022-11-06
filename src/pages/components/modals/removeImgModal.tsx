@@ -1,5 +1,5 @@
 import React from "react";
-import { deleteUserPhoto } from "../../Services/user.service";
+import { deleteUserPhoto } from "../../../Services/user.service";
 import { HiOutlineX } from "react-icons/hi";
 import { IoWarningOutline } from "react-icons/io5";
 

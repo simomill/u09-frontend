@@ -4,9 +4,8 @@ import { getUser, getUserPhotos } from "../Services/user.service";
 import { FaChevronLeft } from "react-icons/fa";
 import { AiOutlinePlusSquare } from "react-icons/ai";
 import Post from "./components/post";
-import UploadModal from "./components/uploadModal";
-import Loader from "./Loader";
-import { setLocale } from "yup";
+import UploadModal from "./components/modals/uploadModal";
+import Loader from "./components/Loader";
 
 const UserPage: FC = () => {
     // STATES AND VARIABLES

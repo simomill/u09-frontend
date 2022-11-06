@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { logout } from "../Services/auth.service";
 import { getAllUsers } from "../Services/user.service";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
@@ -11,10 +11,12 @@ import NewUsrModal from "./components/modals/NewUsrModal";
 import UpdateUsrModal from "./components/modals/UpdateUsrModal";
 import AdminAssignModal from "./components/modals/AdminAssignModal";
 import { AiFillHome } from "react-icons/ai";
-import Loader from "./Loader";
+import Loader from "./components/Loader";
+import Nav from "./components/Nav";
 
 const Dashboard = () => {
     const navigate = useNavigate();
+    const pageId = useLocation().pathname;
     const [profileMenu, setProfileMenu] = useState(false);
     const initialArray: any[] | (() => any[]) = [];
     const [userArray, setUserArray] = useState<any[] | null>(null);
@@ -28,8 +30,7 @@ const Dashboard = () => {
     const { state } = useLocation();
     const [statusMsg, setStatusMsg] = useState(state ?? "");
     const authRole = localStorage.getItem("isAdmin");
-    const [isLoading, setIsLoading] = useState(false);
-
+    const [isLoading, setIsLoading] = useState(false);    
 
     function onClickLogout() {
         logout();
@@ -113,72 +114,8 @@ const Dashboard = () => {
 
     return (
         <div className="h-screen py-6 px-2 items-center flex flex-col bg-gray-100 relative">
-            {/* Nav */}
-            <nav className="flex flex-row gap-2 justify-center items-center">
-                <Link to={"/"}>
-                    <AiFillHome className="w-6 h-6 text-slate-800 hover:text-slate-600" />
-                </Link>
-
-                <div className="flex flex-row border border-gray-300 rounded-lg mx-3 w-min p-2 items-center bg-white">
-                    <input
-                        type="text"
-                        name="searchfield"
-                        id="searchfield"
-                        className="focus:outline-none"
-                        onChange={(e) => onSearch(e.target.value)}
-                        aria-label={"search"}
-                    />
-                    <IoSearchOutline className="w-6 h-6 text-gray-300" />
-                </div>
-
-                {searchVal && (
-                    <div
-                        className={
-                            findings.length
-                                ? "absolute top-20 border z-20 w-72 rounded bg-white flex flex-col gap-1 items-center shadow-md"
-                                : "hidden"
-                        }
-                    >
-                        {findings.map((user: string, index: number) => (
-                            <Link
-                                key={index}
-                                className="flex flex-col w-1/3 items-start"
-                                to={`/user/${user}`}
-                            >
-                                <p className="font-medium py-2">{user}</p>
-                            </Link>
-                        ))}
-                    </div>
-                )}
-
-                <div
-                    onClick={onClickProfile}
-                    className="rounded-full w-4 h-4 p-4 bg-slate-500 border border-gray-500 relative cursor-pointer"
-                >
-                    <div
-                        className={
-                            profileMenu
-                                ? "absolute w-min h-min shadow-md rounded-lg py-4 z-20 bg-white -left-10 top-5 mt-6 flex flex-col items-center gap-4"
-                                : "absolute w-60 h-min shadow-md rounded-lg py-2 z-20 bg-white left-0 top-0 mt-6 hidden aria-hidden"
-                        }
-                    >
-                        <Link
-                            className="px-8 w-min hover:text-cyan-600"
-                            to={`/user/${localStorage.getItem("username")}`}
-                        >
-                            Profile
-                        </Link>
-                        <button
-                            className="hover:text-cyan-600"
-                            onClick={onClickLogout}
-                        >
-                            Logout
-                        </button>
-                    </div>
-                </div>
-            </nav>
-
-            <span className="w-full h-px border-b border-gray-200 py-2"></span>
+            
+            <Nav userArray={userArray} isAdmin={authRole} pageId={pageId} />
 
             {/* Content */}
 

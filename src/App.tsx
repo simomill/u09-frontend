@@ -10,7 +10,6 @@ import { checkIsLoggedIn } from "./Services/auth.service";
 import TestAuthPage from "./pages/TestAuthPage";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
-import Loader from "./pages/Loader";
 import Unauth from "./pages/Unauth";
 
 function App() {

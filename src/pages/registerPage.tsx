@@ -4,7 +4,7 @@ import { registerUser } from "../Services/auth.service";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import Loader from "./Loader";
+import Loader from "./components/Loader";
 
 const RegisterPage: FC = () => {
     // states and navigation
