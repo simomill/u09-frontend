@@ -5,12 +5,13 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import Loader from "./components/Loader";
+import RegisterForm from "./components/RegisterForm";
 
 const RegisterPage: FC = () => {
     // states and navigation
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const [statusMsg, setStatusMsg] = useState("");
+    const [statusMsg, setStatusMsg] = useState<any>("");
 
     // Change username state from input
 
@@ -62,76 +63,10 @@ const RegisterPage: FC = () => {
         <div className="flex flex-col justify-center items-center h-screen gap-4">
             <h1 className="font-bold text-3xl mb-6 text-cyan-900">DSPLAY</h1>
 
-            <form
-                className="flex flex-col"
-                action=""
-                onSubmit={handleSubmit(onSubmit)}
-            >
-                <input
-                    className="border rounded py-2 px-3 mb-3"
-                    type="text"
-                    id="name"
-                    placeholder="name"
-                    {...register("name", { required: true })}
-                    aria-label={"your name"}
-                />
-
-                <input
-                    className="border rounded py-2 px-3 mb-3"
-                    type="email"
-                    id="email"
-                    placeholder="email"
-                    {...register("email", {
-                        required: true,
-                        pattern:
-                            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                    })}
-                    aria-label={"your email"}
-                />
-
-                <input
-                    className="border rounded py-2 px-3 mb-3"
-                    type="text"
-                    id="username"
-                    placeholder="username"
-                    {...register("username", { required: true, maxLength: 10 })}
-                    aria-label={"your username"}
-                />
-                {errors.username && (
-                    <p className="text-red-700">Please choose a username</p>
-                )}
-
-                <input
-                    className="border rounded py-2 px-3 mb-3"
-                    type="password"
-                    id="pass"
-                    placeholder="password"
-                    {...register("password", { required: true })}
-                    aria-label={"your password"}
-                />
-                {errors.password && (
-                    <p className="text-red-700">Please choose a password</p>
-                )}
-
-                <input
-                    className="border rounded py-2 px-3 mb-3"
-                    type="password"
-                    id="passconf"
-                    placeholder="repeat password"
-                    {...register("passconf")}
-                    aria-label={"confirm password"}
-                />
-                {errors.passconf && (
-                    <p className="text-red-700">Passwords do not match</p>
-                )}
-
-                <input
-                    className="border rounded py-2 px-3 bg-slate-50 cursor-pointer "
-                    type="submit"
-                    value="register"
-                    aria-label={"submit"}
-                />
-            </form>
+            <RegisterForm
+                statusMsg={statusMsg}
+                setStatusMsg={setStatusMsg}
+            />
 
             {statusMsg && <p className="text-red-700">{statusMsg}</p>}
 
