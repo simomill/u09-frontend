@@ -1,24 +1,14 @@
 import axios from "axios";
+import { ILoginModel, IRegisterModel } from "../Models";
 
 const API_URL =
     process.env.NODE_ENV === "production"
         ? `${process.env.REACT_APP_API_URL}/auth`
         : `http://localhost:3000/auth`;
 
-export interface LoginModel {
-    username: string;
-    password: string;
-}
 
-export interface RegisterModel {
-    username: string;
-    password: string;
-    name: string;
-    email: string;
-    passconf: string;
-}
 // Post register user
-export const registerUser = async (registerData: RegisterModel) => {
+export const registerUser = async (registerData: IRegisterModel) => {
         const response = await axios
             .post(`${API_URL}/register`, registerData)
             .then((data) => {
@@ -33,7 +23,7 @@ export const registerUser = async (registerData: RegisterModel) => {
 };
 
 // Post login user and save token
-export const login = async (loginData: LoginModel) => {
+export const login = async (loginData: ILoginModel) => {
     try {
         const response = await axios
             .post(`${API_URL}/login`, loginData)
