@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { getUser, getUserPhotos } from "../Services/user.service";
 import { FaChevronLeft } from "react-icons/fa";
 import { AiOutlinePlusSquare } from "react-icons/ai";
-import Post from "./components/post";
+import Post from "./components/Post";
 import UploadModal from "./components/modals/uploadModal";
 import Loader from "./components/Loader";
 

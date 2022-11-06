@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import FeedView from "./pages/feedView";
+import FeedView from "./pages/FeedView";
 import PhotoView from "./pages/PhotoView";
-import UserPage from "./pages/userPage";
-import LoginPage from "./pages/loginPage";
-import RegisterPage from "./pages/registerPage";
+import UserPage from "./pages/UserPage";
+import RegisterPage from "./pages/RegisterPage";
 import { checkIsLoggedIn } from "./Services/auth.service";
 import TestAuthPage from "./pages/TestAuthPage";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import Unauth from "./pages/Unauth";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);

@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import Post from "./components/post";
+import Post from "./components/Post";
 import { checkIsLoggedIn } from "../Services/auth.service";
 import { getAllUsers, getPhotos } from "../Services/user.service";
 import FullscreenModal from "./components/modals/fullscreenModal";

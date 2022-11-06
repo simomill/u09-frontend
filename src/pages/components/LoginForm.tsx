@@ -50,7 +50,7 @@ const LoginForm = ({ state }: any) => {
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <input
-                    className="border rounded py-2 px-3 mb-3"
+                    className="inputField"
                     type="text"
                     id="username"
                     placeholder="username"
@@ -59,7 +59,7 @@ const LoginForm = ({ state }: any) => {
                 />
 
                 <input
-                    className="border rounded py-2 px-3 mb-3"
+                    className="inputField"
                     type="password"
                     id="pass"
                     placeholder="password"
@@ -68,7 +68,7 @@ const LoginForm = ({ state }: any) => {
                 />
 
                 <input
-                    className="border rounded py-2 px-3 bg-slate-50 cursor-pointer"
+                    className="btn"
                     type="submit"
                     value="login"
                     aria-label={"submit"}
@@ -76,7 +76,7 @@ const LoginForm = ({ state }: any) => {
 
                 <Link
                     to={"/register"}
-                    className="text-cyan-900 hover:text-cyan-600"
+                    className="textLink"
                 >
                     Not a user yet?
                 </Link>
