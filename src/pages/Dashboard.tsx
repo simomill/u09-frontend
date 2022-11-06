@@ -6,7 +6,7 @@ import { getAllUsers } from "../Services/user.service";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import { ImPlus } from "react-icons/im";
 import { BsFillKeyFill } from "react-icons/bs";
-import RemoveUsrModal from "./components/modals/removeUsrModal";
+import RemoveUsrModal from "./components/modals/RmvUsrModal";
 import NewUsrModal from "./components/modals/NewUsrModal";
 import UpdateUsrModal from "./components/modals/UpdateUsrModal";
 import AdminAssignModal from "./components/modals/AdminAssignModal";

@@ -26,7 +26,7 @@ const RemoveImgModal = ({ showModal, setShowModal, id }: any) => {
                             onClick={closeHandler}
                         />
 
-                        <div className="flex flex-col items-center justify-center">
+                        <div className="centerColumn">
                             <IoWarningOutline className="w-6 h-6 mb-3 text-red-700" />
 
                             <p>You are about to delete this image.</p>

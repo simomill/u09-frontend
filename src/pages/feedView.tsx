@@ -2,13 +2,12 @@ import React, { FC, useEffect, useState } from "react";
 import Post from "./components/Post";
 import { checkIsLoggedIn } from "../Services/auth.service";
 import { getAllUsers, getPhotos } from "../Services/user.service";
-import FullscreenModal from "./components/modals/fullscreenModal";
+import FullscreenModal from "./components/modals/FullscreenModal";
 import Loader from "./components/Loader";
 import Nav from "./components/Nav";
 import { IUserModel } from "../Models";
 
 const FeedView: FC = () => {
-
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [photoArray, setPhotoArray] = useState<any[] | null>(null);
@@ -17,10 +16,7 @@ const FeedView: FC = () => {
     const [showFullscreenModal, setShowFullscreenModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-
     const changeState = (data: any) => {
-        console.log({ data });
-
         if (!chosenPhoto) {
             setChosenPhoto(data);
             setShowFullscreenModal((prev) => !prev);
@@ -29,7 +25,7 @@ const FeedView: FC = () => {
 
     async function fetchUsers() {
         const response = await getAllUsers();
-        
+
         setUserArray(response.data);
     }
 
@@ -55,10 +51,8 @@ const FeedView: FC = () => {
             setIsLoading(true);
             fetchPhotos();
         } else {
-            setIsLoading(false)
+            setIsLoading(false);
         }
-
-        
 
         if (!showFullscreenModal) {
             setChosenPhoto(null);
@@ -68,13 +62,11 @@ const FeedView: FC = () => {
     return (
         <>
             <div className="w-full py-6 flex flex-col">
-
                 <Nav userArray={userArray} isAdmin={isAdmin} />
-                
-                <div className="flex flex-wrap items-center justify-center">
 
+                <div className="centerColumn">
                     {isLoading && <Loader />}
-                    
+
                     {/* IF THERE ARE PHOTOS, THEN LOOP OVER THEM */}
                     {(() => {
                         if (photoArray && photoArray.length > 0) {
@@ -83,7 +75,7 @@ const FeedView: FC = () => {
                                     {photoArray.map(
                                         (item: any, index: number) => (
                                             <div
-                                                className="w-full flex flex-col items-center relative"
+                                                className="postOuter"
                                                 key={index}
                                             >
                                                 <Post
