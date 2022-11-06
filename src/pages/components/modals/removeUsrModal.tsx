@@ -1,7 +1,6 @@
 import React from "react";
 import { deleteUser } from "../../../Services/user.service";
 import { HiOutlineX } from "react-icons/hi";
-import { IoWarningOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineUserDelete } from "react-icons/ai";
 

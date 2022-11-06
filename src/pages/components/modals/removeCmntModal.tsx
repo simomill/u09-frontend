@@ -1,14 +1,9 @@
 import React from "react";
-import { deleteUser } from "../../../Services/user.service";
 import { HiOutlineX } from "react-icons/hi";
-import { IoWarningOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
-import { AiOutlineUserDelete } from "react-icons/ai";
 import { deleteComment } from "../../../Services/comment.service";
 import { BiCommentX } from "react-icons/bi";
 
 const RemoveCmntModal = ({ showModal, setShowModal, id, fetchComments }: any) => {
-    const navigate = useNavigate();
 
     function closeHandler() {
         setShowModal((prev: any) => !prev);
