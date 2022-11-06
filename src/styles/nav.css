@@ -1,0 +1,25 @@
+/* ----------------------NAV */
+
+.menu {
+    @apply absolute w-min h-min shadow-md rounded-lg py-4 z-20 bg-white -left-10 top-5 mt-6 flex flex-col items-center gap-4;
+}
+
+.menuLink {
+    @apply px-8 w-min hover:text-cyan-600;
+}
+
+.searchField {
+    @apply flex flex-row border border-gray-300 rounded-lg w-min p-3 items-center mr-5;
+}
+
+.searchResults {
+    @apply absolute top-20 border z-20 w-72 rounded-lg bg-white flex flex-col gap-1 items-center shadow-md;
+}
+
+.avatar {
+    @apply rounded-full w-4 h-4 p-4 bg-slate-500 border border-gray-500 mx-2 relative cursor-pointer;
+}
+
+.homeBtn {
+    @apply w-6 h-6 text-slate-800 hover:text-slate-600 mr-4;
+}

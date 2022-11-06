@@ -1,0 +1,53 @@
+/* -------------POST */
+
+.postOuter {
+    @apply w-full flex flex-col items-center relative;
+}
+
+.postContainer {
+    @apply w-full py-4 px-6 flex flex-col self-center items-center;
+}
+
+.removeBtn {
+    @apply w-5 h-5 cursor-pointer self-start absolute top-5 right-10 m-3 bg-white border rounded text-red-700;
+}
+
+.byline {
+    @apply flex flex-row items-center self-start mb-2;
+}
+
+.toggleSection {
+    @apply relative flex flex-col gap-3 items-start w-full;
+}
+
+.comment {
+    @apply w-fit flex flex-row gap-2 items-start justify-start pb-2;
+}
+
+.commentMsg {
+    @apply h-max w-60 text-left break-words pl-2;
+}
+
+.redCross {
+    @apply w-5 h-5 cursor-pointer top-5 right-10 text-red-700;
+}
+
+.textArea {
+    @apply text-left border h-fit w-52 rounded rounded-r-none py-2 px-3 empty:before:content-[attr(placeholder)] focus:before:content-[attr(ref)];
+}
+
+.postComment {
+    @apply h-max py-2 border rounded px-5 bg-slate-50 cursor-pointer hover:border-sky-200 hover:bg-sky-50 rounded-l-none;
+}
+
+.toggleIcon {
+    @apply w-6 h-6 cursor-pointer;
+}
+
+.infoIcon {
+    @apply flex flex-row py-1 gap-2;
+}
+
+.centerColumn {
+    @apply flex flex-col items-center justify-center;
+}
