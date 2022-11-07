@@ -11,8 +11,8 @@ import NewUsrModal from "./components/modals/NewUsrModal";
 import UpdateUsrModal from "./components/modals/UpdateUsrModal";
 import AdminAssignModal from "./components/modals/AdminAssignModal";
 import { AiFillHome } from "react-icons/ai";
-import Loader from "./components/Loader";
-import Nav from "./components/Nav";
+import Loader from "./components/LoaderComponent";
+import Nav from "./components/NavigationComponent";
 
 const Dashboard = () => {
     const navigate = useNavigate();

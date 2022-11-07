@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
-import Post from "./components/Post";
+import Post from "./components/PostComponent";
 import { checkIsLoggedIn } from "../Services/auth.service";
 import { getAllUsers, getPhotos } from "../Services/user.service";
 import FullscreenModal from "./components/modals/FullscreenModal";
-import Loader from "./components/Loader";
-import Nav from "./components/Nav";
+import Loader from "./components/LoaderComponent";
+import Nav from "./components/NavigationComponent";
 import { IUserModel } from "../Models";
 
 const FeedView: FC = () => {

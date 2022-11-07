@@ -3,9 +3,9 @@ import { Link, useParams } from "react-router-dom";
 import { getUser, getUserPhotos } from "../Services/user.service";
 import { FaChevronLeft } from "react-icons/fa";
 import { AiOutlinePlusSquare } from "react-icons/ai";
-import Post from "./components/Post";
+import Post from "./components/PostComponent";
 import UploadModal from "./components/modals/UpImgModal";
-import Loader from "./components/Loader";
+import Loader from "./components/LoaderComponent";
 
 const UserPage: FC = () => {
     // STATES AND VARIABLES

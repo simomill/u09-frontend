@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import FeedView from "./pages/FeedPage";
+import FeedView from "./pages/FeedViewPage";
 import PhotoView from "./pages/PhotoView";
 import UserPage from "./pages/UserProfilePage";
 import RegisterPage from "./pages/RegistrationPage";

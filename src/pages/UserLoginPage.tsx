@@ -2,8 +2,8 @@ import { FC, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { login } from "../Services/auth.service";
 import { useForm } from "react-hook-form";
-import Loader from "./components/Loader";
-import LoginForm from "./components/LoginForm";
+import Loader from "./components/LoaderComponent";
+import LoginForm from "./components/LoginFormComponent";
 
 const LoginPage: FC = () => {
     // states and navigation
