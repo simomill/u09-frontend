@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import FeedView from "./pages/FeedView";
+import FeedView from "./pages/FeedPage";
 import PhotoView from "./pages/PhotoView";
-import UserPage from "./pages/UserPage";
+import UserPage from "./pages/UserProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 import { checkIsLoggedIn } from "./Services/auth.service";
 import TestAuthPage from "./pages/TestAuthPage";
-import NotFound from "./pages/NotFound";
-import Dashboard from "./pages/Dashboard";
-import Unauth from "./pages/Unauth";
+import NotFound from "./pages/404Page";
+import Dashboard from "./pages/DashboardPage";
+import Unauth from "./pages/401Page";
 import LoginPage from "./pages/LoginPage";
 
 function App() {
