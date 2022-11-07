@@ -7,12 +7,21 @@ import { useNavigate } from "react-router-dom";
 const AdminAssignModal = ({ showModal, setShowModal, userName }: any) => {
     const navigate = useNavigate();
 
+    // Clicking "No" should close the modal.
+    // But one should also be able to do it 
+    // by clicking the "x"-button.
     function closeHandler() {
         setShowModal((prev: any) => !prev);
     }
 
-    function onApprove() {
+    function onDeny() {
+        setShowModal((prev: any) => !prev);
+    }
 
+
+    // Clicking "Yes" should compare the users' level,
+    // and upgrade regular users and downgrade admin users respectively.
+    function onApprove() {
         const currentRole = {
             isAdmin: userName.isAdmin
         }
@@ -25,9 +34,7 @@ const AdminAssignModal = ({ showModal, setShowModal, userName }: any) => {
         });
     }
 
-    function onDeny() {
-        setShowModal((prev: any) => !prev);
-    }
+   
 
     return (
         <>
@@ -54,13 +61,13 @@ const AdminAssignModal = ({ showModal, setShowModal, userName }: any) => {
                     <div className="yesNoGroup">
                         <button
                             onClick={onApprove}
-                            className="yesNoBtn"
+                            className="bg-slate-50 yesNoBtn"
                         >
                             Yes
                         </button>
                         <button
                             onClick={onDeny}
-                            className="yesNoBtn"
+                            className="bg-slate-50 yesNoBtn"
                         >
                             No
                         </button>
