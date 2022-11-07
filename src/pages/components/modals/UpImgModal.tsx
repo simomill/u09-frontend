@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { uploadImage } from "../../../Services/user.service";
 
 const UploadModal = ({ showModal, setShowModal }: any) => {
+    // STATES AND VARIABLES
     const [selectedImg, setSelectedImg] = useState<any>(null);
     const [selectImgText, setSelectImgText] = useState("Select");
     const [imageUrl, setImageUrl] = useState<any>("");
@@ -15,6 +16,8 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
         setShowModal((prev: any) => !prev);
     }
 
+    // When clicking the "x"-button next to the selected image,
+    // it should be removed/unselected
     function removeHandler() {
         setSelectedImg("");
         setShowRemove(false);
@@ -25,6 +28,8 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
         }
     }
 
+    // When submiting the form the image should be uploaded, 
+    // and the modal should be closed.
     async function handleSubmit(event: any) {
         event.preventDefault();
 
@@ -43,6 +48,9 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
         }
     }
 
+    // If a file has been selected,
+    // one should be able to change or remove the selection.
+    // And the selection should be shown as a thumbnail.
     useEffect(() => {
         if (ref.current.files.length !== 0) {
             setSelectImgText("Change");
@@ -61,7 +69,6 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
             {showModal && (
                 <>
                     <div className="modalQ">
-
                         <form
                             onSubmit={handleSubmit}
                             action=""
@@ -74,7 +81,7 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
 
                             <div className="flex flex-col items-center gap-5">
                                 <label
-                                    className="text-center yesNoBtn py-2"
+                                    className="text-center bg-slate-50 yesNoBtn py-2"
                                     htmlFor="fileUpload"
                                 >
                                     {selectImgText} image
@@ -84,7 +91,9 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
                                     type="hidden"
                                     name="username"
                                     value={userName}
-                                    aria-label={"your username is chosen automatically"}
+                                    aria-label={
+                                        "your username is chosen automatically"
+                                    }
                                 />
 
                                 <div className="flex flex-row justify-center items-center">
@@ -149,7 +158,11 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
                             </div>
 
                             <button
-                                className="yesNoBtn self-center"
+                                className={
+                                    selectedImg
+                                        ? "bg-slate-50 yesNoBtn self-center"
+                                        : "disabled w-1/2 self-center"
+                                }
                                 type="submit"
                             >
                                 Submit
