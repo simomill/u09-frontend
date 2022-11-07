@@ -10,6 +10,7 @@ const Nav = (
     isAdmin: boolean,
     pageId: string
 ) => {
+    // ----------------STATES AND NAVIGATION
     const navigate = useNavigate();
     const [profileMenu, setProfileMenu] = useState(false);
     const [searchVal, setSearchVal] = useState("");
@@ -18,19 +19,30 @@ const Nav = (
     isAdmin = userArray.isAdmin;
     pageId = userArray.pageId;
 
+
+    // ------------------FUNCTIONS 
     function onClickLogout() {
         logout();
         navigate("/login");
         window.location.reload();
     }
 
+
+    //  Show/Hide the menu when clicking the avatar 
     const onClickProfile = () => {
         profileMenu ? setProfileMenu(false) : setProfileMenu(true);
     };
 
+
+    // When writing in searchbar, 
+    // suggestions of users should appear.
     const onSearch = (val: string) => {
         setSearchVal(val);
 
+        // Look through all the users, 
+        // and if a username has what is being searched 
+        // for, that username should be saved. If it doesnt,
+        // and that username already is saved, it should be removed.
         if (userArray) {
             for (const user of userArray.userArray) {
                 if (user.username?.includes(val)) {
@@ -99,16 +111,9 @@ const Nav = (
                     </div>
                 )}
 
-                <div
-                    onClick={onClickProfile}
-                    className="avatar"
-                >
+                <div onClick={onClickProfile} className="avatar">
                     <div
-                        className={
-                            profileMenu
-                                ? "menu"
-                                : " hidden aria-hidden"
-                        }
+                        className={profileMenu ? "menu" : " hidden aria-hidden"}
                     >
                         {pageId !== "/dashboard" && (
                             <>

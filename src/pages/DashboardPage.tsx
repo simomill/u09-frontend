@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IoSearchOutline } from "react-icons/io5";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { logout } from "../Services/auth.service";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getAllUsers } from "../Services/user.service";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import { ImPlus } from "react-icons/im";
@@ -10,14 +8,13 @@ import RemoveUsrModal from "./components/modals/RmvUsrModal";
 import NewUsrModal from "./components/modals/NewUsrModal";
 import UpdateUsrModal from "./components/modals/UpdateUsrModal";
 import AdminAssignModal from "./components/modals/AdminAssignModal";
-import { AiFillHome } from "react-icons/ai";
 import Loader from "./components/LoaderComponent";
 import Nav from "./components/NavigationComponent";
 
 const Dashboard = () => {
+    // --------------------STATES AND NAVIGATION
     const navigate = useNavigate();
     const pageId = useLocation().pathname;
-    const [profileMenu, setProfileMenu] = useState(false);
     const initialArray: any[] | (() => any[]) = [];
     const [userArray, setUserArray] = useState<any[] | null>(null);
     const [userName, setUserName] = useState<object | string>("");
@@ -32,16 +29,7 @@ const Dashboard = () => {
     const authRole = localStorage.getItem("isAdmin");
     const [isLoading, setIsLoading] = useState(false);
 
-    function onClickLogout() {
-        logout();
-        navigate("/login");
-        window.location.reload();
-    }
-
-    const onClickProfile = () => {
-        profileMenu ? setProfileMenu(false) : setProfileMenu(true);
-    };
-
+    // --------OPEN MODAL HANDLERS
     const onRemove = (username: string) => {
         window.scrollTo({ top: 0, behavior: "smooth" });
         setShowRemoveModal((prev) => !prev);
@@ -49,8 +37,6 @@ const Dashboard = () => {
     };
 
     const onMakeAdmin = (user: any) => {
-        // console.log(user);
-
         setUserName(user);
         window.scrollTo({ top: 0, behavior: "smooth" });
         setShowAdminModal((prev) => !prev);
@@ -66,25 +52,8 @@ const Dashboard = () => {
         setShowNewUsrModal((prev) => !prev);
     };
 
-    const onSearch = (val: string) => {
-        setSearchVal(val);
 
-        if (userArray) {
-            for (const user of userArray) {
-                if (user.username.includes(val)) {
-                    if (!findings.includes(user.username)) {
-                        setFindings((oldArr) => [...oldArr, user.username]);
-                    }
-                } else {
-                    if (findings.includes(user.username)) {
-                        findings.pop();
-                        setFindings(findings);
-                    }
-                }
-            }
-        }
-    };
-
+    // -------------------FUNCTIONS
     async function fetchUsers() {
         const response = await getAllUsers();
 
@@ -94,6 +63,8 @@ const Dashboard = () => {
     }
 
     useEffect(() => {
+        // Users should be fetched from the database,
+        // if they havent already been so
         if (userArray === null) {
             setIsLoading(true);
             fetchUsers();
@@ -107,10 +78,7 @@ const Dashboard = () => {
             }, 4000);
         }
 
-        if (!searchVal) {
-            setFindings([]);
-        }
-    }, [searchVal, statusMsg, userArray]);
+    }, [statusMsg, userArray]);
 
     return (
         <div className="dashContainer">
@@ -119,9 +87,13 @@ const Dashboard = () => {
             <div className="usersFlexbox">
                 {isLoading && <Loader />}
 
-                <h1>Users</h1>
+                <h1 className="h1">Users</h1>
 
                 {statusMsg && <p className="msg success">{statusMsg}</p>}
+
+                {/* 
+                    If there are users, they should be displayed.
+                */}
 
                 {userArray?.map((user, index) => (
                     <div key={index} className="card">
@@ -139,6 +111,11 @@ const Dashboard = () => {
                                     : "User"}
                             </p>
                         </div>
+
+                        {/* 
+                            Admins should only be able to crud users 
+                            with a lower "rank" than themselves.
+                        */}
 
                         {(() => {
                             if (authRole && authRole > user.isAdmin)
