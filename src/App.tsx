@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import FeedView from "./pages/FeedPage";
 import PhotoView from "./pages/PhotoView";
 import UserPage from "./pages/UserProfilePage";
-import RegisterPage from "./pages/RegisterPage";
+import RegisterPage from "./pages/RegistrationPage";
 import { checkIsLoggedIn } from "./Services/auth.service";
 import TestAuthPage from "./pages/TestAuthPage";
 import NotFound from "./pages/404Page";
