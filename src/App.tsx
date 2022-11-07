@@ -10,7 +10,7 @@ import TestAuthPage from "./pages/TestAuthPage";
 import NotFound from "./pages/404Page";
 import Dashboard from "./pages/DashboardPage";
 import Unauth from "./pages/401Page";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/UserLoginPage";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
