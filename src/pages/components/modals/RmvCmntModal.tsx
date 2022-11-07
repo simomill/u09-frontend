@@ -1,14 +1,9 @@
 import React from "react";
-import { deleteUser } from "../../Services/user.service";
 import { HiOutlineX } from "react-icons/hi";
-import { IoWarningOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
-import { AiOutlineUserDelete } from "react-icons/ai";
-import { deleteComment } from "../../Services/comment.service";
+import { deleteComment } from "../../../Services/comment.service";
 import { BiCommentX } from "react-icons/bi";
 
 const RemoveCmntModal = ({ showModal, setShowModal, id, fetchComments }: any) => {
-    const navigate = useNavigate();
 
     function closeHandler() {
         setShowModal((prev: any) => !prev);
@@ -28,10 +23,9 @@ const RemoveCmntModal = ({ showModal, setShowModal, id, fetchComments }: any) =>
     return (
         <>
             {showModal && (
-                <div className="absolute h-full w-full flex items-center">
-                    <div className="bg-white border rounded-lg flex flex-col justify-between p-2 drop-shadow-md z-10">
+                    <div className="modalQ">
                         <HiOutlineX
-                            className="w-6 h-6 cursor-pointer hover:text-red-700"
+                            className="closeWndw"
                             onClick={closeHandler}
                         />
 
@@ -44,22 +38,21 @@ const RemoveCmntModal = ({ showModal, setShowModal, id, fetchComments }: any) =>
                             </div>
                         </div>
 
-                        <div className="flex flex-row w-full gap-2 justify-center py-2 px-6">
+                        <div className="yesNoGroup">
                             <button
                                 onClick={onApprove}
-                                className="border rounded w-max px-5 bg-slate-50 cursor-pointer hover:border-sky-200 hover:bg-sky-50 w-1/2"
+                                className="yesNoBtn"
                             >
                                 Yes
                             </button>
                             <button
                                 onClick={onDeny}
-                                className="border rounded w-max px-5 bg-slate-50 cursor-pointer hover:border-sky-200 hover:bg-sky-50 w-1/2"
+                                className="yesNoBtn"
                             >
                                 No
                             </button>
                         </div>
                     </div>
-                </div>
             )}
         </>
     );

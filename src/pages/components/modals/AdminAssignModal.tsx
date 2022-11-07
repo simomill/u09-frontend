@@ -1,5 +1,5 @@
 import React from "react";
-import { changeUserRole, deleteUser } from "../../Services/user.service";
+import { changeUserRole } from "../../../Services/user.service";
 import { HiOutlineX } from "react-icons/hi";
 import { GrUserAdmin } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
@@ -32,9 +32,9 @@ const AdminAssignModal = ({ showModal, setShowModal, userName }: any) => {
     return (
         <>
             {showModal && (
-                <div className="top-60 h-56 bg-white border rounded-lg flex flex-col justify-between p-2 absolute drop-shadow-md">
+                <div className="modalQ">
                     <HiOutlineX
-                        className="w-6 h-6 cursor-pointer hover:text-red-700"
+                        className="closeWndw"
                         onClick={closeHandler}
                     />
 
@@ -51,16 +51,16 @@ const AdminAssignModal = ({ showModal, setShowModal, userName }: any) => {
                         </div>
                     </div>
 
-                    <div className="flex flex-row w-full gap-2 justify-center py-2 px-6">
+                    <div className="yesNoGroup">
                         <button
                             onClick={onApprove}
-                            className="border rounded w-max px-5 bg-slate-50 cursor-pointer hover:border-sky-200 hover:bg-sky-50 w-1/2"
+                            className="yesNoBtn"
                         >
                             Yes
                         </button>
                         <button
                             onClick={onDeny}
-                            className="border rounded w-max px-5 bg-slate-50 cursor-pointer hover:border-sky-200 hover:bg-sky-50 w-1/2"
+                            className="yesNoBtn"
                         >
                             No
                         </button>

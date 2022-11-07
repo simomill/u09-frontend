@@ -8,12 +8,12 @@ const FullscreenModal = ({ showModal, setShowModal, data }: any) => {
     return (
         <>
             {showModal && (
-                <div className="absolute overflow-hidden sticky bottom-0 bg-white z-50 h-screen w-screen flex flex-col items-center justify-center">
+                <div className="fullImgWndw">
                     <HiOutlineX
-                        className="w-6 h-6 self-start cursor-pointer hover:text-red-700"
+                        className="closeWndw"
                         onClick={closeHandler}
                     />
-                    <div className="w-full flex flex-row justify-center overflow-hidden ">
+                    <div className="fullImgContainer">
                         <img
                             alt={data.title}
                             src={`data:image/jpeg;base64, ${data.img.data}`}

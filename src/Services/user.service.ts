@@ -1,19 +1,12 @@
 import axios from "axios";
+import { IRole, IUpdateData } from "../Models";
 
 const API_URL =
     process.env.NODE_ENV === "production"
         ? `${process.env.REACT_APP_API_URL}/users`
         : `http://localhost:3000/users`;
 
-export interface updateData {
-    name?: string;
-    username?: string;
-    email?: string;
-}
 
-export interface Role {
-    isAdmin: number;
-}
 
 // Get individual user
 export const getUser = async (username: string) => {
@@ -61,13 +54,13 @@ export const deleteUser = async (userName: string) => {
     return response;
 };
 
-export const updateUser = async (updateData: updateData, userId: string) => {
+export const updateUser = async (updateData: IUpdateData, userId: string) => {
     const response = await axios.put(`${API_URL}/${userId}`, updateData);
 
     return response;
 };
 
-export const changeUserRole = async (userId: string, currentRole: Role) => {
+export const changeUserRole = async (userId: string, currentRole: IRole) => {
     const response = await axios.put(`${API_URL}/${userId}/role`, currentRole);
 
     return response;

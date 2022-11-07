@@ -1,0 +1,48 @@
+/* -----------------DASHBOARD */
+.dashContainer {
+    @apply h-screen py-6 px-2 items-center flex flex-col bg-gray-100 relative;
+}
+
+.usersFlexbox {
+    @apply flex flex-col p-4 gap-2;
+}
+
+h1 {
+    @apply text-3xl font-bold pb-3 text-center text-slate-800;
+}
+
+.card {
+    @apply flex bg-white border border-gray-200 rounded justify-between;
+}
+
+.userInfo {
+    @apply flex items-start flex-col p-3 hover:text-sky-400 cursor-pointer;
+}
+
+.actionButtons {
+    @apply flex justify-center border-l border-gray-200;
+}
+
+.action {
+    @apply flex items-center px-4;
+}
+
+.rBorder {
+    @apply border-r border-gray-200;
+}
+
+.actionIcon {
+    @apply w-6 h-6 text-sky-900 cursor-pointer hover:text-slate-400;
+}
+
+.plusIcon {
+    @apply w-6 h-6 my-5 mx-2 text-green-800 hover:text-green-600 cursor-pointer;
+}
+
+.plusIconActive {
+    @apply w-6 h-6 my-5 mx-2 text-green-600 hover:text-green-600 cursor-pointer;
+}
+
+.closeWndw {
+    @apply w-6 h-6 self-start cursor-pointer hover:text-red-700;
+}

@@ -1,28 +1,14 @@
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { login, LoginModel } from "../Services/auth.service";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../../Services/auth.service";
 
-const LoginPage: FC = () => {
-    // states and navigation
-    const navigate = useNavigate();
-    const { state } = useLocation();
+const LoginForm = ({ state }: any) => {
     const [loading, setLoading] = useState(false);
-    const [statusMsg, setStatusMsg] = useState(state ?? "");
+    const [statusMsg, setStatusMsg] = useState(state);
+    const { register, handleSubmit } = useForm();
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
-
-    useEffect(() => {
-        if (statusMsg) {
-            setTimeout(() => {
-                setStatusMsg("");
-            }, 4000);
-        }
-    }, [statusMsg]);
+    const navigate = useNavigate();
 
     // Login on button click
     async function onSubmit(data: any) {
@@ -47,17 +33,24 @@ const LoginPage: FC = () => {
         setLoading(false);
     }
 
-    return (
-        <div className="flex flex-col justify-center items-center h-screen gap-4">
-            <h1 className="font-bold text-3xl mb-6 text-cyan-900">DSPLAY</h1>
+    useEffect(() => {
+        if (statusMsg) {
+            setTimeout(() => {
+                setStatusMsg("");
+            }, 4000);
+        }
 
+    }, [statusMsg]);
+
+    return (
+        <div>
             <form
                 className="flex flex-col"
                 action=""
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <input
-                    className="border rounded py-2 px-3 mb-3"
+                    className="inputField"
                     type="text"
                     id="username"
                     placeholder="username"
@@ -66,7 +59,7 @@ const LoginPage: FC = () => {
                 />
 
                 <input
-                    className="border rounded py-2 px-3 mb-3"
+                    className="inputField"
                     type="password"
                     id="pass"
                     placeholder="password"
@@ -75,7 +68,7 @@ const LoginPage: FC = () => {
                 />
 
                 <input
-                    className="border rounded py-2 px-3 bg-slate-50 cursor-pointer"
+                    className="btn"
                     type="submit"
                     value="login"
                     aria-label={"submit"}
@@ -83,7 +76,7 @@ const LoginPage: FC = () => {
 
                 <Link
                     to={"/register"}
-                    className="text-cyan-900 hover:text-cyan-600"
+                    className="textLink"
                 >
                     Not a user yet?
                 </Link>
@@ -91,11 +84,11 @@ const LoginPage: FC = () => {
                 {(() => {
                     if (statusMsg) {
                         return statusMsg.includes("success") ? (
-                            <p className="text-green-700 bg-green-50 border border-green-700 rounded mt-3">
+                            <p className="msg success">
                                 {statusMsg}
                             </p>
                         ) : (
-                            <p className="text-red-700 bg-red-50 border border-red-700 rounded mt-3">
+                            <p className="msg warning">
                                 {statusMsg}
                             </p>
                         );
@@ -106,4 +99,4 @@ const LoginPage: FC = () => {
     );
 };
 
-export default LoginPage;
+export default LoginForm;

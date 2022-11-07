@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { HiOutlineX } from "react-icons/hi";
 import { useParams } from "react-router-dom";
-import { uploadImage } from "../../Services/user.service";
+import { uploadImage } from "../../../Services/user.service";
 
 const UploadModal = ({ showModal, setShowModal }: any) => {
     const [selectedImg, setSelectedImg] = useState<any>(null);
     const [selectImgText, setSelectImgText] = useState("Select");
     const [imageUrl, setImageUrl] = useState<any>("");
-    const [imageTitle, setImageTitle] = useState("");
     const [showRemove, setShowRemove] = useState(false);
     const ref = useRef<any>();
     const userName = useParams().id;
@@ -27,7 +26,6 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
     }
 
     async function handleSubmit(event: any) {
-        // console.log(selectedImg);
         event.preventDefault();
 
         const formData = {
@@ -37,7 +35,7 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
         };
 
         try {
-            const result = await uploadImage(formData);
+            await uploadImage(formData);
 
             window.location.reload();
         } catch (error) {
@@ -62,7 +60,7 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
         <>
             {showModal && (
                 <>
-                    <div className="flex flex-col bottom-1/2 w-80 h-80 bg-white border rounded-lg flex flex-col p-2 z-10 fixed p-2 top-60">
+                    <div className="modalQ">
 
                         <form
                             onSubmit={handleSubmit}
@@ -70,13 +68,13 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
                             className="flex h-full flex-col justify-between"
                         >
                             <HiOutlineX
-                                className="w-6 h-6 cursor-pointer hover:text-red-700"
+                                className="closeWndw"
                                 onClick={closeHandler}
                             />
 
                             <div className="flex flex-col items-center gap-5">
                                 <label
-                                    className="border rounded py-2 px-3 bg-slate-50 cursor-pointer hover:border-sky-200 hover:bg-sky-50 w-1/2"
+                                    className="text-center yesNoBtn py-2"
                                     htmlFor="fileUpload"
                                 >
                                     {selectImgText} image
@@ -123,7 +121,7 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
                                 {selectedImg && (
                                     <>
                                         <input
-                                            className="border rounded py-2 px-3 mb-3"
+                                            className="inputField"
                                             type="text"
                                             id="imgTitle"
                                             placeholder="title"
@@ -151,7 +149,7 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
                             </div>
 
                             <button
-                                className="border rounded py-2 px-3 bg-slate-50 cursor-pointer hover:border-sky-200 hover:bg-sky-50 w-1/3 self-center"
+                                className="yesNoBtn self-center"
                                 type="submit"
                             >
                                 Submit

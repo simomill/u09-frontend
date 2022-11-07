@@ -1,15 +1,10 @@
 import axios from "axios";
+import { ICommentData } from "../Models";
 
 const API_URL =
     process.env.NODE_ENV === "production"
         ? `${process.env.REACT_APP_API_URL}/comments`
         : "http://localhost:3000/comments";
-
-export interface commentData {
-    username: string;
-    photoId: string;
-    message: string;
-}
 
 // GET ALL COMMENTS
 export const getComments = async () => {
@@ -19,7 +14,7 @@ export const getComments = async () => {
 };
 
 // POST NEW COMMENT
-export const postComment = async (data: commentData) => {
+export const postComment = async (data: ICommentData) => {
     const response = await axios.post(`${API_URL}`, data);
 
     return response;

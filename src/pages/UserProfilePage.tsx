@@ -3,10 +3,9 @@ import { Link, useParams } from "react-router-dom";
 import { getUser, getUserPhotos } from "../Services/user.service";
 import { FaChevronLeft } from "react-icons/fa";
 import { AiOutlinePlusSquare } from "react-icons/ai";
-import Post from "./components/post";
-import UploadModal from "./components/uploadModal";
-import Loader from "./Loader";
-import { setLocale } from "yup";
+import Post from "./components/PostComponent";
+import UploadModal from "./components/modals/UpImgModal";
+import Loader from "./components/LoaderComponent";
 
 const UserPage: FC = () => {
     // STATES AND VARIABLES
@@ -87,7 +86,7 @@ const UserPage: FC = () => {
                 {hasAccess && (
                     <>
                         <AiOutlinePlusSquare
-                            className="w-6 h-6 cursor-pointer"
+                            className="toggleIcon"
                             onClick={openModal}
                         />
 
@@ -116,7 +115,7 @@ const UserPage: FC = () => {
                             <>
                                 {photoArray.map((item: any, index: number) => (
                                     <div
-                                        className="w-full flex flex-col items-center relative"
+                                        className="postOuter"
                                         key={index}
                                     >
                                         <Post photo={photoArray[index]} />

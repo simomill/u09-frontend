@@ -1,0 +1,46 @@
+/* --------------------MODALS */
+
+.modalQ {
+    @apply top-60 w-80 bg-white border rounded-lg flex flex-col justify-between self-center p-2 fixed drop-shadow-md z-20;
+}
+
+.yesNoGroup {
+    @apply flex flex-row w-full gap-2 justify-center py-2 px-6;
+}
+
+.yesNoBtn {
+    @apply border rounded w-max px-5 py-2 bg-slate-50 cursor-pointer hover:border-sky-200 hover:bg-sky-50 w-1/2;
+}
+
+.inputModalBody {
+    @apply m-3 top-60 w-80 bg-white border rounded-lg flex flex-col justify-between p-2 absolute drop-shadow-md;
+}
+
+.formContainer {
+    @apply flex flex-col items-center px-5 pt-4;
+}
+
+.formFlexbox {
+    @apply flex flex-col py-3;
+}
+
+.note {
+    @apply flex flex-col gap-2 mx-6 px-3 items-center justify-center my-4 italic text-left text-sky-700 cursor-pointer;
+}
+
+.commentModalPlacement {
+    @apply absolute h-full w-full flex items-center justify-center;
+}
+
+.commentModalBody {
+    @apply h-56 w-80 bg-white border rounded-lg flex flex-col justify-between p-2 drop-shadow-md z-10;
+}
+
+/* --------------FULLSCREEN IMG */
+.fullImgWndw {
+    @apply absolute overflow-hidden sticky bottom-0 bg-white z-50 h-screen w-screen flex flex-col items-center justify-center;
+}
+
+.fullImgContainer {
+    @apply w-full flex flex-row justify-center;
+}

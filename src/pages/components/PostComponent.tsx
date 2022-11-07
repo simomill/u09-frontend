@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useEffect, useRef, useState } from "react";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
 import {
     HiOutlineX,
     HiOutlineInformationCircle,
@@ -7,16 +7,15 @@ import {
 import { RiCameraLensFill } from "react-icons/ri";
 import { GoCommentDiscussion, GoSettings } from "react-icons/go";
 import { Link, useParams } from "react-router-dom";
-import RemoveImgModal from "./removeImgModal";
+import RemoveImgModal from "./modals/RmvImgModal";
 import { getComments, postComment } from "../../Services/comment.service";
-import RemoveCmntModal from "./removeCmntModal";
+import RemoveCmntModal from "./modals/RmvCmntModal";
 import { IoCameraOutline } from "react-icons/io5";
 import { encode, decode } from "html-entities";
 import { ICommentModel } from "../../Models";
 
 const Post = ({ photo, changeState }: any) => {
-    const [showInfo, setShowInfo] = useState("hidden");
-    const [infoColor, setInfoColor] = useState("text-slate-300");
+    const [showInfo, setShowInfo] = useState(false);
     const [showRemove, setShowRemove] = useState(false);
     const [showRemoveModal, setShowRemoveModal] = useState(false);
     const [showRemoveCmntModal, setShowRemoveCmntModal] = useState(false);
@@ -32,14 +31,8 @@ const Post = ({ photo, changeState }: any) => {
     const pageName = useParams().id;
     const authedUser = localStorage.getItem("username");
 
-    const toggleInfo = () => {
-        if (showInfo === "hidden") {
-            setShowInfo("flex flex-col gap-1");
-            setInfoColor("text-slate-800");
-        } else {
-            setShowInfo("hidden");
-            setInfoColor("text-slate-300");
-        }
+    const onToggleInfo = () => {
+        setShowInfo((prev) => !prev);
     };
 
     const onToggleComment = () => {
@@ -57,7 +50,6 @@ const Post = ({ photo, changeState }: any) => {
     }
 
     const onRemoveComment = (id: string) => {
-        // console.log(id);
         setCommentId(id);
         setShowRemoveCmntModal((prev) => !prev);
     };
@@ -105,11 +97,12 @@ const Post = ({ photo, changeState }: any) => {
 
     return (
         <>
-            <div className="md:w-[50rem] w-full py-4 px-6 flex flex-col self-center items-center">
+            <div className="postContainer">
                 {/* Top */}
-                {!useParams().id ? (
-                    <div className="flex flex-row justify-start items-center self-start mb-2">
-                        <div className="rounded-full w-4 h-4 p-4 bg-slate-500 mx-2 border border-gray-500"></div>
+                {!useParams().id && (
+                    <div className="byline">
+                        <div
+                            className="avatar"></div>
                         <Link
                             to={`/user/${photo.username}`}
                             className="font-medium text-lg font-md"
@@ -117,8 +110,6 @@ const Post = ({ photo, changeState }: any) => {
                             {photo.username}
                         </Link>
                     </div>
-                ) : (
-                    ""
                 )}
 
                 {/* Image */}
@@ -140,7 +131,7 @@ const Post = ({ photo, changeState }: any) => {
                                 return (
                                     <>
                                         <HiOutlineX
-                                            className="w-5 h-5 cursor-pointer self-start absolute top-5 right-10 m-3 bg-white border rounded text-red-700"
+                                            className="removeBtn"
                                             onClick={() =>
                                                 onDeleteImg(photo._id)
                                             }
@@ -162,12 +153,12 @@ const Post = ({ photo, changeState }: any) => {
                 {photo && <p>{photo.title}</p>}
 
                 <div className="flex flex-col self-start w-full">
-                    <div className="flex flex-row py-1 gap-2">
+                    <div className="infoIcon">
                         <GoCommentDiscussion
                             className={
                                 showComment
-                                    ? "w-6 h-6 cursor-pointer"
-                                    : "w-6 h-6 cursor-pointer text-slate-300"
+                                    ? "toggleIcon"
+                                    : "toggleIcon text-slate-300"
                             }
                             onClick={onToggleComment}
                         />
@@ -176,11 +167,11 @@ const Post = ({ photo, changeState }: any) => {
                     <div
                         className={
                             showComment
-                                ? "relative flex flex-col gap-3 items-start w-full"
+                                ? "toggleSection"
                                 : "hidden"
                         }
                     >
-                        <span className="w-full h-px border-b border-gray-200 pt-1"></span>
+                        <span className="divider"></span>
 
                         {commentArray.map(
                             (comment: ICommentModel, index: number) => (
@@ -188,7 +179,7 @@ const Post = ({ photo, changeState }: any) => {
                                     {comment.photoId === photo._id && (
                                         <div
                                             key={index}
-                                            className="w-fit flex flex-row gap-2 items-start justify-start border-b"
+                                            className="comment"
                                         >
                                             <Link
                                                 to={`/users/${comment.username}`}
@@ -196,7 +187,7 @@ const Post = ({ photo, changeState }: any) => {
                                             >
                                                 {comment.username}
                                             </Link>
-                                            <p className="h-max w-60 text-left break-words border-l pl-2">
+                                            <p className="commentMsg">
                                                 {decode(comment.message, {
                                                     level: "html5",
                                                 })}
@@ -215,7 +206,7 @@ const Post = ({ photo, changeState }: any) => {
                                                                     comment._id
                                                                 )
                                                             }
-                                                            className="w-5 h-5 cursor-pointer top-5 right-10 text-red-700"
+                                                            className="redCross"
                                                         />
                                                     );
                                                 }
@@ -235,12 +226,12 @@ const Post = ({ photo, changeState }: any) => {
                         )}
 
                         <form
-                            className="flex self-center my-3 items-end"
+                            className="flex self-center mt-3"
                             action=""
                             onSubmit={(e) => onSubmitComment(e, photo._id)}
                         >
                             <span
-                                className="text-left border h-fit w-52 rounded rounded-r-none py-2 px-3 empty:before:content-[attr(placeholder)] focus:before:content-[attr(ref)]"
+                                className="textArea"
                                 placeholder="Add a comment..."
                                 id="message"
                                 role={"textbox"}
@@ -251,41 +242,45 @@ const Post = ({ photo, changeState }: any) => {
                                 {msgValue}
                             </span>
                             <input
-                                className=" h-max py-2 border rounded px-5 bg-slate-50 cursor-pointer hover:border-sky-200 hover:bg-sky-50 rounded-l-none"
+                                className="postComment"
                                 type="submit"
                                 value={"Post"}
                                 aria-label={"submit"}
                             />
                         </form>
 
-                        <span className="w-full h-px border-b border-gray-200 pt-1"></span>
+                        <span className="divider"></span>
                     </div>
 
                     <div className="flex flex-row py-2 gap-2">
                         <HiOutlineInformationCircle
-                            className={`${infoColor} w-6 h-6 cursor-pointer`}
-                            onClick={toggleInfo}
+                            className={showInfo
+                                ? "toggleIcon"
+                                : "toggleIcon text-slate-300"}
+                            onClick={onToggleInfo}
                         />
                     </div>
 
                     {/* info section */}
-                    <div className={showInfo}>
-                        <div className="flex flex-row py-1 gap-2">
+                    <div className={showInfo
+                                ? "toggleSection"
+                                : "hidden"}>
+                        <div className="infoIcon">
                             <IoCameraOutline className="w-6 h-6" />
                             <p>Camera</p>
                         </div>
 
-                        <div className="flex flex-row py-1 gap-2">
+                        <div className="infoIcon">
                             <RiCameraLensFill className="w-6 h-6" />
                             <p>Lens</p>
                         </div>
 
-                        <div className="flex flex-row py-1 gap-2">
+                        <div className="infoIcon">
                             <GoSettings className="w-5 h-5" />
                             <p>Settings</p>
                         </div>
 
-                        <div className="flex flex-row py-1 gap-2">
+                        <div className="infoIcon">
                             <HiOutlineFilm className="w-6 h-6" />
 
                             <p>Film</p>
