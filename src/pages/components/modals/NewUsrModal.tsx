@@ -5,26 +5,27 @@ import { registerUser } from "../../../Services/auth.service";
 import { BiChevronDown, BiChevronRight } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
-
 const NewUsrModal = ({ showModal, setShowModal }: any) => {
+    // STATES AND NAVIGATION
     const [showPassNote, setShowPassNote] = useState(false);
     const navigate = useNavigate();
-
-    function closeHandler() {
-        setShowModal((prev: any) => !prev);
-    }
-
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
 
+
+    function closeHandler() {
+        setShowModal((prev: any) => !prev);
+    }
+
+    // When submitting the form,
+    // a new user should be created, 
+    // with their username as password. 
     const onSubmit = async (data: any) => {
         data.password = data.username;
         data.passconf = data.username;
-
-        // console.log(data);
 
         const success = await registerUser(data);
         setShowModal((prev: any) => !prev);
@@ -42,13 +43,11 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
         <>
             {showModal && (
                 <div className="inputModalBody">
-                    {/* TOP */}
                     <HiOutlineX
                         className="closeWndw"
                         onClick={closeHandler}
                     />
 
-                    {/* CONTENT */}
                     <div className="formContainer">
                         <form
                             className="formFlexbox"
@@ -95,7 +94,7 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
                             )}
 
                             <input
-                                className="btn"
+                                className="bg-slate-50 btn"
                                 type="submit"
                                 value="create user"
                                 aria-label={"submit"}
