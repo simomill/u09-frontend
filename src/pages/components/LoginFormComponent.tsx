@@ -3,14 +3,12 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../Services/auth.service";
 
-const LoginForm = ({ state }: any) => {
-    const [loading, setLoading] = useState(false);
+const LoginForm = ({ state, setLoading, loading }: any) => {
+    // STATES AND VARIABLES
     const [statusMsg, setStatusMsg] = useState(state);
     const { register, handleSubmit } = useForm();
-
     const navigate = useNavigate();
 
-    // Login on button click
     async function onSubmit(data: any) {
         setLoading(true);
 
@@ -39,7 +37,6 @@ const LoginForm = ({ state }: any) => {
                 setStatusMsg("");
             }, 4000);
         }
-
     }, [statusMsg]);
 
     return (
@@ -68,29 +65,28 @@ const LoginForm = ({ state }: any) => {
                 />
 
                 <input
-                    className="btn"
+                    className="bg-slate-50 yesNoBtn"
                     type="submit"
                     value="login"
                     aria-label={"submit"}
                 />
 
-                <Link
-                    to={"/register"}
-                    className="textLink"
-                >
+                <Link to={"/register"} className="textLink">
                     Not a user yet?
                 </Link>
+
+                
+                {/* 
+                The text should be green if it has "success" in it, 
+                otherwise it should be red. 
+                */}
 
                 {(() => {
                     if (statusMsg) {
                         return statusMsg.includes("success") ? (
-                            <p className="msg success">
-                                {statusMsg}
-                            </p>
+                            <p className="msg success">{statusMsg}</p>
                         ) : (
-                            <p className="msg warning">
-                                {statusMsg}
-                            </p>
+                            <p className="msg warning">{statusMsg}</p>
                         );
                     }
                 })()}

@@ -5,9 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 
-const RegisterForm = ({ statusMsg, setStatusMsg }: any) => {
-    const [loading, setLoading] = useState(false);
-
+const RegisterForm = ({ statusMsg, setStatusMsg, loading, setLoading }: any) => {
     const navigate = useNavigate();
 
     const formSchema = Yup.object().shape({
@@ -33,7 +31,9 @@ const RegisterForm = ({ statusMsg, setStatusMsg }: any) => {
         try {
             const success = await registerUser(data);
 
-            // Navigate if successful
+            // If the registration was successful
+            // the user should be riedirected to the login page,
+            // with feedback.
             if (success) {
                 navigate("/login", { state: "User successfully created!" });
             } else {
@@ -111,7 +111,7 @@ const RegisterForm = ({ statusMsg, setStatusMsg }: any) => {
             )}
 
             <input
-                className="btn"
+                className="bg-slate-50 btn"
                 type="submit"
                 value="register"
                 aria-label={"submit"}

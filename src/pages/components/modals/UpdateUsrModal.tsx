@@ -12,6 +12,7 @@ function UpdateUsrModal({
     setUserName,
     userArray,
 }: any) {
+    // STATES AND VARIABLES
     const [showPassNote, setShowPassNote] = useState(false);
     const [user, setUser] = useState<IUserModel>(userName ?? null);
     const { username } = user;
@@ -21,26 +22,8 @@ function UpdateUsrModal({
     const [notAvailable, setNotAvailable] = useState("");
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (userName) {
-            setUser(userName);
-        }
-
-        if (userArray && newUsername) {
-            if (
-                userArray.every((user: any) => {
-                    return user.username !== newUsername;
-                })
-            ) {
-                setNotAvailable("");
-            } else if (username === newUsername) {
-                setNotAvailable("");
-            } else {
-                setNotAvailable("Username is occupied!");
-            }
-        }
-    }, [newUsername, userArray, userName, username]);
-
+    // When closing the modal, 
+    // all the changed values should be forgotten.
     function closeHandler() {
         setNewName("");
         setNewUsername("");
@@ -50,6 +33,9 @@ function UpdateUsrModal({
         setShowModal((prev: any) => !prev);
     }
 
+    // When submitting the form, only the edited fields should be updated.
+    // The modal should then closed, and there should be feedback about the
+    // requested update.
     const onSubmit = async (event: any) => {
         event.preventDefault();
 
@@ -63,8 +49,6 @@ function UpdateUsrModal({
             : (obj.username = userName.username);
 
         newEmail ? (obj.email = newEmail) : (obj.email = userName.email);
-
-        console.log(obj);
 
         const success = await updateUser(obj, userId);
 
@@ -84,17 +68,39 @@ function UpdateUsrModal({
         setShowModal((prev: any) => !prev);
     };
 
+    useEffect(() => {
+        if (userName) {
+            setUser(userName);
+        }
+
+        // If someone else has the chosen new username,
+        // it should be unavailable.
+        if (userArray && newUsername) {
+            if (
+                userArray.every((user: any) => {
+                    return user.username !== newUsername;
+                })
+            ) {
+                setNotAvailable("");
+            } else if (username === newUsername) {
+                setNotAvailable("");
+            } else {
+                setNotAvailable("Username is occupied!");
+            }
+        }
+    }, [newUsername, userArray, userName, username]);
+
+    
+
     return (
         <>
             {showModal && (
                 <div className="inputModalBody">
-                    {/* TOP */}
                     <HiOutlineX
                         className="w-6 h-6 self-start cursor-pointer hover:text-red-700"
                         onClick={closeHandler}
                     />
 
-                    {/* CONTENT */}
                     <div className="formContainer">
                         {userName && (
                             <form
@@ -140,8 +146,8 @@ function UpdateUsrModal({
                                 <input
                                     className={
                                         notAvailable
-                                            ? "btn disabled"
-                                            : "btn"
+                                            ? " disabled"
+                                            : "bg-slate-50 btn"
                                     }
                                     type="submit"
                                     value="update user"

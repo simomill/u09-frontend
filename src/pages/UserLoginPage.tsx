@@ -6,49 +6,29 @@ import Loader from "./components/LoaderComponent";
 import LoginForm from "./components/LoginFormComponent";
 
 const LoginPage: FC = () => {
-    // states and navigation
-    const navigate = useNavigate();
+    // STATES AND VARIABLES
     const { state } = useLocation();
     const [loading, setLoading] = useState(false);
     const [statusMsg, setStatusMsg] = useState(state ?? "");    
 
     useEffect(() => {
+
+        // Make any statsus message be vissible 
+        // only for a short amount of time
         if (statusMsg) {
             setTimeout(() => {
                 setStatusMsg("");
             }, 4000);
         }
+
     }, [statusMsg]);
-
-    // Login on button click
-    async function onSubmit(data: any) {
-        setLoading(true);
-
-        const response = await login(data);
-
-        if (response?.status === 200) {
-            // Navigate and reload if successful
-            if (response.data.isAdmin !== 0) {
-                navigate("/dashboard");
-                window.location.reload();
-            } else {
-                navigate("/");
-                window.location.reload();
-            }
-        } else {
-            setStatusMsg(response?.data);
-        }
-
-        // Reset loading state
-        setLoading(false);
-    }
 
     return (
         <>
         <div className="formGroup">
             <h1 className="logo">DSPLAY</h1>
 
-            <LoginForm state={state} />
+            <LoginForm state={state} setLoading={setLoading} loading={loading} />
 
             {loading && <Loader />}
         </div>
