@@ -36,13 +36,13 @@ const RemoveImgModal = ({ showModal, setShowModal, id }: any) => {
                         <div className="yesNoGroup">
                             <button
                                 onClick={onApprove}
-                                className="yesNoBtn"
+                                className="bg-slate-50 yesNoBtn"
                             >
                                 Yes
                             </button>
                             <button
                                 onClick={onDeny}
-                                className="yesNoBtn"
+                                className="bg-slate-50 yesNoBtn"
                             >
                                 No
                             </button>
