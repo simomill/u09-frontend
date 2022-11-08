@@ -4,11 +4,11 @@
 }
 
 .btn {
-    @apply border rounded py-2 px-3 bg-slate-50 cursor-pointer hover:bg-slate-100;
+    @apply appearance-none border rounded py-2 px-3 bg-slate-100 cursor-pointer hover:border-sky-200 hover:bg-sky-50;
 }
 
 .disabled {
-    @apply opacity-60 cursor-default;
+    @apply border rounded py-2 px-3 bg-slate-100 opacity-60 cursor-default;
 }
 
 .inputField {
