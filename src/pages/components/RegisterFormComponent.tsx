@@ -31,7 +31,9 @@ const RegisterForm = ({ statusMsg, setStatusMsg, loading, setLoading }: any) => 
         try {
             const success = await registerUser(data);
 
-            // Navigate if successful
+            // If the registration was successful
+            // the user should be riedirected to the login page,
+            // with feedback.
             if (success) {
                 navigate("/login", { state: "User successfully created!" });
             } else {

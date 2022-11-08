@@ -22,7 +22,7 @@ function UpdateUsrModal({
     const [notAvailable, setNotAvailable] = useState("");
     const navigate = useNavigate();
 
-    // When closing the window, 
+    // When closing the modal, 
     // all the changed values should be forgotten.
     function closeHandler() {
         setNewName("");
@@ -34,7 +34,7 @@ function UpdateUsrModal({
     }
 
     // When submitting the form, only the edited fields should be updated.
-    // The window should then closed, and there should be feedback about the
+    // The modal should then closed, and there should be feedback about the
     // requested update.
     const onSubmit = async (event: any) => {
         event.preventDefault();

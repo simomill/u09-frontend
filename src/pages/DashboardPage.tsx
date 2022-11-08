@@ -12,7 +12,7 @@ import Loader from "./components/LoaderComponent";
 import Nav from "./components/NavigationComponent";
 
 const Dashboard = () => {
-    // --------------------STATES AND NAVIGATION
+    // --------------------STATES AND VARIABLES
     const navigate = useNavigate();
     const pageId = useLocation().pathname;
     const initialArray: any[] | (() => any[]) = [];

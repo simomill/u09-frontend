@@ -6,7 +6,7 @@ import Loader from "./components/LoaderComponent";
 import LoginForm from "./components/LoginFormComponent";
 
 const LoginPage: FC = () => {
-    // STATES AND NAVIGATION
+    // STATES AND VARIABLES
     const { state } = useLocation();
     const [loading, setLoading] = useState(false);
     const [statusMsg, setStatusMsg] = useState(state ?? "");    

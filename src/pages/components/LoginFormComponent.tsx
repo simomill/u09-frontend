@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../Services/auth.service";
 
 const LoginForm = ({ state, setLoading, loading }: any) => {
-    // STATES AND NAVIGATION
+    // STATES AND VARIABLES
     const [statusMsg, setStatusMsg] = useState(state);
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();

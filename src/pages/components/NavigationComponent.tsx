@@ -10,7 +10,7 @@ const Nav = (
     isAdmin: boolean,
     pageId: string
 ) => {
-    // ----------------STATES AND NAVIGATION
+    // ----------------STATES AND VARIABLES
     const navigate = useNavigate();
     const [profileMenu, setProfileMenu] = useState(false);
     const [searchVal, setSearchVal] = useState("");
@@ -19,28 +19,25 @@ const Nav = (
     isAdmin = userArray.isAdmin;
     pageId = userArray.pageId;
 
-
-    // ------------------FUNCTIONS 
+    // ------------------FUNCTIONS
     function onClickLogout() {
         logout();
         navigate("/login");
         window.location.reload();
     }
 
-
-    //  Show/Hide the menu when clicking the avatar 
+    //  Show/Hide the menu when clicking the avatar
     const onClickProfile = () => {
         profileMenu ? setProfileMenu(false) : setProfileMenu(true);
     };
 
-
-    // When writing in searchbar, 
+    // When writing in searchbar,
     // suggestions of users should appear.
     const onSearch = (val: string) => {
         setSearchVal(val);
 
-        // Look through all the users, 
-        // and if a username has what is being searched 
+        // Look through all the users,
+        // and if a username has what is being searched
         // for, that username should be saved. If it doesnt,
         // and that username already is saved, it should be removed.
         if (userArray) {
@@ -91,57 +88,57 @@ const Nav = (
                     <IoSearchOutline className="w-6 h-6 text-gray-300" />
                 </div>
 
-                {searchVal && (
-                    <div
-                        className={
-                            findings.length
-                                ? "searchResults"
-                                : "hidden aria-hidden"
-                        }
-                    >
-                        {findings.map((user: string, index: number) => (
-                            <Link
-                                key={index}
-                                className="flex flex-col w-1/3 items-start"
-                                to={`user/${user}`}
-                            >
-                                <p className="font-medium py-2">{user}</p>
-                            </Link>
-                        ))}
-                    </div>
-                )}
+                {(() => {
+                    if (searchVal && findings.length > 0)
+                        return (
+                            <div className={"searchResults"}>
+                                {findings.map((user: string, index: number) => (
+                                    <Link
+                                        key={index}
+                                        className="flex flex-col w-1/3 items-start"
+                                        to={`user/${user}`}
+                                    >
+                                        <p className="font-medium py-2">
+                                            {user}
+                                        </p>
+                                    </Link>
+                                ))}
+                            </div>
+                        );
+                })()}
 
                 <div onClick={onClickProfile} className="avatar">
-                    <div
-                        className={profileMenu ? "menu" : " hidden aria-hidden"}
-                    >
-                        {pageId !== "/dashboard" && (
-                            <>
-                                {isAdmin && (
-                                    <Link
-                                        className="menuLink"
-                                        to={"/dashboard"}
-                                    >
-                                        Dashboard
-                                    </Link>
-                                )}
-                            </>
-                        )}
+                    {profileMenu && (
+                        <div
+                            className={"menu"}>
+                            {pageId !== "/dashboard" && (
+                                <>
+                                    {isAdmin && (
+                                        <Link
+                                            className="menuLink"
+                                            to={"/dashboard"}
+                                        >
+                                            Dashboard
+                                        </Link>
+                                    )}
+                                </>
+                            )}
 
-                        <Link
-                            className="menuLink"
-                            to={`/user/${localStorage.getItem("username")}`}
-                        >
-                            Profile
-                        </Link>
+                            <Link
+                                className="menuLink"
+                                to={`/user/${localStorage.getItem("username")}`}
+                            >
+                                Profile
+                            </Link>
 
-                        <button
-                            className="hover:text-cyan-600"
-                            onClick={onClickLogout}
-                        >
-                            Logout
-                        </button>
-                    </div>
+                            <button
+                                className="hover:text-cyan-600"
+                                onClick={onClickLogout}
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    )}
                 </div>
             </nav>
 

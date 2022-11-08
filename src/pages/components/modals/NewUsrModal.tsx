@@ -6,7 +6,7 @@ import { BiChevronDown, BiChevronRight } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 const NewUsrModal = ({ showModal, setShowModal }: any) => {
-    // STATES AND NAVIGATION
+    // STATES AND VARIABLES
     const [showPassNote, setShowPassNote] = useState(false);
     const navigate = useNavigate();
     const {

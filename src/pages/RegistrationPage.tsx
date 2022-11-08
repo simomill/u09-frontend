@@ -4,7 +4,7 @@ import Loader from "./components/LoaderComponent";
 import RegisterForm from "./components/RegisterFormComponent";
 
 const RegisterPage: FC = () => {
-    // STATES AND NAVIGATION
+    // STATES AND VARIABLES
     const [loading, setLoading] = useState(false);
     const [statusMsg, setStatusMsg] = useState<any>("");
 
