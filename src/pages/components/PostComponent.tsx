@@ -15,6 +15,7 @@ import { encode, decode } from "html-entities";
 import { ICommentModel } from "../../Models";
 
 const Post = ({ photo, changeState }: any) => {
+    // ------------------STATES AND VARIABLES
     const [showInfo, setShowInfo] = useState(false);
     const [showRemove, setShowRemove] = useState(false);
     const [showRemoveModal, setShowRemoveModal] = useState(false);
@@ -27,7 +28,6 @@ const Post = ({ photo, changeState }: any) => {
     const initialArray: any[] | (() => any[]) = [];
     const [commentArray, setCommentArray]: any[] = useState(initialArray);
     const [commentId, setCommentId] = useState("");
-
     const pageName = useParams().id;
     const authedUser = localStorage.getItem("username");
 
@@ -43,7 +43,6 @@ const Post = ({ photo, changeState }: any) => {
         }
     };
 
-    // FUNCTION FOR DELETING THE CLICKED IMAGE
     function onDeleteImg(id: string) {
         setImageId(id);
         setShowRemoveModal((prev) => !prev);
@@ -54,12 +53,12 @@ const Post = ({ photo, changeState }: any) => {
         setShowRemoveCmntModal((prev) => !prev);
     };
 
+    // When the comment is submitted, it should be sanitized
+    // by swapping out special characters for their html-character.
     const onSubmitComment = (event: FormEvent, photoId: string) => {
         event.preventDefault();
 
         let message = msgRef.current?.innerText;
-
-        // make user input safe from XSS
 
         const safeMsg = encode(message, { mode: "nonAsciiPrintable" });
 
@@ -76,6 +75,8 @@ const Post = ({ photo, changeState }: any) => {
         }
     };
 
+    // When comments are being fetched,
+    // the commentfield should be emptied.
     async function fetchComments() {
         const response = await getComments();
 
@@ -93,16 +94,17 @@ const Post = ({ photo, changeState }: any) => {
         } else if (localStorage.getItem("isAdmin")) {
             setHasAccess(true);
         }
-    }, [authedUser, commentArray, msgValue, pageName]);
+    }, [authedUser, commentArray, pageName]);
 
     return (
         <>
             <div className="postContainer">
-                {/* Top */}
+                {/* 
+                    Show the Byline only on the homepage 
+                */}
                 {!useParams().id && (
                     <div className="byline">
-                        <div
-                            className="avatar"></div>
+                        <div className="avatar"></div>
                         <Link
                             to={`/user/${photo.username}`}
                             className="font-medium text-lg font-md"
@@ -112,7 +114,9 @@ const Post = ({ photo, changeState }: any) => {
                     </div>
                 )}
 
-                {/* Image */}
+                {/* 
+
+                */}
                 {photo && (
                     <div
                         className="flex relative max-h-screen p-2"
@@ -126,6 +130,10 @@ const Post = ({ photo, changeState }: any) => {
                             className="cursor-nesw-resize h-full w-auto"
                         />
 
+                        {/* 
+                            It should only be possible to remove an image
+                            if it's the users' own image, or if the user is admin.
+                        */}
                         {(() => {
                             if (hasAccess && showRemove)
                                 return (
@@ -142,6 +150,11 @@ const Post = ({ photo, changeState }: any) => {
                     </div>
                 )}
 
+                {/* 
+                    When the image clicked, to be removed is the same
+                    as the image in this post instance, 
+                    open the modal to confirm the removal.
+                */}
                 {imageId === photo._id && (
                     <RemoveImgModal
                         id={imageId}
@@ -163,24 +176,21 @@ const Post = ({ photo, changeState }: any) => {
                             onClick={onToggleComment}
                         />
                     </div>
-
-                    <div
-                        className={
-                            showComment
-                                ? "toggleSection"
-                                : "hidden"
-                        }
-                    >
+                    
+                    {showComment && (
+                        <div className={"toggleSection"}>
                         <span className="divider"></span>
 
+                        {/* 
+                            Comments related to the image should be shown under it.
+                            Users should be able to remove their own comments,
+                            and admins should be able to remove all comments.
+                        */}
                         {commentArray.map(
                             (comment: ICommentModel, index: number) => (
                                 <>
                                     {comment.photoId === photo._id && (
-                                        <div
-                                            key={index}
-                                            className="comment"
-                                        >
+                                        <div key={index} className="comment">
                                             <Link
                                                 to={`/users/${comment.username}`}
                                                 className="font-medium"
@@ -251,41 +261,43 @@ const Post = ({ photo, changeState }: any) => {
 
                         <span className="divider"></span>
                     </div>
+                    )}
 
                     <div className="flex flex-row py-2 gap-2">
                         <HiOutlineInformationCircle
-                            className={showInfo
-                                ? "toggleIcon"
-                                : "toggleIcon text-slate-300"}
+                            className={
+                                showInfo
+                                    ? "toggleIcon"
+                                    : "toggleIcon text-slate-300"
+                            }
                             onClick={onToggleInfo}
                         />
                     </div>
 
-                    {/* info section */}
-                    <div className={showInfo
-                                ? "toggleSection"
-                                : "hidden"}>
-                        <div className="infoIcon">
-                            <IoCameraOutline className="w-6 h-6" />
-                            <p>Camera</p>
-                        </div>
+                    {showInfo && (
+                        <div className="toggleSection">
+                            <div className="infoIcon">
+                                <IoCameraOutline className="w-6 h-6" />
+                                <p>Camera</p>
+                            </div>
 
-                        <div className="infoIcon">
-                            <RiCameraLensFill className="w-6 h-6" />
-                            <p>Lens</p>
-                        </div>
+                            <div className="infoIcon">
+                                <RiCameraLensFill className="w-6 h-6" />
+                                <p>Lens</p>
+                            </div>
 
-                        <div className="infoIcon">
-                            <GoSettings className="w-5 h-5" />
-                            <p>Settings</p>
-                        </div>
+                            <div className="infoIcon">
+                                <GoSettings className="w-5 h-5" />
+                                <p>Settings</p>
+                            </div>
 
-                        <div className="infoIcon">
-                            <HiOutlineFilm className="w-6 h-6" />
+                            <div className="infoIcon">
+                                <HiOutlineFilm className="w-6 h-6" />
 
-                            <p>Film</p>
+                                <p>Film</p>
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
         </>
