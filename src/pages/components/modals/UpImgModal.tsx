@@ -145,7 +145,9 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
                                     onChange={(e) => {
                                         if (e.target.files) {
                                             setImageUrl('');
-                                            setSelectedImg(e.target.files[0]);
+                                            setSelectedImg(
+                                                e.target.files[0]
+                                            );
                                         }
                                     }}
                                     type="file"

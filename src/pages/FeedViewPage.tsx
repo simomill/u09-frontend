@@ -11,9 +11,12 @@ const FeedView: FC = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [photoArray, setPhotoArray] = useState<any[] | null>(null);
-    const [userArray, setUserArray] = useState<IUserModel[] | null>(null);
+    const [userArray, setUserArray] = useState<IUserModel[] | null>(
+        null
+    );
     const [chosenPhoto, setChosenPhoto] = useState<string | null>(null);
-    const [showFullscreenModal, setShowFullscreenModal] = useState(false);
+    const [showFullscreenModal, setShowFullscreenModal] =
+        useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     const changeState = (data: any) => {
@@ -79,8 +82,14 @@ const FeedView: FC = () => {
                                                 key={index}
                                             >
                                                 <Post
-                                                    photo={photoArray[index]}
-                                                    changeState={changeState}
+                                                    photo={
+                                                        photoArray[
+                                                            index
+                                                        ]
+                                                    }
+                                                    changeState={
+                                                        changeState
+                                                    }
                                                 />
                                                 <span className="w-full h-px border-b border-gray-200"></span>
                                             </div>

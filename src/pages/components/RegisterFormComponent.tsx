@@ -19,7 +19,10 @@ const RegisterForm = ({
             .min(4, 'Password length should be at least 4 characters'),
         passconf: Yup.string()
             .required('Confirm Password is required')
-            .oneOf([Yup.ref('password')], 'Passwords must and should match'),
+            .oneOf(
+                [Yup.ref('password')],
+                'Passwords must and should match'
+            ),
     });
 
     const validationOpt = { resolver: yupResolver(formSchema) };
@@ -40,7 +43,9 @@ const RegisterForm = ({
             // the user should be riedirected to the login page,
             // with feedback.
             if (success) {
-                navigate('/login', { state: 'User successfully created!' });
+                navigate('/login', {
+                    state: 'User successfully created!',
+                });
             } else {
                 setStatusMsg('User already exists');
             }
@@ -83,7 +88,10 @@ const RegisterForm = ({
                 type="text"
                 id="username"
                 placeholder="username"
-                {...register('username', { required: true, maxLength: 10 })}
+                {...register('username', {
+                    required: true,
+                    maxLength: 10,
+                })}
                 aria-label={'your username'}
             />
             {errors.username && (

@@ -117,12 +117,21 @@ const UserPage: FC = () => {
                     if (photoArray.length > 0) {
                         return (
                             <>
-                                {photoArray.map((item: any, index: number) => (
-                                    <div className="postOuter" key={index}>
-                                        <Post photo={photoArray[index]} />
-                                        <span className="w-full h-px border-b border-gray-200"></span>
-                                    </div>
-                                ))}
+                                {photoArray.map(
+                                    (item: any, index: number) => (
+                                        <div
+                                            className="postOuter"
+                                            key={index}
+                                        >
+                                            <Post
+                                                photo={
+                                                    photoArray[index]
+                                                }
+                                            />
+                                            <span className="w-full h-px border-b border-gray-200"></span>
+                                        </div>
+                                    )
+                                )}
                             </>
                         );
                     }

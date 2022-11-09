@@ -15,7 +15,9 @@ const RemoveUsrModal = ({ showModal, setShowModal, userName }: any) => {
         deleteUser(userName);
 
         window.location.reload();
-        navigate('/dashboard', { state: 'User was successfully deleted!' });
+        navigate('/dashboard', {
+            state: 'User was successfully deleted!',
+        });
     }
 
     function onDeny() {
@@ -26,7 +28,10 @@ const RemoveUsrModal = ({ showModal, setShowModal, userName }: any) => {
         <>
             {showModal && (
                 <div className="modalQ">
-                    <HiOutlineX className="closeWndw" onClick={closeHandler} />
+                    <HiOutlineX
+                        className="closeWndw"
+                        onClick={closeHandler}
+                    />
 
                     <div className="flex flex-col items-center">
                         <AiOutlineUserDelete className="w-8 h-8 mb-3" />
@@ -34,7 +39,10 @@ const RemoveUsrModal = ({ showModal, setShowModal, userName }: any) => {
                         <div className="px-8">
                             <p>
                                 You are about to delete{' '}
-                                <span className="font-medium">{userName}</span>.
+                                <span className="font-medium">
+                                    {userName}
+                                </span>
+                                .
                             </p>
                             <p>Are you sure about this?</p>
                         </div>

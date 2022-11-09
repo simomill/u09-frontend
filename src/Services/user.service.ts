@@ -52,14 +52,26 @@ export const deleteUser = async (userName: string) => {
     return response;
 };
 
-export const updateUser = async (updateData: IUpdateData, userId: string) => {
-    const response = await axios.put(`${API_URL}/${userId}`, updateData);
+export const updateUser = async (
+    updateData: IUpdateData,
+    userId: string
+) => {
+    const response = await axios.put(
+        `${API_URL}/${userId}`,
+        updateData
+    );
 
     return response;
 };
 
-export const changeUserRole = async (userId: string, currentRole: IRole) => {
-    const response = await axios.put(`${API_URL}/${userId}/role`, currentRole);
+export const changeUserRole = async (
+    userId: string,
+    currentRole: IRole
+) => {
+    const response = await axios.put(
+        `${API_URL}/${userId}/role`,
+        currentRole
+    );
 
     return response;
 };

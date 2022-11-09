@@ -4,7 +4,11 @@ import { HiOutlineX } from 'react-icons/hi';
 import { GrUserAdmin } from 'react-icons/gr';
 import { useNavigate } from 'react-router-dom';
 
-const AdminAssignModal = ({ showModal, setShowModal, userName }: any) => {
+const AdminAssignModal = ({
+    showModal,
+    setShowModal,
+    userName,
+}: any) => {
     const navigate = useNavigate();
 
     // Clicking "No" should close the modal.
@@ -37,7 +41,10 @@ const AdminAssignModal = ({ showModal, setShowModal, userName }: any) => {
         <>
             {showModal && (
                 <div className="modalQ">
-                    <HiOutlineX className="closeWndw" onClick={closeHandler} />
+                    <HiOutlineX
+                        className="closeWndw"
+                        onClick={closeHandler}
+                    />
 
                     <div className="flex flex-col items-center">
                         <GrUserAdmin className="w-8 h-8 mb-3" />
@@ -45,7 +52,9 @@ const AdminAssignModal = ({ showModal, setShowModal, userName }: any) => {
                         <div className="px-8">
                             <p>
                                 You are about to{' '}
-                                {userName.isAdmin > 0 ? 'downgrade' : 'upgrade'}{' '}
+                                {userName.isAdmin > 0
+                                    ? 'downgrade'
+                                    : 'upgrade'}{' '}
                                 <span className="font-medium">
                                     {userName.username}'s
                                 </span>{' '}

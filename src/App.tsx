@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+    Routes,
+} from 'react-router-dom';
 import FeedView from './pages/FeedViewPage';
 import PhotoView from './pages/PhotoView';
 import UserPage from './pages/UserProfilePage';
@@ -15,9 +19,9 @@ import LoginPage from './pages/UserLoginPage';
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
-    const [conditionalElement, setConditionalElement] = useState<null | any>(
-        null
-    );
+    const [conditionalElement, setConditionalElement] = useState<
+        null | any
+    >(null);
 
     // Check if user is logged in on page load
     useEffect(() => {
@@ -43,20 +47,47 @@ function App() {
                     <Routes>
                         <Route
                             path="/"
-                            element={isLoggedIn ? <FeedView /> : <LoginPage />}
+                            element={
+                                isLoggedIn ? (
+                                    <FeedView />
+                                ) : (
+                                    <LoginPage />
+                                )
+                            }
                         />
                         <Route
                             path="/photo"
-                            element={isLoggedIn ? <PhotoView /> : <LoginPage />}
+                            element={
+                                isLoggedIn ? (
+                                    <PhotoView />
+                                ) : (
+                                    <LoginPage />
+                                )
+                            }
                         />
                         <Route
                             path="/user/:id"
-                            element={isLoggedIn ? <UserPage /> : <LoginPage />}
+                            element={
+                                isLoggedIn ? (
+                                    <UserPage />
+                                ) : (
+                                    <LoginPage />
+                                )
+                            }
                         />
-                        <Route path="/dashboard" element={conditionalElement} />
+                        <Route
+                            path="/dashboard"
+                            element={conditionalElement}
+                        />
                         <Route path="/login" element={<LoginPage />} />
-                        <Route path="/register" element={<RegisterPage />} />
-                        <Route path="/auth-test" element={<TestAuthPage />} />
+                        <Route
+                            path="/register"
+                            element={<RegisterPage />}
+                        />
+                        <Route
+                            path="/auth-test"
+                            element={<TestAuthPage />}
+                        />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </Router>

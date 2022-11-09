@@ -44,7 +44,10 @@ const Nav = (
             for (const user of userArray.userArray) {
                 if (user.username?.includes(val)) {
                     if (!findings.includes(user.username)) {
-                        setFindings((oldArr) => [...oldArr, user.username]);
+                        setFindings((oldArr) => [
+                            ...oldArr,
+                            user.username,
+                        ]);
                     }
                 } else {
                     if (findings.includes(user.username)) {
@@ -92,17 +95,19 @@ const Nav = (
                     if (searchVal && findings.length > 0)
                         return (
                             <div className={'searchResults'}>
-                                {findings.map((user: string, index: number) => (
-                                    <Link
-                                        key={index}
-                                        className="flex flex-col w-1/3 items-start"
-                                        to={`user/${user}`}
-                                    >
-                                        <p className="font-medium py-2">
-                                            {user}
-                                        </p>
-                                    </Link>
-                                ))}
+                                {findings.map(
+                                    (user: string, index: number) => (
+                                        <Link
+                                            key={index}
+                                            className="flex flex-col w-1/3 items-start"
+                                            to={`user/${user}`}
+                                        >
+                                            <p className="font-medium py-2">
+                                                {user}
+                                            </p>
+                                        </Link>
+                                    )
+                                )}
                             </div>
                         );
                 })()}
@@ -125,7 +130,9 @@ const Nav = (
 
                             <Link
                                 className="menuLink"
-                                to={`/user/${localStorage.getItem('username')}`}
+                                to={`/user/${localStorage.getItem(
+                                    'username'
+                                )}`}
                             >
                                 Profile
                             </Link>

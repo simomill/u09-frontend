@@ -48,13 +48,17 @@ function UpdateUsrModal({
             ? (obj.username = newUsername)
             : (obj.username = userName.username);
 
-        newEmail ? (obj.email = newEmail) : (obj.email = userName.email);
+        newEmail
+            ? (obj.email = newEmail)
+            : (obj.email = userName.email);
 
         const success = await updateUser(obj, userId);
 
         if (success) {
             window.location.reload();
-            navigate('/dashboard', { state: 'User was successfully updated!' });
+            navigate('/dashboard', {
+                state: 'User was successfully updated!',
+            });
         } else {
             window.location.reload();
             navigate('/dashboard', { state: 'Failed to update user.' });
@@ -112,7 +116,9 @@ function UpdateUsrModal({
                                     id="name"
                                     placeholder="name"
                                     defaultValue={userName.name}
-                                    onChange={(e) => setNewName(e.target.value)}
+                                    onChange={(e) =>
+                                        setNewName(e.target.value)
+                                    }
                                     aria-label="name of user"
                                 />
 
@@ -163,7 +169,9 @@ function UpdateUsrModal({
 
                         <div
                             className="note"
-                            onClick={() => setShowPassNote((prev) => !prev)}
+                            onClick={() =>
+                                setShowPassNote((prev) => !prev)
+                            }
                         >
                             <div className="flex items-center">
                                 {showPassNote ? (
@@ -172,13 +180,16 @@ function UpdateUsrModal({
                                     <BiChevronRight className="text-sky-700" />
                                 )}
 
-                                <span className="">Where is the password?</span>
+                                <span className="">
+                                    Where is the password?
+                                </span>
                             </div>
 
                             {showPassNote && (
                                 <span className="text-slate-400">
-                                    You cannot change users passwords. They have
-                                    to change it themselves in their userpage
+                                    You cannot change users passwords.
+                                    They have to change it themselves in
+                                    their userpage
                                 </span>
                             )}
                         </div>

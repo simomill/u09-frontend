@@ -8,7 +8,10 @@ import { RiCameraLensFill } from 'react-icons/ri';
 import { GoCommentDiscussion, GoSettings } from 'react-icons/go';
 import { Link, useParams } from 'react-router-dom';
 import RemoveImgModal from './modals/RmvImgModal';
-import { getComments, postComment } from '../../Services/comment.service';
+import {
+    getComments,
+    postComment,
+} from '../../Services/comment.service';
 import RemoveCmntModal from './modals/RmvCmntModal';
 import { IoCameraOutline } from 'react-icons/io5';
 import { encode, decode } from 'html-entities';
@@ -19,14 +22,16 @@ const Post = ({ photo, changeState }: any) => {
     const [showInfo, setShowInfo] = useState(false);
     const [showRemove, setShowRemove] = useState(false);
     const [showRemoveModal, setShowRemoveModal] = useState(false);
-    const [showRemoveCmntModal, setShowRemoveCmntModal] = useState(false);
+    const [showRemoveCmntModal, setShowRemoveCmntModal] =
+        useState(false);
     const [hasAccess, setHasAccess] = useState(false);
     const [showComment, setShowComment] = useState(false);
     const [imageId, setImageId] = useState('');
     const msgRef = useRef<HTMLSpanElement | null>(null);
     const [msgValue, setMsgValue] = useState(msgRef.current?.innerText);
     const initialArray: any[] | (() => any[]) = [];
-    const [commentArray, setCommentArray]: any[] = useState(initialArray);
+    const [commentArray, setCommentArray]: any[] =
+        useState(initialArray);
     const [commentId, setCommentId] = useState('');
     const pageName = useParams().id;
     const authedUser = localStorage.getItem('username');
@@ -187,9 +192,13 @@ const Post = ({ photo, changeState }: any) => {
                             and admins should be able to remove all comments.
                         */}
                             {commentArray.map(
-                                (comment: ICommentModel, index: number) => (
+                                (
+                                    comment: ICommentModel,
+                                    index: number
+                                ) => (
                                     <>
-                                        {comment.photoId === photo._id && (
+                                        {comment.photoId ===
+                                            photo._id && (
                                             <div
                                                 key={index}
                                                 className="comment"
@@ -201,9 +210,12 @@ const Post = ({ photo, changeState }: any) => {
                                                     {comment.username}
                                                 </Link>
                                                 <p className="commentMsg">
-                                                    {decode(comment.message, {
-                                                        level: 'html5',
-                                                    })}
+                                                    {decode(
+                                                        comment.message,
+                                                        {
+                                                            level: 'html5',
+                                                        }
+                                                    )}
                                                 </p>
 
                                                 {(() => {
@@ -233,7 +245,9 @@ const Post = ({ photo, changeState }: any) => {
                                 <RemoveCmntModal
                                     id={commentId}
                                     showModal={showRemoveCmntModal}
-                                    setShowModal={setShowRemoveCmntModal}
+                                    setShowModal={
+                                        setShowRemoveCmntModal
+                                    }
                                     fetchComments={fetchComments}
                                 />
                             )}
@@ -241,7 +255,9 @@ const Post = ({ photo, changeState }: any) => {
                             <form
                                 className="flex self-center mt-3"
                                 action=""
-                                onSubmit={(e) => onSubmitComment(e, photo._id)}
+                                onSubmit={(e) =>
+                                    onSubmitComment(e, photo._id)
+                                }
                             >
                                 <span
                                     className="textArea"
@@ -250,7 +266,9 @@ const Post = ({ photo, changeState }: any) => {
                                     role={'textbox'}
                                     contentEditable
                                     ref={msgRef}
-                                    suppressContentEditableWarning={true}
+                                    suppressContentEditableWarning={
+                                        true
+                                    }
                                 >
                                     {msgValue}
                                 </span>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getAllUsers } from '../Services/user.service';
 import { BsFillPencilFill, BsTrashFill } from 'react-icons/bs';
 import { ImPlus } from 'react-icons/im';
 import { BsFillKeyFill } from 'react-icons/bs';
+import { getAllUsers } from '../Services/user.service';
 import RemoveUsrModal from './components/modals/RmvUsrModal';
 import NewUsrModal from './components/modals/NewUsrModal';
 import UpdateUsrModal from './components/modals/UpdateUsrModal';
@@ -11,19 +11,16 @@ import AdminAssignModal from './components/modals/AdminAssignModal';
 import Loader from './components/LoaderComponent';
 import Nav from './components/NavigationComponent';
 
-const Dashboard = () => {
+function Dashboard() {
     // --------------------STATES AND VARIABLES
     const navigate = useNavigate();
     const pageId = useLocation().pathname;
-    const initialArray: any[] | (() => any[]) = [];
     const [userArray, setUserArray] = useState<any[] | null>(null);
     const [userName, setUserName] = useState<object | string>('');
     const [showRemoveModal, setShowRemoveModal] = useState(false);
     const [showNewUsrModal, setShowNewUsrModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [showAdminModal, setShowAdminModal] = useState(false);
-    const [findings, setFindings] = useState(initialArray);
-    const [searchVal, setSearchVal] = useState('');
     const { state } = useLocation();
     const [statusMsg, setStatusMsg] = useState(state ?? '');
     const authRole = localStorage.getItem('isAdmin');
@@ -80,14 +77,20 @@ const Dashboard = () => {
 
     return (
         <div className="dashContainer">
-            <Nav userArray={userArray} isAdmin={authRole} pageId={pageId} />
+            <Nav
+                userArray={userArray}
+                isAdmin={authRole}
+                pageId={pageId}
+            />
 
             <div className="usersFlexbox">
                 {isLoading && <Loader />}
 
                 <h1 className="h1">Users</h1>
 
-                {statusMsg && <p className="msg success">{statusMsg}</p>}
+                {statusMsg && (
+                    <p className="msg success">{statusMsg}</p>
+                )}
 
                 {/* 
                     If there are users, they should be displayed.
@@ -97,9 +100,13 @@ const Dashboard = () => {
                     <div key={index} className="card">
                         <div
                             className="userInfo"
-                            onClick={() => navigate(`/user/${user.username}`)}
+                            onClick={() =>
+                                navigate(`/user/${user.username}`)
+                            }
                         >
-                            <p className="font-medium">{user.username}</p>
+                            <p className="font-medium">
+                                {user.username}
+                            </p>
                             <p>{user.email}</p>
                             <p>
                                 {user.isAdmin > 1
@@ -131,7 +138,9 @@ const Dashboard = () => {
                                         <div className="action rBorder">
                                             <BsFillPencilFill
                                                 className="actionIcon"
-                                                onClick={() => onEdit(user)}
+                                                onClick={() =>
+                                                    onEdit(user)
+                                                }
                                             />
                                         </div>
 
@@ -139,7 +148,9 @@ const Dashboard = () => {
                                             <BsTrashFill
                                                 className="actionIcon"
                                                 onClick={() =>
-                                                    onRemove(user.username)
+                                                    onRemove(
+                                                        user.username
+                                                    )
                                                 }
                                             />
                                         </div>
@@ -150,7 +161,9 @@ const Dashboard = () => {
                 ))}
                 <ImPlus
                     className={
-                        showNewUsrModal ? 'plusIcon plusActive' : 'plusIcon'
+                        showNewUsrModal
+                            ? 'plusIcon plusActive'
+                            : 'plusIcon'
                     }
                     onClick={onAdd}
                 />
@@ -185,6 +198,6 @@ const Dashboard = () => {
             />
         </div>
     );
-};
+}
 
 export default Dashboard;

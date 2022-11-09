@@ -28,7 +28,10 @@ const RemoveCmntModal = ({
         <>
             {showModal && (
                 <div className="modalQ">
-                    <HiOutlineX className="closeWndw" onClick={closeHandler} />
+                    <HiOutlineX
+                        className="closeWndw"
+                        onClick={closeHandler}
+                    />
 
                     <div className="flex flex-col items-center">
                         <BiCommentX className="w-8 h-8 mb-3" />

@@ -2,6 +2,7 @@
     "parser": "@typescript-eslint/parser",
     "extends": [
         "airbnb",
+        "plugin:import:typescript",
         "plugin:prettier/recommended",
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
@@ -16,13 +17,13 @@
             "jsx": true
         }
     },
+    "env": {
+        "browser": true,
+        "node": true,
+        "jasmine": true
+    },
     "rules": {
         "prettier/prettier": ["error", {"endOfLine": "auto"}],
-        "import/resolver": {
-            "node" : {
-                "extensions": [".js", ".jsx", ".ts", ".tsx"]
-            }
-        },
         "import/extensions": [
             "error",
             "ignorePackages",

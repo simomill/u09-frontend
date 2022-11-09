@@ -30,7 +30,9 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
         setShowModal((prev: any) => !prev);
 
         if (success) {
-            navigate('/dashboard', { state: 'User was successfully created!' });
+            navigate('/dashboard', {
+                state: 'User was successfully created!',
+            });
             window.location.reload();
         } else {
             navigate('/dashboard', { state: 'Failed to create user.' });
@@ -42,7 +44,10 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
         <>
             {showModal && (
                 <div className="inputModalBody">
-                    <HiOutlineX className="closeWndw" onClick={closeHandler} />
+                    <HiOutlineX
+                        className="closeWndw"
+                        onClick={closeHandler}
+                    />
 
                     <div className="formContainer">
                         <form
@@ -55,7 +60,9 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
                                 type="text"
                                 id="name"
                                 placeholder="name"
-                                {...register('name', { required: true })}
+                                {...register('name', {
+                                    required: true,
+                                })}
                                 aria-label={'name of user'}
                             />
 
@@ -98,7 +105,9 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
                         </form>
                         <div
                             className="note"
-                            onClick={() => setShowPassNote((prev) => !prev)}
+                            onClick={() =>
+                                setShowPassNote((prev) => !prev)
+                            }
                         >
                             <div className="flex items-center">
                                 {showPassNote ? (
@@ -107,15 +116,17 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
                                     <BiChevronRight className="text-sky-700" />
                                 )}
 
-                                <span className="">Where is the password?</span>
+                                <span className="">
+                                    Where is the password?
+                                </span>
                             </div>
 
                             {showPassNote && (
                                 <span className="text-slate-400">
-                                    The Password will automatically be the same
-                                    as the username, and the user will have to
-                                    change it in their userpage on the first
-                                    login.
+                                    The Password will automatically be
+                                    the same as the username, and the
+                                    user will have to change it in their
+                                    userpage on the first login.
                                 </span>
                             )}
                         </div>

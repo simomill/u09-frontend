@@ -1,6 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { checkIsLoggedIn, getAuthTest, logout } from '../Services/auth.service';
+import {
+    checkIsLoggedIn,
+    getAuthTest,
+    logout,
+} from '../Services/auth.service';
 
 const TestAuthPage: FC = () => {
     // states &navigation

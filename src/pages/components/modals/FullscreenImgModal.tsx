@@ -9,7 +9,10 @@ const FullscreenModal = ({ showModal, setShowModal, data }: any) => {
         <>
             {showModal && (
                 <div className="fullImgWndw">
-                    <HiOutlineX className="closeWndw" onClick={closeHandler} />
+                    <HiOutlineX
+                        className="closeWndw"
+                        onClick={closeHandler}
+                    />
                     <div className="fullImgContainer">
                         <img
                             alt={data.title}

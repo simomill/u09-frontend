@@ -21,7 +21,10 @@ const RemoveImgModal = ({ showModal, setShowModal, id }: any) => {
         <>
             {showModal && (
                 <div className="modalQ">
-                    <HiOutlineX className="closeWndw" onClick={closeHandler} />
+                    <HiOutlineX
+                        className="closeWndw"
+                        onClick={closeHandler}
+                    />
 
                     <div className="centerColumn">
                         <IoWarningOutline className="w-6 h-6 mb-3 text-red-700" />
