@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { HiOutlineX } from "react-icons/hi";
-import { registerUser } from "../../../Services/auth.service";
-import { BiChevronDown, BiChevronRight } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { HiOutlineX } from 'react-icons/hi';
+import { registerUser } from '../../../Services/auth.service';
+import { BiChevronDown, BiChevronRight } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
 
 const NewUsrModal = ({ showModal, setShowModal }: any) => {
     // STATES AND VARIABLES
@@ -15,14 +15,13 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
         formState: { errors },
     } = useForm();
 
-
     function closeHandler() {
         setShowModal((prev: any) => !prev);
     }
 
     // When submitting the form,
-    // a new user should be created, 
-    // with their username as password. 
+    // a new user should be created,
+    // with their username as password.
     const onSubmit = async (data: any) => {
         data.password = data.username;
         data.passconf = data.username;
@@ -31,10 +30,10 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
         setShowModal((prev: any) => !prev);
 
         if (success) {
-            navigate("/dashboard", { state: "User was successfully created!" });
+            navigate('/dashboard', { state: 'User was successfully created!' });
             window.location.reload();
         } else {
-            navigate("/dashboard", { state: "Failed to create user." });
+            navigate('/dashboard', { state: 'Failed to create user.' });
             window.location.reload();
         }
     };
@@ -43,10 +42,7 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
         <>
             {showModal && (
                 <div className="inputModalBody">
-                    <HiOutlineX
-                        className="closeWndw"
-                        onClick={closeHandler}
-                    />
+                    <HiOutlineX className="closeWndw" onClick={closeHandler} />
 
                     <div className="formContainer">
                         <form
@@ -59,8 +55,8 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
                                 type="text"
                                 id="name"
                                 placeholder="name"
-                                {...register("name", { required: true })}
-                                aria-label={"name of user"}
+                                {...register('name', { required: true })}
+                                aria-label={'name of user'}
                             />
 
                             <input
@@ -68,12 +64,12 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
                                 type="email"
                                 id="email"
                                 placeholder="email"
-                                {...register("email", {
+                                {...register('email', {
                                     required: true,
                                     pattern:
-                                    /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                                        /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
                                 })}
-                                aria-label={"user email"}
+                                aria-label={'user email'}
                             />
 
                             <input
@@ -81,11 +77,11 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
                                 type="text"
                                 id="username"
                                 placeholder="username"
-                                {...register("username", {
+                                {...register('username', {
                                     required: true,
                                     maxLength: 10,
                                 })}
-                                aria-label={"username of user"}
+                                aria-label={'username of user'}
                             />
                             {errors.username && (
                                 <p className="msg warning">
@@ -97,7 +93,7 @@ const NewUsrModal = ({ showModal, setShowModal }: any) => {
                                 className="bg-slate-50 btn"
                                 type="submit"
                                 value="create user"
-                                aria-label={"submit"}
+                                aria-label={'submit'}
                             />
                         </form>
                         <div

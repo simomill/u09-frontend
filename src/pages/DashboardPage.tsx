@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { getAllUsers } from "../Services/user.service";
-import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
-import { ImPlus } from "react-icons/im";
-import { BsFillKeyFill } from "react-icons/bs";
-import RemoveUsrModal from "./components/modals/RmvUsrModal";
-import NewUsrModal from "./components/modals/NewUsrModal";
-import UpdateUsrModal from "./components/modals/UpdateUsrModal";
-import AdminAssignModal from "./components/modals/AdminAssignModal";
-import Loader from "./components/LoaderComponent";
-import Nav from "./components/NavigationComponent";
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { getAllUsers } from '../Services/user.service';
+import { BsFillPencilFill, BsTrashFill } from 'react-icons/bs';
+import { ImPlus } from 'react-icons/im';
+import { BsFillKeyFill } from 'react-icons/bs';
+import RemoveUsrModal from './components/modals/RmvUsrModal';
+import NewUsrModal from './components/modals/NewUsrModal';
+import UpdateUsrModal from './components/modals/UpdateUsrModal';
+import AdminAssignModal from './components/modals/AdminAssignModal';
+import Loader from './components/LoaderComponent';
+import Nav from './components/NavigationComponent';
 
 const Dashboard = () => {
     // --------------------STATES AND VARIABLES
@@ -17,33 +17,33 @@ const Dashboard = () => {
     const pageId = useLocation().pathname;
     const initialArray: any[] | (() => any[]) = [];
     const [userArray, setUserArray] = useState<any[] | null>(null);
-    const [userName, setUserName] = useState<object | string>("");
+    const [userName, setUserName] = useState<object | string>('');
     const [showRemoveModal, setShowRemoveModal] = useState(false);
     const [showNewUsrModal, setShowNewUsrModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [showAdminModal, setShowAdminModal] = useState(false);
     const [findings, setFindings] = useState(initialArray);
-    const [searchVal, setSearchVal] = useState("");
+    const [searchVal, setSearchVal] = useState('');
     const { state } = useLocation();
-    const [statusMsg, setStatusMsg] = useState(state ?? "");
-    const authRole = localStorage.getItem("isAdmin");
+    const [statusMsg, setStatusMsg] = useState(state ?? '');
+    const authRole = localStorage.getItem('isAdmin');
     const [isLoading, setIsLoading] = useState(false);
 
     // --------OPEN MODAL HANDLERS
     const onRemove = (username: string) => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         setShowRemoveModal((prev) => !prev);
         setUserName(username);
     };
 
     const onMakeAdmin = (user: any) => {
         setUserName(user);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         setShowAdminModal((prev) => !prev);
     };
 
     const onEdit = (user: object) => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         setUserName(user);
         setShowEditModal((prev) => !prev);
     };
@@ -51,7 +51,6 @@ const Dashboard = () => {
     const onAdd = () => {
         setShowNewUsrModal((prev) => !prev);
     };
-
 
     // -------------------FUNCTIONS
     async function fetchUsers() {
@@ -74,10 +73,9 @@ const Dashboard = () => {
 
         if (statusMsg) {
             setTimeout(() => {
-                setStatusMsg("");
+                setStatusMsg('');
             }, 4000);
         }
-
     }, [statusMsg, userArray]);
 
     return (
@@ -105,10 +103,10 @@ const Dashboard = () => {
                             <p>{user.email}</p>
                             <p>
                                 {user.isAdmin > 1
-                                    ? "Superadmin"
+                                    ? 'Superadmin'
                                     : user.isAdmin > 0
-                                    ? "Admin"
-                                    : "User"}
+                                    ? 'Admin'
+                                    : 'User'}
                             </p>
                         </div>
 
@@ -152,9 +150,7 @@ const Dashboard = () => {
                 ))}
                 <ImPlus
                     className={
-                        showNewUsrModal
-                            ? "plusIcon plusActive"
-                            : "plusIcon"
+                        showNewUsrModal ? 'plusIcon plusActive' : 'plusIcon'
                     }
                     onClick={onAdd}
                 />

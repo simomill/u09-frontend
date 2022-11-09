@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { AiFillHome } from "react-icons/ai";
-import { IoSearchOutline } from "react-icons/io5";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { IUserModel } from "../../Models";
-import { logout } from "../../Services/auth.service";
+import React, { useEffect, useState } from 'react';
+import { AiFillHome } from 'react-icons/ai';
+import { IoSearchOutline } from 'react-icons/io5';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { IUserModel } from '../../Models';
+import { logout } from '../../Services/auth.service';
 
 const Nav = (
     userArray: IUserModel[] | any,
@@ -13,7 +13,7 @@ const Nav = (
     // ----------------STATES AND VARIABLES
     const navigate = useNavigate();
     const [profileMenu, setProfileMenu] = useState(false);
-    const [searchVal, setSearchVal] = useState("");
+    const [searchVal, setSearchVal] = useState('');
     const initialArray: any[] | (() => any[]) = [];
     const [findings, setFindings] = useState(initialArray);
     isAdmin = userArray.isAdmin;
@@ -22,7 +22,7 @@ const Nav = (
     // ------------------FUNCTIONS
     function onClickLogout() {
         logout();
-        navigate("/login");
+        navigate('/login');
         window.location.reload();
     }
 
@@ -65,16 +65,16 @@ const Nav = (
     return (
         <>
             <nav className="flex flex-row justify-center items-center">
-                {pageId === "/dashboard" && (
-                    <Link to={"/"}>
+                {pageId === '/dashboard' && (
+                    <Link to={'/'}>
                         <AiFillHome className="homeBtn" />
                     </Link>
                 )}
                 <div
                     className={
-                        pageId === "/dashboard"
-                            ? "searchField bg-white"
-                            : "searchField"
+                        pageId === '/dashboard'
+                            ? 'searchField bg-white'
+                            : 'searchField'
                     }
                 >
                     <input
@@ -83,7 +83,7 @@ const Nav = (
                         id="searchfield"
                         className="focus:outline-none"
                         onChange={(e) => onSearch(e.target.value)}
-                        aria-label={"search"}
+                        aria-label={'search'}
                     />
                     <IoSearchOutline className="w-6 h-6 text-gray-300" />
                 </div>
@@ -91,7 +91,7 @@ const Nav = (
                 {(() => {
                     if (searchVal && findings.length > 0)
                         return (
-                            <div className={"searchResults"}>
+                            <div className={'searchResults'}>
                                 {findings.map((user: string, index: number) => (
                                     <Link
                                         key={index}
@@ -109,14 +109,13 @@ const Nav = (
 
                 <div onClick={onClickProfile} className="avatar">
                     {profileMenu && (
-                        <div
-                            className={"menu"}>
-                            {pageId !== "/dashboard" && (
+                        <div className={'menu'}>
+                            {pageId !== '/dashboard' && (
                                 <>
                                     {isAdmin && (
                                         <Link
                                             className="menuLink"
-                                            to={"/dashboard"}
+                                            to={'/dashboard'}
                                         >
                                             Dashboard
                                         </Link>
@@ -126,7 +125,7 @@ const Nav = (
 
                             <Link
                                 className="menuLink"
-                                to={`/user/${localStorage.getItem("username")}`}
+                                to={`/user/${localStorage.getItem('username')}`}
                             >
                                 Profile
                             </Link>

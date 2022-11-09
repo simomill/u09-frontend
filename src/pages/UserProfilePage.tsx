@@ -1,21 +1,21 @@
-import React, { FC, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { getUser, getUserPhotos } from "../Services/user.service";
-import { FaChevronLeft } from "react-icons/fa";
-import { AiOutlinePlusSquare } from "react-icons/ai";
-import Post from "./components/PostComponent";
-import UploadModal from "./components/modals/UpImgModal";
-import Loader from "./components/LoaderComponent";
+import React, { FC, useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { getUser, getUserPhotos } from '../Services/user.service';
+import { FaChevronLeft } from 'react-icons/fa';
+import { AiOutlinePlusSquare } from 'react-icons/ai';
+import Post from './components/PostComponent';
+import UploadModal from './components/modals/UpImgModal';
+import Loader from './components/LoaderComponent';
 
 const UserPage: FC = () => {
     // STATES AND VARIABLES
-    const [userEmail, setUserEmail] = useState("");
+    const [userEmail, setUserEmail] = useState('');
     const [showUploadModal, setShowUploadModal] = useState(false);
     const initialArray: any[] | (() => any[]) = [];
     const [photoArray, setPhotoArray]: any[] = useState(initialArray);
     const [hasAccess, setHasAccess] = useState(false);
     const pageName = useParams().id;
-    const authedUser = localStorage.getItem("username");
+    const authedUser = localStorage.getItem('username');
     const [isLoading, setIsLoading] = useState(false);
 
     // FUNCTION FOR OPEN-/CLOSING THE UPLOAD MODAL
@@ -30,7 +30,7 @@ const UserPage: FC = () => {
 
         // FUNCTION FOR FETCHING THE DATA OF USER CORRESPONDING TO THE PAGE NAME
         async function fetchData() {
-            const response = await getUser(pageName ?? "");
+            const response = await getUser(pageName ?? '');
 
             if (response.email) {
                 setUserEmail(response.email);
@@ -40,7 +40,7 @@ const UserPage: FC = () => {
         // FUNCTION FOR FETCHING THE PHOTOS OF USER CORRESPONDING TO THE PAGE NAME
         async function fetchPhotos() {
             setIsLoading(true);
-            const response = await getUserPhotos(pageName ?? "");
+            const response = await getUserPhotos(pageName ?? '');
 
             setPhotoArray(response);
         }
@@ -53,7 +53,7 @@ const UserPage: FC = () => {
             setIsLoading(true);
             fetchPhotos();
         } else {
-            setIsLoading(false);            
+            setIsLoading(false);
         }
     }, [authedUser, pageName, userEmail, photoArray]);
 
@@ -102,22 +102,23 @@ const UserPage: FC = () => {
             </div>
 
             <span className="w-full h-px border-b border-gray-200"></span>
-            
-            
+
             {/* --------------------------------GALLERY SECTION */}
-            <div className={photoArray.length ? "flex flex-wrap" : "flex flex-col justify-center items-center h-screen "}>
-                
-            {isLoading && <Loader />}
+            <div
+                className={
+                    photoArray.length
+                        ? 'flex flex-wrap'
+                        : 'flex flex-col justify-center items-center h-screen '
+                }
+            >
+                {isLoading && <Loader />}
                 {/* IF THERE ARE PHOTOS, THEN LOOP OVER THEM */}
                 {(() => {
                     if (photoArray.length > 0) {
                         return (
                             <>
                                 {photoArray.map((item: any, index: number) => (
-                                    <div
-                                        className="postOuter"
-                                        key={index}
-                                    >
+                                    <div className="postOuter" key={index}>
                                         <Post photo={photoArray[index]} />
                                         <span className="w-full h-px border-b border-gray-200"></span>
                                     </div>

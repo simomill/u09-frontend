@@ -1,17 +1,17 @@
-import React, { useState, FC, useEffect } from "react";
-import { Link } from "react-router-dom";
-import Loader from "./components/LoaderComponent";
-import RegisterForm from "./components/RegisterFormComponent";
+import React, { useState, FC, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import Loader from './components/LoaderComponent';
+import RegisterForm from './components/RegisterFormComponent';
 
 const RegisterPage: FC = () => {
     // STATES AND VARIABLES
     const [loading, setLoading] = useState(false);
-    const [statusMsg, setStatusMsg] = useState<any>("");
+    const [statusMsg, setStatusMsg] = useState<any>('');
 
     useEffect(() => {
         if (statusMsg) {
             setTimeout(() => {
-                setStatusMsg("");
+                setStatusMsg('');
             }, 2000);
         }
     }, [statusMsg]);
@@ -29,7 +29,7 @@ const RegisterPage: FC = () => {
 
             {statusMsg && <p className="text-red-700">{statusMsg}</p>}
 
-            <Link to={"/login"} className="textLink">
+            <Link to={'/login'} className="textLink">
                 Already a user?
             </Link>
 

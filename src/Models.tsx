@@ -20,13 +20,13 @@ export interface IPhotoModel {
     username: string;
     filename: string;
     title: string;
-    img: object
+    img: object;
 }
 
 export interface IUserModel {
-    name: string | null
-    username: string | null
-    email: string | null
+    name: string | null;
+    username: string | null;
+    email: string | null;
 }
 
 export interface ILoginModel {

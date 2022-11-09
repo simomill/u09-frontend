@@ -1,12 +1,10 @@
-import axios from "axios";
-import { IRole, IUpdateData } from "../Models";
+import axios from 'axios';
+import { IRole, IUpdateData } from '../Models';
 
 const API_URL =
-    process.env.NODE_ENV === "production"
+    process.env.NODE_ENV === 'production'
         ? `${process.env.REACT_APP_API_URL}/users`
         : `http://localhost:3000/users`;
-
-
 
 // Get individual user
 export const getUser = async (username: string) => {
@@ -24,7 +22,7 @@ export const getAllUsers = async () => {
 
 export const uploadImage = async (formData: any) => {
     const response = await axios.post(`${API_URL}/upload`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { 'Content-Type': 'multipart/form-data' },
     });
 
     return response;

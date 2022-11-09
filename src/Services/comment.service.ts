@@ -1,10 +1,10 @@
-import axios from "axios";
-import { ICommentData } from "../Models";
+import axios from 'axios';
+import { ICommentData } from '../Models';
 
 const API_URL =
-    process.env.NODE_ENV === "production"
+    process.env.NODE_ENV === 'production'
         ? `${process.env.REACT_APP_API_URL}/comments`
-        : "http://localhost:3000/comments";
+        : 'http://localhost:3000/comments';
 
 // GET ALL COMMENTS
 export const getComments = async () => {

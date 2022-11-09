@@ -1,5 +1,5 @@
-import React from "react";
-import { HiOutlineX } from "react-icons/hi";
+import React from 'react';
+import { HiOutlineX } from 'react-icons/hi';
 
 const FullscreenModal = ({ showModal, setShowModal, data }: any) => {
     function closeHandler() {
@@ -9,10 +9,7 @@ const FullscreenModal = ({ showModal, setShowModal, data }: any) => {
         <>
             {showModal && (
                 <div className="fullImgWndw">
-                    <HiOutlineX
-                        className="closeWndw"
-                        onClick={closeHandler}
-                    />
+                    <HiOutlineX className="closeWndw" onClick={closeHandler} />
                     <div className="fullImgContainer">
                         <img
                             alt={data.title}

@@ -1,27 +1,40 @@
-import React, { useEffect, useState } from "react";
-import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import FeedView from "./pages/FeedViewPage";
-import PhotoView from "./pages/PhotoView";
-import UserPage from "./pages/UserProfilePage";
-import RegisterPage from "./pages/RegistrationPage";
-import { checkIsLoggedIn } from "./Services/auth.service";
-import TestAuthPage from "./pages/TestAuthPage";
-import NotFound from "./pages/404Page";
-import Dashboard from "./pages/DashboardPage";
-import Unauth from "./pages/401Page";
-import LoginPage from "./pages/UserLoginPage";
+import React, { useEffect, useState } from 'react';
+import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import FeedView from './pages/FeedViewPage';
+import PhotoView from './pages/PhotoView';
+import UserPage from './pages/UserProfilePage';
+import RegisterPage from './pages/RegistrationPage';
+import { checkIsLoggedIn } from './Services/auth.service';
+import TestAuthPage from './pages/TestAuthPage';
+import NotFound from './pages/404Page';
+import Dashboard from './pages/DashboardPage';
+import Unauth from './pages/401Page';
+import LoginPage from './pages/UserLoginPage';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [conditionalElement, setConditionalElement] = useState<null | any>(
+        null
+    );
 
     // Check if user is logged in on page load
     useEffect(() => {
-        const isLoggedIn = checkIsLoggedIn();
-        setIsLoggedIn(isLoggedIn.token);
-        setIsAdmin(isLoggedIn.token);
-    }, []);
+        const isAuth = checkIsLoggedIn();
+        setIsLoggedIn(isAuth.token);
+        setIsAdmin(isAuth.token);
+
+        if (isLoggedIn) {
+            if (isAdmin) {
+                setConditionalElement(<Dashboard />);
+            } else {
+                setConditionalElement(<Unauth />);
+            }
+        } else {
+            setConditionalElement(<LoginPage />);
+        }
+    }, [isAdmin, isLoggedIn]);
 
     return (
         <div className="App">
@@ -40,18 +53,7 @@ function App() {
                             path="/user/:id"
                             element={isLoggedIn ? <UserPage /> : <LoginPage />}
                         />
-                        <Route
-                            path="/dashboard"
-                            element={
-                                isAdmin ? (
-                                    <Dashboard />
-                                ) : isLoggedIn ? (
-                                    <Unauth />
-                                ) : (
-                                    <LoginPage />
-                                )
-                            }
-                        />
+                        <Route path="/dashboard" element={conditionalElement} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/register" element={<RegisterPage />} />
                         <Route path="/auth-test" element={<TestAuthPage />} />

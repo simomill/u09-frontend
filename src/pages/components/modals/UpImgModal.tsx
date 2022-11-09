@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from "react";
-import { HiOutlineX } from "react-icons/hi";
-import { useParams } from "react-router-dom";
-import { uploadImage } from "../../../Services/user.service";
+import { useEffect, useRef, useState } from 'react';
+import { HiOutlineX } from 'react-icons/hi';
+import { useParams } from 'react-router-dom';
+import { uploadImage } from '../../../Services/user.service';
 
 const UploadModal = ({ showModal, setShowModal }: any) => {
     // STATES AND VARIABLES
     const [selectedImg, setSelectedImg] = useState<any>(null);
-    const [selectImgText, setSelectImgText] = useState("Select");
-    const [imageUrl, setImageUrl] = useState<any>("");
+    const [selectImgText, setSelectImgText] = useState('Select');
+    const [imageUrl, setImageUrl] = useState<any>('');
     const [showRemove, setShowRemove] = useState(false);
     const ref = useRef<any>();
     const userName = useParams().id;
@@ -19,16 +19,16 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
     // When clicking the "x"-button next to the selected image,
     // it should be removed/unselected
     function removeHandler() {
-        setSelectedImg("");
+        setSelectedImg('');
         setShowRemove(false);
 
         if (ref.current.files.length !== 0) {
             ref.current.value = null;
-            setImageUrl("");
+            setImageUrl('');
         }
     }
 
-    // When submiting the form the image should be uploaded, 
+    // When submiting the form the image should be uploaded,
     // and the modal should be closed.
     async function handleSubmit(event: any) {
         event.preventDefault();
@@ -53,14 +53,14 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
     // And the selection should be shown as a thumbnail.
     useEffect(() => {
         if (ref.current.files.length !== 0) {
-            setSelectImgText("Change");
+            setSelectImgText('Change');
             setShowRemove(true);
 
-            if (imageUrl === "") {
+            if (imageUrl === '') {
                 setImageUrl(URL.createObjectURL(selectedImg));
             }
         } else {
-            setSelectImgText("Select");
+            setSelectImgText('Select');
         }
     }, [imageUrl, selectedImg, ref]);
 
@@ -92,7 +92,7 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
                                     name="username"
                                     value={userName}
                                     aria-label={
-                                        "your username is chosen automatically"
+                                        'your username is chosen automatically'
                                     }
                                 />
 
@@ -136,7 +136,7 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
                                             placeholder="title"
                                             name="title"
                                             accept="image/*"
-                                            aria-label={"Image title"}
+                                            aria-label={'Image title'}
                                         />
                                     </>
                                 )}
@@ -144,7 +144,7 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
                                 <input
                                     onChange={(e) => {
                                         if (e.target.files) {
-                                            setImageUrl("");
+                                            setImageUrl('');
                                             setSelectedImg(e.target.files[0]);
                                         }
                                     }}
@@ -153,15 +153,15 @@ const UploadModal = ({ showModal, setShowModal }: any) => {
                                     hidden={true}
                                     name="file"
                                     id="fileUpload"
-                                    aria-label={"Upload image"}
+                                    aria-label={'Upload image'}
                                 />
                             </div>
 
                             <button
                                 className={
                                     selectedImg
-                                        ? "bg-slate-50 yesNoBtn self-center"
-                                        : "disabled w-1/2 self-center"
+                                        ? 'bg-slate-50 yesNoBtn self-center'
+                                        : 'disabled w-1/2 self-center'
                                 }
                                 type="submit"
                             >

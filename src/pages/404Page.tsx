@@ -1,6 +1,6 @@
-import React from "react";
-import { FaChevronLeft } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { FaChevronLeft } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const NotFound = () => {
     return (

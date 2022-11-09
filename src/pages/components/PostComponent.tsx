@@ -1,18 +1,18 @@
-import React, { FormEvent, useEffect, useRef, useState } from "react";
+import React, { FormEvent, useEffect, useRef, useState } from 'react';
 import {
     HiOutlineX,
     HiOutlineInformationCircle,
     HiOutlineFilm,
-} from "react-icons/hi";
-import { RiCameraLensFill } from "react-icons/ri";
-import { GoCommentDiscussion, GoSettings } from "react-icons/go";
-import { Link, useParams } from "react-router-dom";
-import RemoveImgModal from "./modals/RmvImgModal";
-import { getComments, postComment } from "../../Services/comment.service";
-import RemoveCmntModal from "./modals/RmvCmntModal";
-import { IoCameraOutline } from "react-icons/io5";
-import { encode, decode } from "html-entities";
-import { ICommentModel } from "../../Models";
+} from 'react-icons/hi';
+import { RiCameraLensFill } from 'react-icons/ri';
+import { GoCommentDiscussion, GoSettings } from 'react-icons/go';
+import { Link, useParams } from 'react-router-dom';
+import RemoveImgModal from './modals/RmvImgModal';
+import { getComments, postComment } from '../../Services/comment.service';
+import RemoveCmntModal from './modals/RmvCmntModal';
+import { IoCameraOutline } from 'react-icons/io5';
+import { encode, decode } from 'html-entities';
+import { ICommentModel } from '../../Models';
 
 const Post = ({ photo, changeState }: any) => {
     // ------------------STATES AND VARIABLES
@@ -22,14 +22,14 @@ const Post = ({ photo, changeState }: any) => {
     const [showRemoveCmntModal, setShowRemoveCmntModal] = useState(false);
     const [hasAccess, setHasAccess] = useState(false);
     const [showComment, setShowComment] = useState(false);
-    const [imageId, setImageId] = useState("");
+    const [imageId, setImageId] = useState('');
     const msgRef = useRef<HTMLSpanElement | null>(null);
     const [msgValue, setMsgValue] = useState(msgRef.current?.innerText);
     const initialArray: any[] | (() => any[]) = [];
     const [commentArray, setCommentArray]: any[] = useState(initialArray);
-    const [commentId, setCommentId] = useState("");
+    const [commentId, setCommentId] = useState('');
     const pageName = useParams().id;
-    const authedUser = localStorage.getItem("username");
+    const authedUser = localStorage.getItem('username');
 
     const onToggleInfo = () => {
         setShowInfo((prev) => !prev);
@@ -60,7 +60,7 @@ const Post = ({ photo, changeState }: any) => {
 
         let message = msgRef.current?.innerText;
 
-        const safeMsg = encode(message, { mode: "nonAsciiPrintable" });
+        const safeMsg = encode(message, { mode: 'nonAsciiPrintable' });
 
         if (message && authedUser) {
             const obj = {
@@ -81,17 +81,17 @@ const Post = ({ photo, changeState }: any) => {
         const response = await getComments();
 
         setCommentArray(response.data);
-        setMsgValue("");
+        setMsgValue('');
 
         if (msgRef.current?.innerText) {
-            msgRef.current.innerText = "";
+            msgRef.current.innerText = '';
         }
     }
 
     useEffect(() => {
         if (pageName === authedUser) {
             setHasAccess(true);
-        } else if (localStorage.getItem("isAdmin")) {
+        } else if (localStorage.getItem('isAdmin')) {
             setHasAccess(true);
         }
     }, [authedUser, commentArray, pageName]);
@@ -170,105 +170,108 @@ const Post = ({ photo, changeState }: any) => {
                         <GoCommentDiscussion
                             className={
                                 showComment
-                                    ? "toggleIcon"
-                                    : "toggleIcon text-slate-300"
+                                    ? 'toggleIcon'
+                                    : 'toggleIcon text-slate-300'
                             }
                             onClick={onToggleComment}
                         />
                     </div>
-                    
-                    {showComment && (
-                        <div className={"toggleSection"}>
-                        <span className="divider"></span>
 
-                        {/* 
+                    {showComment && (
+                        <div className={'toggleSection'}>
+                            <span className="divider"></span>
+
+                            {/* 
                             Comments related to the image should be shown under it.
                             Users should be able to remove their own comments,
                             and admins should be able to remove all comments.
                         */}
-                        {commentArray.map(
-                            (comment: ICommentModel, index: number) => (
-                                <>
-                                    {comment.photoId === photo._id && (
-                                        <div key={index} className="comment">
-                                            <Link
-                                                to={`/users/${comment.username}`}
-                                                className="font-medium"
+                            {commentArray.map(
+                                (comment: ICommentModel, index: number) => (
+                                    <>
+                                        {comment.photoId === photo._id && (
+                                            <div
+                                                key={index}
+                                                className="comment"
                                             >
-                                                {comment.username}
-                                            </Link>
-                                            <p className="commentMsg">
-                                                {decode(comment.message, {
-                                                    level: "html5",
-                                                })}
-                                            </p>
+                                                <Link
+                                                    to={`/users/${comment.username}`}
+                                                    className="font-medium"
+                                                >
+                                                    {comment.username}
+                                                </Link>
+                                                <p className="commentMsg">
+                                                    {decode(comment.message, {
+                                                        level: 'html5',
+                                                    })}
+                                                </p>
 
-                                            {(() => {
-                                                if (
-                                                    hasAccess ||
-                                                    authedUser ===
-                                                        comment.username
-                                                ) {
-                                                    return (
-                                                        <HiOutlineX
-                                                            onClick={() =>
-                                                                onRemoveComment(
-                                                                    comment._id
-                                                                )
-                                                            }
-                                                            className="redCross"
-                                                        />
-                                                    );
-                                                }
-                                            })()}
-                                        </div>
-                                    )}
-                                </>
-                            )
-                        )}
-                        {showRemoveCmntModal && (
-                            <RemoveCmntModal
-                                id={commentId}
-                                showModal={showRemoveCmntModal}
-                                setShowModal={setShowRemoveCmntModal}
-                                fetchComments={fetchComments}
-                            />
-                        )}
+                                                {(() => {
+                                                    if (
+                                                        hasAccess ||
+                                                        authedUser ===
+                                                            comment.username
+                                                    ) {
+                                                        return (
+                                                            <HiOutlineX
+                                                                onClick={() =>
+                                                                    onRemoveComment(
+                                                                        comment._id
+                                                                    )
+                                                                }
+                                                                className="redCross"
+                                                            />
+                                                        );
+                                                    }
+                                                })()}
+                                            </div>
+                                        )}
+                                    </>
+                                )
+                            )}
+                            {showRemoveCmntModal && (
+                                <RemoveCmntModal
+                                    id={commentId}
+                                    showModal={showRemoveCmntModal}
+                                    setShowModal={setShowRemoveCmntModal}
+                                    fetchComments={fetchComments}
+                                />
+                            )}
 
-                        <form
-                            className="flex self-center mt-3"
-                            action=""
-                            onSubmit={(e) => onSubmitComment(e, photo._id)}
-                        >
-                            <span
-                                className="textArea"
-                                placeholder="Add a comment..."
-                                id="message"
-                                role={"textbox"}
-                                contentEditable
-                                ref={msgRef}
-                                suppressContentEditableWarning={true}
+                            <form
+                                className="flex self-center mt-3"
+                                action=""
+                                onSubmit={(e) => onSubmitComment(e, photo._id)}
                             >
-                                {msgValue}
-                            </span>
-                            <input
-                                className="postComment"
-                                type="submit"
-                                value={"Post"}
-                                aria-label={"submit"}
-                            />
-                        </form>
+                                <span
+                                    className="textArea"
+                                    placeholder="Add a comment..."
+                                    id="message"
+                                    role={'textbox'}
+                                    contentEditable
+                                    ref={msgRef}
+                                    suppressContentEditableWarning={true}
+                                >
+                                    {msgValue}
+                                </span>
+                                <input
+                                    className="postComment"
+                                    type="submit"
+                                    value={'Post'}
+                                    aria-label={'submit'}
+                                />
+                            </form>
 
-                        <span className="divider"></span>
-                    </div>
+                            <span className="divider"></span>
+                        </div>
                     )}
 
                     <div className="flex flex-row py-2 gap-2">
                         <HiOutlineInformationCircle
                             className={
                                 showInfo
-                                    ? "toggleIcon"
-                                    : "toggleIcon text-slate-300"
+                                    ? 'toggleIcon'
+                                    : 'toggleIcon text-slate-300'
                             }
                             onClick={onToggleInfo}
                         />

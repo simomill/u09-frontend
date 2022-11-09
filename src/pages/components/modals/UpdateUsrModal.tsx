@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { HiOutlineX } from "react-icons/hi";
-import { BiChevronDown, BiChevronRight } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
-import { updateUser } from "../../../Services/user.service";
-import { IUserModel } from "../../../Models";
+import React, { useEffect, useState } from 'react';
+import { HiOutlineX } from 'react-icons/hi';
+import { BiChevronDown, BiChevronRight } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
+import { updateUser } from '../../../Services/user.service';
+import { IUserModel } from '../../../Models';
 
 function UpdateUsrModal({
     showModal,
@@ -16,19 +16,19 @@ function UpdateUsrModal({
     const [showPassNote, setShowPassNote] = useState(false);
     const [user, setUser] = useState<IUserModel>(userName ?? null);
     const { username } = user;
-    const [newName, setNewName] = useState("");
-    const [newUsername, setNewUsername] = useState("");
-    const [newEmail, setNewEmail] = useState("");
-    const [notAvailable, setNotAvailable] = useState("");
+    const [newName, setNewName] = useState('');
+    const [newUsername, setNewUsername] = useState('');
+    const [newEmail, setNewEmail] = useState('');
+    const [notAvailable, setNotAvailable] = useState('');
     const navigate = useNavigate();
 
-    // When closing the modal, 
+    // When closing the modal,
     // all the changed values should be forgotten.
     function closeHandler() {
-        setNewName("");
-        setNewUsername("");
-        setNewEmail("");
-        setNotAvailable("");
+        setNewName('');
+        setNewUsername('');
+        setNewEmail('');
+        setNotAvailable('');
 
         setShowModal((prev: any) => !prev);
     }
@@ -54,16 +54,16 @@ function UpdateUsrModal({
 
         if (success) {
             window.location.reload();
-            navigate("/dashboard", { state: "User was successfully updated!" });
+            navigate('/dashboard', { state: 'User was successfully updated!' });
         } else {
             window.location.reload();
-            navigate("/dashboard", { state: "Failed to update user." });
+            navigate('/dashboard', { state: 'Failed to update user.' });
         }
 
-        setNewName("");
-        setNewUsername("");
-        setNewEmail("");
-        setNotAvailable("");
+        setNewName('');
+        setNewUsername('');
+        setNewEmail('');
+        setNotAvailable('');
 
         setShowModal((prev: any) => !prev);
     };
@@ -81,16 +81,14 @@ function UpdateUsrModal({
                     return user.username !== newUsername;
                 })
             ) {
-                setNotAvailable("");
+                setNotAvailable('');
             } else if (username === newUsername) {
-                setNotAvailable("");
+                setNotAvailable('');
             } else {
-                setNotAvailable("Username is occupied!");
+                setNotAvailable('Username is occupied!');
             }
         }
     }, [newUsername, userArray, userName, username]);
-
-    
 
     return (
         <>
@@ -146,8 +144,8 @@ function UpdateUsrModal({
                                 <input
                                     className={
                                         notAvailable
-                                            ? " disabled"
-                                            : "bg-slate-50 btn"
+                                            ? ' disabled'
+                                            : 'bg-slate-50 btn'
                                     }
                                     type="submit"
                                     value="update user"
